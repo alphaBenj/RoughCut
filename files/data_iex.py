@@ -73,7 +73,8 @@ class API(object):
         suffix          = r'tops/last?symbols='
         df              = self._GetDataFrame(self._IEX_URL_PREFIX + suffix + symbols)
         df['time']      = pd.to_datetime(df['time'], unit='ms').dt.time
-        return df.set_index(['symbol'], inplace=True)
+        df.set_index(['symbol'], inplace=True)
+        return df
   
     def latestTradeQuote(self, securities):
         """
