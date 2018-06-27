@@ -4,7 +4,6 @@ From IEX's native api , this module will allow you to  :
 - get latest quote and trade data
 - get trade data only
 Started with Himanshu Gupta's IEX_Data github repo. 
-
 Examples:
         iex = API()
         print(iex.latestTrade(['AAPL', 'IBM']))
@@ -56,8 +55,8 @@ class API(object):
         rawData     = json.loads(urlData)
       
         df          = pd.DataFrame()     
-        for k, v in rawData.items():
-            [e.update({'symbol':k}) for e in v['time-series']]    
+        for sym, v in rawData.items():
+            [e.update({'symbol':sym}) for e in v['time-series']]    
             _df             = pd.DataFrame(v['time-series'])
             _df["date"]     = _df["date"].str.replace("-","")
             _df["AdjClose"] = _df["close"]
@@ -74,8 +73,7 @@ class API(object):
         suffix          = r'tops/last?symbols='
         df              = self._GetDataFrame(self._IEX_URL_PREFIX + suffix + symbols)
         df['time']      = pd.to_datetime(df['time'], unit='ms').dt.time
-        df.set_index(['symbol'], inplace=True)
-        return df
+        return df.set_index(['symbol'], inplace=True)
   
     def latestTradeQuote(self, securities):
         """
