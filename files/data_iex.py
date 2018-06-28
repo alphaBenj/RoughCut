@@ -63,7 +63,7 @@ class API(object):
             df              = pd.concat([df,_df])  
         return df[cols]
 
-    def latestTrade(self, securities):
+    def lastTrade(self, securities):
         """
         Gets latest trade data
         :param securities: list of securities
@@ -76,7 +76,7 @@ class API(object):
         df.set_index(['symbol'], inplace=True)
         return df
   
-    def latestTradeQuote(self, securities):
+    def lastTradeQuote(self, securities):
         """
         Gets latest quote and trade data
         :param securities: list of securities
@@ -93,7 +93,7 @@ class API(object):
         df.set_index(['symbol'], inplace=True)
         return df[cols]
   
-    def earnings(self, securities):
+    def infoCompEarns(self, securities):
         """
         Get latest earnings for securities.
         :param securities: list of symbols
@@ -110,7 +110,7 @@ class API(object):
             df              = pd.concat([df,_df])
         return df[cols]
 
-    def latestNews(self, securities, count=1):
+    def infoCompNews(self, securities, count=1):
         """
         Get latest news for securities. By default, gets one news item per security.
 
@@ -130,7 +130,7 @@ class API(object):
         return df[cols]
 
 
-    def financials(self, securities):
+    def infoCompFins(self, securities):
         """
         Get latest financials of securities. By default, gets one news item per security.
         :param securities: list of symbols

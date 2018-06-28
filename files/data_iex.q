@@ -1,9 +1,8 @@
 /
 #########################################################################################
-# Author : Himanshu Gupta																
-# Description: IEX is a new exchange that is slowly becoming popular. It provides a lot 
-# of its data for free through its API. This code is a q/kdb+ wrapper to make it easier	
-# to get data from IEX. 																
+# Author : Asher  Benjamin															
+# Description: IEX API.  This code is a q/kdb+ wrapper to make it easier	
+#  modiyfing Himanshu Guptas git repo. 
 # IEX api URL: https://iextrading.com/developer/docs/#getting-started					
 #########################################################################################
 \
@@ -27,7 +26,7 @@ get_data:{[main_url;suffix;prefix;char_delta;identifier]
 / AAPL 174.66 100  2017.11.10D20:59:58.008999936
 / IBM  149.18 300  2017.11.10D20:59:59.724999936  
 
-get_last_trade:{[syms] 
+lastTrade:{[syms] 
 
   / This function can run for multiple securities.
   syms:$[1<count syms;"," sv string(upper syms);string(upper syms)];
@@ -44,7 +43,7 @@ get_last_trade:{[syms]
 / Get previous day summary for a security - high, low, open, close, vwap etc
 / q)get_prev_day_summary`aapl
 
-get_prev_day_summary:{[sym]
+summaryPDO:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/previous";
@@ -67,7 +66,7 @@ get_prev_day_summary:{[sym]
 /   5y - 5 years
 / q)get_historical_summary[`aapl;`1m] 
 
-get_historical_summary:{[sym;period]
+summaryHist:{[sym;period]
 
   sym:string(upper sym);
   period:string(period);
@@ -88,7 +87,7 @@ get_historical_summary:{[sym;period]
 / Same as get_historical_summary but for a specific date
 / q)get_minutely_summary[`aapl;`20171103] 
 
-get_minutely_summary:{[sym;date]
+tradeBarsMin:{[sym;date]
 
   sym:string(upper sym);
   date:string(date);
@@ -103,7 +102,7 @@ get_minutely_summary:{[sym;date]
 / Get information about a company such as exchange, industry, website, description, CEO etc
 / q)get_company_info`aapl 
 
-get_company_info:{[sym]
+infoCompSummary:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/company";
@@ -118,7 +117,7 @@ get_company_info:{[sym]
 / Get key stats about a company such as market cap, beta, revenue, debt etc
 / q)get_key_stats`aapl
  
-get_key_stats:{[sym]
+infoKeyStats:{[sym]
 
   sym:string(upper sym);  
   suffix: "GET /1.0/stock/",sym,"/stats";
@@ -133,7 +132,7 @@ get_key_stats:{[sym]
 / Get news relating to a company
 / q)get_company_news`aapl
 
-get_company_news:{[sym]
+infoCompNews:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/news";
@@ -147,7 +146,7 @@ get_company_news:{[sym]
 / Get financial information of a company such as report date, gross profit, net income etc
 / q)get_company_financials`aapl
 
-get_company_financials:{[sym]
+infoCompFins:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/financials";
@@ -161,7 +160,7 @@ get_company_financials:{[sym]
 / Get earnings information of a company such as actual EPS, consensus EPS, estimated EPS etc
 / q)get_company_earnings`aapl
 
-get_company_earnings:{[sym]
+infoCompEarns:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/earnings";
@@ -175,27 +174,27 @@ get_company_earnings:{[sym]
 / Get most 'active' stocks for last trade date with additional info such as close price, open price etc
 / q)get_most_active_stocks[]
 
-get_most_active_stocks:{
+stockaActive:{
    predefined_iex_lists_data[`mostactive]
  }
 
 / Get stocks with highest gains for last trade date with additional info such as close price, open price etc
 / q)get_most_gainers_stocks[] 
 
-get_most_gainers_stocks:{
+stocksUps:{
   predefined_iex_lists_data[`gainers]
  }
 
 / Get stocks with most loss for last trade date with additional info such as close price, open price etc
 / q)get_most_losers_stocks[] 
 
-get_most_losers_stocks:{
+stockDowns:{
   predefined_iex_lists_data[`losers]
  }
 
 / Helper function for getting 'lists' data from IEX
 / There are three types of lists: most active, gainers and losers 
-predefined_iex_lists_data:{[list]
+iexListsData:{[list]
  
   list: string(list);
   suffix: "GET /1.0/stock/market/list/",list;
