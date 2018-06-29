@@ -30,11 +30,7 @@ lastTrade:{[syms]
 
   / This function can run for multiple securities.
   syms:$[1<count syms;"," sv string(upper syms);string(upper syms)];
-
-  / Construct the GET request
   suffix: "GET /1.0/tops/last?symbols=",syms;
-
-  / Parse json response and put into table
   data:.j.k getData[urlRoot;suffix;prefix;-3;"symbol"];
 
   `sym xcol update symbol:`$symbol, time:"P"$string(resetTime time) from data
@@ -47,8 +43,6 @@ summaryPDO:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/previous";
-  
-  / Parse json response and put into table
   data: enlist .j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcol update symbol:`$symbol, date:"D"$date from data
@@ -75,7 +69,6 @@ tradeBars:{[sym;period]
   / Remove any text from response before 'minute' if period is 1d and 'date' otherwise
   txt:$[all "1d"=period;"minute";"date"];
   
-  / Parse json response and put into table
   data:.j.k "[", getData[urlRoot;suffix;prefix;-2;txt];
   
   / data has different schema for 1d vs other buckets
@@ -91,9 +84,7 @@ tradeBarsMin:{[sym;date]
 
   sym:string(upper sym);
   date:string(date);
-  suffix: "GET /1.0/stock/",sym,"/chart/date/",date;
-  
-  / Parse json response and put into table
+  suffix: "GET /1.0/stock/",sym,"/chart/date/",date; 
   data:.j.k "[",getData[urlRoot;suffix;prefix;-2;"minute"];
   
   `sym`date`minute xcols update sym:`$sym, date:"D"$date, minute:"U"$minute from data
@@ -106,8 +97,6 @@ infoCompSummary:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/company";
-  
-  / Parse json response and put into table
   data: enlist .j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   / Rename symbol to sym
@@ -121,8 +110,6 @@ infoKeyStats:{[sym]
 
   sym:string(upper sym);  
   suffix: "GET /1.0/stock/",sym,"/stats";
-  
-  / Parse json response and put into table
   data: enlist .j.k getData[urlRoot;suffix;prefix;-2;"companyName"];
   
   / Update data types and rename symbol column to sym
@@ -136,8 +123,6 @@ infoCompNews:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/news";
-
-  / Parse json response and put into table
   data:.j.k "[",getData[urlRoot;suffix;prefix;-2;"datetime"];
 
   `sym xcols update sym:`$sym, datetime:"P"$datetime from data
@@ -150,8 +135,6 @@ infoCompFins:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/financials";
-  
-  / Parse json response and put into table
   data:.j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcols update sym:`$sym, reportDate:"D"$reportDate from data[`financials]
@@ -164,8 +147,6 @@ infoCompEarns:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/earnings";
-  
-  / Parse json response and put into table
   data:.j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcols update sym:`$sym, EPSReportDate:"D"$EPSReportDate, fiscalEndDate:"D"$fiscalEndDate from data[`earnings]
@@ -188,9 +169,7 @@ stocksUps:{
 / Get stocks with most loss for last trade date with additional info such as close price, open price etc
 / q)get_most_losers_stocks[] 
 
-stocksDowns:{
-  iexListsData[`losers]
- }
+stocksDowns:{iexListsData[`losers]}
 
 / Helper function for getting 'lists' data from IEX
 / There are three types of lists: most active, gainers and losers 
@@ -198,8 +177,6 @@ iexListsData:{[list]
  
   list: string(list);
   suffix: "GET /1.0/stock/market/list/",list;
-
-  / Parse json response and put into table
   data:.j.k "[",getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcol update symbol:`$symbol, openTime:"P"$string(resetTime openTime), closeTime:"P"$string(resetTime closeTime), latestUpdate:"P"$string(resetTime latestUpdate), iexLastUpdated:"P"$string(resetTime iexLastUpdated), delayedPriceTime:"P"$string(resetTime delayedPriceTime) from data
