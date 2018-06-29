@@ -51,7 +51,14 @@ summaryPDO:{[sym]
  }
 
 / Get bucketed data for a security for different periods 
-/ Available buckets are: 	1d, 1m ,3m, 6m ,ytd, 1y , 2y 5y 
+/ Available buckets are:
+/ 	1d -   1m - 1 month
+/   3m - 3 months
+/   6m - 6 months
+/   ytd - Year-to-date
+/   1y - 1 year
+/   2y - 2 years
+/   5y - 5 years
 / q)get_historical_summary[`aapl;`1m] 
 
 tradeBars:{[sym;period]
