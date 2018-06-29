@@ -1,6 +1,6 @@
 /
 #########################################################################################
-# Author : Asher Benjamin															
+# Author : Asher  Benjamin															
 # Description: IEX API.  This code is a q/kdb+ wrapper to make it easier	
 #  modiyfing Himanshu Guptas git repo. 
 # IEX api URL: https://iextrading.com/developer/docs/#getting-started					
@@ -8,7 +8,7 @@
 \
 
 urlRoot: "api.iextrading.com";
-prefix:  "HTTP/1.0\r\nhost:www.",urlRoot,"\r\n\r\n";
+prefix: "HTTP/1.0\r\nhost:www.",urlRoot,"\r\n\r\n";
 
 / Function for converting epoch time
 resetTime:{"p"$1970.01.01D+1000000j*x};
@@ -31,13 +31,15 @@ lastTrade:{[syms]
   / This function can run for multiple securities.
   syms:$[1<count syms;"," sv string(upper syms);string(upper syms)];
 
+  / Construct the GET request
   suffix: "GET /1.0/tops/last?symbols=",syms;
+
+  / Parse json response and put into table
   data:.j.k getData[urlRoot;suffix;prefix;-3;"symbol"];
 
   `sym xcol update symbol:`$symbol, time:"P"$string(resetTime time) from data
  }
-
-/ 
+ 
 / Get previous day summary for a security - high, low, open, close, vwap etc
 / q)summaryPDO`aapl
 
@@ -45,6 +47,8 @@ summaryPDO:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/previous";
+  
+  / Parse json response and put into table
   data: enlist .j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcol update symbol:`$symbol, date:"D"$date from data
@@ -52,7 +56,8 @@ summaryPDO:{[sym]
 
 / Get bucketed data for a security for different periods 
 / Available buckets are:
-/ 	1d -   1m - 1 month
+/ 	1d - 1 day
+/   1m - 1 month
 /   3m - 3 months
 /   6m - 6 months
 /   ytd - Year-to-date
@@ -69,6 +74,8 @@ tradeBars:{[sym;period]
   
   / Remove any text from response before 'minute' if period is 1d and 'date' otherwise
   txt:$[all "1d"=period;"minute";"date"];
+  
+  / Parse json response and put into table
   data:.j.k "[", getData[urlRoot;suffix;prefix;-2;txt];
   
   / data has different schema for 1d vs other buckets
@@ -85,6 +92,8 @@ tradeBarsMin:{[sym;date]
   sym:string(upper sym);
   date:string(date);
   suffix: "GET /1.0/stock/",sym,"/chart/date/",date;
+  
+  / Parse json response and put into table
   data:.j.k "[",getData[urlRoot;suffix;prefix;-2;"minute"];
   
   `sym`date`minute xcols update sym:`$sym, date:"D"$date, minute:"U"$minute from data
@@ -94,9 +103,12 @@ tradeBarsMin:{[sym;date]
 / q)get_company_info`aapl 
 
 infoCompSummary:{[sym]
-  sym:    string(upper sym);
+
+  sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/company";
-  data:   enlist .j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
+  
+  / Parse json response and put into table
+  data: enlist .j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   / Rename symbol to sym
   `sym xcol update symbol:`$symbol from data
@@ -106,9 +118,12 @@ infoCompSummary:{[sym]
 / q)get_key_stats`aapl
  
 infoKeyStats:{[sym]
-  sym:    string(upper sym);  
+
+  sym:string(upper sym);  
   suffix: "GET /1.0/stock/",sym,"/stats";
-  data:   enlist .j.k getData[urlRoot;suffix;prefix;-2;"companyName"];
+  
+  / Parse json response and put into table
+  data: enlist .j.k getData[urlRoot;suffix;prefix;-2;"companyName"];
   
   / Update data types and rename symbol column to sym
   `sym xcol `symbol xcols update latestEPSDate:"D"$latestEPSDate, shortDate:"D"$shortDate, exDividendDate:"D"$exDividendDate, symbol:`$symbol from data
@@ -118,8 +133,11 @@ infoKeyStats:{[sym]
 / q)get_company_news`aapl
 
 infoCompNews:{[sym]
+
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/news";
+
+  / Parse json response and put into table
   data:.j.k "[",getData[urlRoot;suffix;prefix;-2;"datetime"];
 
   `sym xcols update sym:`$sym, datetime:"P"$datetime from data
@@ -129,8 +147,11 @@ infoCompNews:{[sym]
 / q)get_company_financials`aapl
 
 infoCompFins:{[sym]
+
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/financials";
+  
+  / Parse json response and put into table
   data:.j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcols update sym:`$sym, reportDate:"D"$reportDate from data[`financials]
@@ -143,32 +164,33 @@ infoCompEarns:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/earnings";
+  
+  / Parse json response and put into table
   data:.j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcols update sym:`$sym, EPSReportDate:"D"$EPSReportDate, fiscalEndDate:"D"$fiscalEndDate from data[`earnings]
  }
-/
-/
-/
-/
-/
-/
-/
-/
+
 / Get most 'active' stocks for last trade date with additional info such as close price, open price etc
 / q)get_most_active_stocks[]
 
-stocksActive:{ iexListsData[`mostactive]}
+stocksActive:{
+   iexListsData[`mostactive]
+ }
 
 / Get stocks with highest gains for last trade date with additional info such as close price, open price etc
 / q)get_most_gainers_stocks[] 
 
-stocksUps:{ iexListsData[`gainers] }
+stocksUps:{
+  iexListsData[`gainers]
+ }
 
 / Get stocks with most loss for last trade date with additional info such as close price, open price etc
 / q)get_most_losers_stocks[] 
 
-stocksDowns:{ iexListsData[`losers]}
+stocksDowns:{
+  iexListsData[`losers]
+ }
 
 / Helper function for getting 'lists' data from IEX
 / There are three types of lists: most active, gainers and losers 
@@ -176,6 +198,8 @@ iexListsData:{[list]
  
   list: string(list);
   suffix: "GET /1.0/stock/market/list/",list;
+
+  / Parse json response and put into table
   data:.j.k "[",getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcol update symbol:`$symbol, openTime:"P"$string(resetTime openTime), closeTime:"P"$string(resetTime closeTime), latestUpdate:"P"$string(resetTime latestUpdate), iexLastUpdated:"P"$string(resetTime iexLastUpdated), delayedPriceTime:"P"$string(resetTime delayedPriceTime) from data
