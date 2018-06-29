@@ -45,7 +45,7 @@ class API(object):
         cols        = ['symbol','date','open','high','low','close','volume', 'AdjClose']
         colsDaily   = ['symbol','date','minute','open','high','low','close','volume', 'marketOpen','marketHigh', 'marketLow','marketClose', 'marketVolume', 'average', 'marketAverage','label',]
         filters     = "&filter=symbol,date,time,open,high,low,close,volume"#,changePercent,vwap"   
-        if bucket.endswith("d"):    
+        if bucket == "1d":    
             cols        = colsDaily
             filters     = ""
       

@@ -31,15 +31,13 @@ lastTrade:{[syms]
   / This function can run for multiple securities.
   syms:$[1<count syms;"," sv string(upper syms);string(upper syms)];
 
-  / Construct the GET request
   suffix: "GET /1.0/tops/last?symbols=",syms;
-
-  / Parse json response and put into table
   data:.j.k getData[urlRoot;suffix;prefix;-3;"symbol"];
 
   `sym xcol update symbol:`$symbol, time:"P"$string(resetTime time) from data
  }
- 
+
+/ 
 / Get previous day summary for a security - high, low, open, close, vwap etc
 / q)summaryPDO`aapl
 
@@ -47,23 +45,13 @@ summaryPDO:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/previous";
-  
-  / Parse json response and put into table
   data: enlist .j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcol update symbol:`$symbol, date:"D"$date from data
  }
 
 / Get bucketed data for a security for different periods 
-/ Available buckets are:
-/ 	1d - 1 day
-/   1m - 1 month
-/   3m - 3 months
-/   6m - 6 months
-/   ytd - Year-to-date
-/   1y - 1 year
-/   2y - 2 years
-/   5y - 5 years
+/ Available buckets are: 	1d, 1m ,3m, 6m ,ytd, 1y , 2y 5y 
 / q)get_historical_summary[`aapl;`1m] 
 
 tradeBars:{[sym;period]
@@ -74,8 +62,6 @@ tradeBars:{[sym;period]
   
   / Remove any text from response before 'minute' if period is 1d and 'date' otherwise
   txt:$[all "1d"=period;"minute";"date"];
-  
-  / Parse json response and put into table
   data:.j.k "[", getData[urlRoot;suffix;prefix;-2;txt];
   
   / data has different schema for 1d vs other buckets
@@ -92,8 +78,6 @@ tradeBarsMin:{[sym;date]
   sym:string(upper sym);
   date:string(date);
   suffix: "GET /1.0/stock/",sym,"/chart/date/",date;
-  
-  / Parse json response and put into table
   data:.j.k "[",getData[urlRoot;suffix;prefix;-2;"minute"];
   
   `sym`date`minute xcols update sym:`$sym, date:"D"$date, minute:"U"$minute from data
@@ -103,12 +87,9 @@ tradeBarsMin:{[sym;date]
 / q)get_company_info`aapl 
 
 infoCompSummary:{[sym]
-
-  sym:string(upper sym);
+  sym:    string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/company";
-  
-  / Parse json response and put into table
-  data: enlist .j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
+  data:   enlist .j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   / Rename symbol to sym
   `sym xcol update symbol:`$symbol from data
@@ -118,12 +99,9 @@ infoCompSummary:{[sym]
 / q)get_key_stats`aapl
  
 infoKeyStats:{[sym]
-
-  sym:string(upper sym);  
+  sym:    string(upper sym);  
   suffix: "GET /1.0/stock/",sym,"/stats";
-  
-  / Parse json response and put into table
-  data: enlist .j.k getData[urlRoot;suffix;prefix;-2;"companyName"];
+  data:   enlist .j.k getData[urlRoot;suffix;prefix;-2;"companyName"];
   
   / Update data types and rename symbol column to sym
   `sym xcol `symbol xcols update latestEPSDate:"D"$latestEPSDate, shortDate:"D"$shortDate, exDividendDate:"D"$exDividendDate, symbol:`$symbol from data
@@ -133,11 +111,8 @@ infoKeyStats:{[sym]
 / q)get_company_news`aapl
 
 infoCompNews:{[sym]
-
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/news";
-
-  / Parse json response and put into table
   data:.j.k "[",getData[urlRoot;suffix;prefix;-2;"datetime"];
 
   `sym xcols update sym:`$sym, datetime:"P"$datetime from data
@@ -147,11 +122,8 @@ infoCompNews:{[sym]
 / q)get_company_financials`aapl
 
 infoCompFins:{[sym]
-
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/financials";
-  
-  / Parse json response and put into table
   data:.j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcols update sym:`$sym, reportDate:"D"$reportDate from data[`financials]
@@ -164,12 +136,15 @@ infoCompEarns:{[sym]
 
   sym:string(upper sym);
   suffix: "GET /1.0/stock/",sym,"/earnings";
-  
-  / Parse json response and put into table
   data:.j.k getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcols update sym:`$sym, EPSReportDate:"D"$EPSReportDate, fiscalEndDate:"D"$fiscalEndDate from data[`earnings]
  }
+/
+/
+/
+/
+/
 /
 /
 /
@@ -194,8 +169,6 @@ iexListsData:{[list]
  
   list: string(list);
   suffix: "GET /1.0/stock/market/list/",list;
-
-  / Parse json response and put into table
   data:.j.k "[",getData[urlRoot;suffix;prefix;-2;"symbol"];
   
   `sym xcol update symbol:`$symbol, openTime:"P"$string(resetTime openTime), closeTime:"P"$string(resetTime closeTime), latestUpdate:"P"$string(resetTime latestUpdate), iexLastUpdated:"P"$string(resetTime iexLastUpdated), delayedPriceTime:"P"$string(resetTime delayedPriceTime) from data
