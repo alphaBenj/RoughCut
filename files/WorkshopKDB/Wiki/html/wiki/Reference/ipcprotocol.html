@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Reference/ipcprotocol by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Reference/ipcprotocol - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Reference_ipcprotocol skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Reference/ipcprotocol</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#ipc_protocol"><span class="tocnumber">1</span> <span class="toctext">ipc protocol</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Handshake"><span class="tocnumber">1.1</span> <span class="toctext">Handshake</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Compression"><span class="tocnumber">1.2</span> <span class="toctext">Compression</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Examples"><span class="tocnumber">1.3</span> <span class="toctext">Examples</span></a>
+<ul>
+<li class="toclevel-3 tocsection-5"><a href="#serializing_an_integer_of_value_1"><span class="tocnumber">1.3.1</span> <span class="toctext">serializing an integer of value 1</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#int_vector"><span class="tocnumber">1.3.2</span> <span class="toctext">int vector</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#byte_vector"><span class="tocnumber">1.3.3</span> <span class="toctext">byte vector</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#general_list"><span class="tocnumber">1.3.4</span> <span class="toctext">general list</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#dictionary_with_atom_values"><span class="tocnumber">1.3.5</span> <span class="toctext">dictionary with atom values</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#sorted_dictionary_with_atom_values"><span class="tocnumber">1.3.6</span> <span class="toctext">sorted dictionary with atom values</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#dictionary_with_vector_values"><span class="tocnumber">1.3.7</span> <span class="toctext">dictionary with vector values</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#table"><span class="tocnumber">1.3.8</span> <span class="toctext">table</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#sorted_table"><span class="tocnumber">1.3.9</span> <span class="toctext">sorted table</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#keyed_table"><span class="tocnumber">1.3.10</span> <span class="toctext">keyed table</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#sorted_keyed_table"><span class="tocnumber">1.3.11</span> <span class="toctext">sorted keyed table</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#function"><span class="tocnumber">1.3.12</span> <span class="toctext">function</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#function_in_a_non-root_context"><span class="tocnumber">1.3.13</span> <span class="toctext">function in a non-root context</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-18"><a href="#Notes"><span class="tocnumber">1.4</span> <span class="toctext">Notes</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="ipc_protocol"> ipc protocol </span></h2>
+<p>This information is provided for debugging/troubleshooting purposes only.<br />
+</p><p>kdb+ uses tcp/ip for communicating between processes. The protocol is extremely simple, as is the message format.
+One can see what a tcp/ip message looks like by using -8!object, which generates the byte vector for the serialization of the object, e.g.
+</p>
+<h3> <span class="mw-headline" id="Handshake"> Handshake </span></h3>
+<p>For releases of kdb+ &amp; drivers since 2012.05.29 - after a client has opened a socket to the server, it sends a null-terminated "username:password" ascii string followed by a single byte that represents its capability wrt compression, timestamp|timespan and uuid. Assuming that the server accepts the credentials as valid, it sends a single byte response which represents the common capability. If the server rejects the credentials as invalid, it closes the connection immediately. kdb+ recognizes these capability bytes
+</p>
+<pre>
+0 - v2.5, no compression, no timestamp, no timespan, no uuid
+1..2 - v2.6-2.8, compression, timestamp, timespan
+3 - v3.0, compression, timestamp, timespan, uuid
+</pre>
+<h3> <span class="mw-headline" id="Compression"> Compression </span></h3>
+<p>For releases of kdb+ &amp; drivers since 2012.05.29, kdb+ and the c-api will compress an outgoing message if
+</p>
+<pre>
+1) Uncompressed serialized data has a length greater than 2000 bytes
+2) Connection is not localhost
+3) Size of compressed data is less than .5*size of uncompressed data
+</pre>
+<p>The compression algorithm is not documented, nor implemented in c.java, c.cs, etc, and the msg validator code in kdb+ does not validate compressed msgs - it assumes they are correctly compressed as only kdb+ &amp; c-api can compress the msgs. The decompression algorithm can be derived from function u() in c.java.
+</p>
+<h3> <span class="mw-headline" id="Examples"> Examples </span></h3>
+<h4> <span class="mw-headline" id="serializing_an_integer_of_value_1"> serializing an integer of value 1 </span></h4>
+<pre>
+q)-8!1
+0x010000000d000000fa01000000
+</pre>
+<p>We can break this down as
+</p><p>0x01 - architecture used for encoding the message, big endian (0) or little endian (1)<br />
+00 - message type (0 - async, 1 - sync, 2 - response)<br />
+0000<br />
+0d000000 - msg length (13)<br />
+fa - type of element following (-6, meaning a 4 byte integer follows)<br />
+01000000 - the 4 byte int value (1)<br />
+</p><p>and further examples
+</p>
+<h4> <span class="mw-headline" id="int_vector"> int vector </span></h4>
+<pre>
+q)-8!enlist 1
+0x010000001200000006000100000001000000
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+12000000 - message length<br />
+06 - type (int vector)<br />
+00 - attributes (00 - none, 01 - <tt>s, 02 - </tt>u, 03 - <tt>p, 04 - </tt>g)<br />
+01000000 - vector length (1)<br />
+01000000 - the element, a 4 byte integer (1)<br />
+</p>
+<h4> <span class="mw-headline" id="byte_vector"> byte vector </span></h4>
+<pre>
+q)-8!`byte$til 5
+0x01000000130000000400050000000001020304
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+13000000 - message length<br />
+04 - type (byte vector)<br />
+00 - attributes<br />
+05000000 - vector length (5)<br />
+0001020304 - the 5 bytes<br />
+</p>
+<h4> <span class="mw-headline" id="general_list"> general list </span></h4>
+<pre>
+q)-8!`byte$enlist til 5
+0x01000000190000000000010000000400050000000001020304
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+19000000 - message length<br />
+00 - type (list)<br />
+00 - attributes<br />
+01000000 - list length (1)<br />
+04 - type (byte vector)<br />
+00 - attributes<br />
+05000000 - vector length (5)<br />
+0001020304 - the 5 bytes<br />
+</p>
+<h4> <span class="mw-headline" id="dictionary_with_atom_values"> dictionary with atom values </span></h4>
+<pre>
+q)-8!`a`b!2 3
+0x0100000021000000630b0002000000610062000600020000000200000003000000
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+21000000 - message length<br />
+63 - type (99 - dict)<br />
+0b - type (11 - symbol vector)<br />
+00 - attributes<br />
+02000000 - vector length<br />
+6100 - null terminated symbol (<tt>`a</tt>)<br />
+6200 - null terminated symbol (<tt>`b</tt>)<br />
+06 - type (6 - integer vector)<br />
+00 - attributes<br />
+02000000 - vector length<br />
+02000000 - 1st element (2)<br />
+03000000 - 2nd element (3)<br />
+</p>
+<h4> <span class="mw-headline" id="sorted_dictionary_with_atom_values"> sorted dictionary with atom values </span></h4>
+<pre>
+q)-8!`s#`a`b!2 3
+0x01000000210000007f0b0102000000610062000600020000000200000003000000
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+21000000 - message length<br />
+7f - type (127 - sorted dict)<br />
+0b - type (11 - symbol vector)<br />
+01 - attributes (<tt>`s#</tt>)<br />
+02000000 - vector length<br />
+6100 - null terminated symbol (<tt>`a</tt>)<br />
+6200 - null terminated symbol (<tt>`b</tt>)<br />
+06 - type (6 - integer vector)<br />
+00 - attributes<br />
+02000000 - vector length<br />
+02000000 - 1st element (2)<br />
+03000000 - 2nd element (3)<br />
+</p>
+<h4> <span class="mw-headline" id="dictionary_with_vector_values"> dictionary with vector values </span></h4>
+<pre>
+q)-8!`a`b!enlist each 2 3
+0x010000002d000000630b0002000000610062000000020000000600010000000200000006000100000003000000
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+2d000000 - message length<br />
+63 - type (99 - dict)<br />
+0b - type (11 - symbol vector)<br />
+00 - attributes<br />
+02000000 - vector length (2)<br />
+6100 - null terminated symbol (<tt>`a</tt>)<br />
+6200 - null terminated symbol (<tt>`b</tt>)<br />
+00 - type (0 - list)<br />
+00 - attributes<br />
+02000000 - list length (2)<br />
+06 - type (6 - int vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+02000000 - 1st element (2)<br />
+06 - type (6 - int vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+03000000 - 1st element (3)<br />
+</p>
+<h4> <span class="mw-headline" id="table"> table </span></h4>
+<p>note the relation to the previous example<br />
+</p>
+<pre>
+q)-8!'(flip`a`b!enlist each 2 3;([]a:enlist 2;b:enlist 3))
+0x010000002f0000006200630b0002000000610062000000020000000600010000000200000006000100000003000000
+0x010000002f0000006200630b0002000000610062000000020000000600010000000200000006000100000003000000
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+2f000000 - message length<br />
+62 - type (98 - table)<br />
+00 - attributes<br />
+63 - type (99 - dict)<br />
+0b - type (11 - symbol vector)<br />
+00 - attributes<br />
+02000000 - vector length (2)<br />
+6100 - null terminated symbol (<tt>`a</tt>)<br />
+6200 - null terminated symbol (<tt>`b</tt>)<br />
+00 - type (0 - list)<br />
+00 - attributes<br />
+02000000 - list length (2)<br />
+06 - type (6 - int vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+02000000 - 1st element (2)<br />
+06 - type (6 - int vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+03000000 - 1st element (3)<br />
+</p>
+<h4> <span class="mw-headline" id="sorted_table"> sorted table </span></h4>
+<p>note the relation to the previous example<br />
+</p>
+<pre>
+q)-8!`s#([]a:enlist 2;b:enlist 3)
+0x010000002f0000006201630b0002000000610062000000020000000603010000000200000006000100000003000000
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+2f000000 - message length<br />
+62 - type (98 - table)<br />
+01 - attributes (<tt>`s#</tt>)<br />
+63 - type (99 - dict)<br />
+0b - type (11 - symbol vector)<br />
+00 - attributes<br />
+02000000 - vector length (2)<br />
+6100 - null terminated symbol (<tt>`a</tt>)<br />
+6200 - null terminated symbol (<tt>`b</tt>)<br />
+00 - type (0 - list)<br />
+00 - attributes<br />
+02000000 - list length (2)<br />
+06 - type (6 - int vector)<br />
+03 - attributes (<tt>`p#</tt>)<br />
+01000000 - vector length (1)<br />
+02000000 - 1st element (2)<br />
+06 - type (6 - int vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+03000000 - 1st element (3)<br />
+</p>
+<h4> <span class="mw-headline" id="keyed_table"> keyed table </span></h4>
+<pre>
+q)-8!([a:enlist 2]b:enlist 3)
+0x010000003f000000636200630b00010000006100000001000000060001000000020000006200630b0001000000620000000100000006000100000003000000
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+3f000000 - message length<br />
+63 - type (99 - dict)<br />
+62 - type (98 - table)<br />
+00 - attributes<br />
+63 - type (99 - dict)<br />
+0b - type (11 - symbol vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+6100 - null terminated symbol (<tt>`a</tt>)<br />
+00 - type (0 - list)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+06 - type (6 - int vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+02000000 - 1st element (2)<br />
+62 - type (98 - table)<br />
+00 - attributes<br />
+63 - type (99 - dict)<br />
+0b - type (11 - symbol vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+6200 - null terminated symbol (<tt>`b</tt>)<br />
+00 - type (0 - list)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+06 - type (6 - int vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+03000000 - 1st element (3)<br />
+</p>
+<h4> <span class="mw-headline" id="sorted_keyed_table"> sorted keyed table </span></h4>
+<p>note the relation to the previous example<br />
+</p>
+<pre>
+q)-8!([a:enlist 2]b:enlist 3)
+0x010000003f0000007f6201630b00010000006100000001000000060001000000020000006200630b0001000000620000000100000006000100000003000000
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+3f000000 - message length<br />
+7f - type (127 - sorted dict)<br />
+62 - type (98 - table)<br />
+01 - attributes (<tt>`s#</tt>)<br />
+63 - type (99 - dict)<br />
+0b - type (11 - symbol vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+6100 - null terminated symbol (<tt>`a</tt>)<br />
+00 - type (0 - list)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+06 - type (6 - int vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+02000000 - 1st element (2)<br />
+62 - type (98 - table)<br />
+00 - attributes<br />
+63 - type (99 - dict)<br />
+0b - type (11 - symbol vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+6200 - null terminated symbol (<tt>`b</tt>)<br />
+00 - type (0 - list)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+06 - type (6 - int vector)<br />
+00 - attributes<br />
+01000000 - vector length (1)<br />
+03000000 - 1st element (3)<br />
+</p>
+<h4> <span class="mw-headline" id="function"> function </span></h4>
+<pre>
+q)-8!{x+y}
+0x010000001500000064000a00050000007b782b797d
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+15000000 - message length<br />
+64 - type (100 - lamda)<br />
+00 - null terminated context (root)<br />
+0a - type (10 - char vector)<br />
+00 - attributes<br />
+05000000 - vector length<br />
+7b782b797d - {x+y}<br />
+</p>
+<h4> <span class="mw-headline" id="function_in_a_non-root_context"> function in a non-root context </span></h4>
+<pre>
+q)\d .d
+q.d)test:{x+y}
+q.d)-8!test
+0x01000000160000006464000a00050000007b782b797d
+</pre>
+<p>0x01 - little endian<br />
+000000<br />
+16000000 - message length<br />
+64 - type (100 - lamda)<br />
+6400 - null terminated context (.d)<br />
+0a - type (10 - char vector)<br />
+00 - attributes<br />
+05000000 - length (5)<br />
+7b782b797d - {x+y}<br />
+</p>
+<h3> <span class="mw-headline" id="Notes"> Notes </span></h3>
+<p>c.java, c.cs etc are simply (de)serializers for these structures. Note that enumerations are automatically converted to values before sending through ipc.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 205/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:336-0!*!0!!en!*!edit=0 and timestamp 20131013181020 -->
+<div class="printfooter">
+Retrieved from "<a href="ipcprotocol.html">http://code.kx.com/wiki/Reference/ipcprotocol</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../Category_Interfaces.html" title="Category:Interfaces">Interfaces</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Reference/ipcprotocol" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="ipcprotocol.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Reference/ipcprotocol&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="ipcprotocol.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/ipcprotocol&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/ipcprotocol&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Reference/ipcprotocol" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Reference/ipcprotocol" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/ipcprotocol&amp;oldid=2890" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Reference%2Fipcprotocol" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Reference%2Fipcprotocol&amp;oldid=2890&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/ipcprotocol&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 10 July 2013, at 11:45.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Reference/ipcprotocol", "wgTitle": "Reference/ipcprotocol", "wgAction": "view", "wgArticleId": 336, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2890, "wgCategories": ["Interfaces"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.035 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Reference/ipcprotocol by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

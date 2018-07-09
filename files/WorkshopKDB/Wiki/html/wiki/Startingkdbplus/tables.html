@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Startingkdbplus/tables by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Startingkdbplus/tables - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Startingkdbplus_tables skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Startingkdbplus/tables</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#4._Kdb.2B_Tables"><span class="tocnumber">1</span> <span class="toctext">4. Kdb+ Tables</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#4.1_Overview"><span class="tocnumber">2</span> <span class="toctext">4.1 Overview</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#4.2_Creating_Tables"><span class="tocnumber">3</span> <span class="toctext">4.2 Creating Tables</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#4.3_Suppliers_and_Parts"><span class="tocnumber">4</span> <span class="toctext">4.3 Suppliers and Parts</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Table_s"><span class="tocnumber">4.1</span> <span class="toctext">Table s</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Table_p"><span class="tocnumber">4.2</span> <span class="toctext">Table p</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Table_sp"><span class="tocnumber">4.3</span> <span class="toctext">Table sp</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#4.4_Stock_Data"><span class="tocnumber">5</span> <span class="toctext">4.4 Stock Data</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="4._Kdb.2B_Tables"> 4. Kdb+ Tables </span></h2>
+<h2> <span class="mw-headline" id="4.1_Overview"> 4.1 Overview </span></h2>
+<p>A basic understanding of the internal structure of tables is needed to work with kdb+.
+The structure is actually quite simple, but very different from conventional databases.
+</p><p>This section gives a quick overview, followed by an explanation of the sp.q script, and then a typical table for stock data. After completing this, you should read the page <a href="http://code.kx.com/wiki/JB:KdbplusForMortals/kdbplus_database" title="JB:KdbplusForMortals/kdbplus database">kdbplus database</a>, which has a detailed comparison of kdb+ and conventional RDBMS.
+</p><p>Kdb+ tables are created out of lists. A table with no key columns is essentially a list of column names associated with a list of corresponding column values, each of which is a list. A table with key columns is internally built from a pair of tables - the key columns associated with the non-key columns.
+</p><p>Kdb+ tables are created in-memory, and then written to disk if required. When written to disk, smaller tables can be stored in a single file, while larger tables are usually partitioned in some way. The partitioning can be seen when viewing the file directories, but the table is treated as a single object within a q process.
+</p>
+<h2> <span class="mw-headline" id="4.2_Creating_Tables"> 4.2 Creating Tables </span></h2>
+<p>There are two ways of creating a table. One way explicitly associates lists of column names and data; the other uses a q expression that specifies the column names and initial values. The second method also permits the each column's datatype to be given, and so is particularly useful when a table is created with no data.
+</p>
+<ul><li>create table by association:
+</li></ul>
+<pre>
+q)tab:flip `items`sales`prices!(`nut`bolt`cam`cog;6 8 0 3;10 20 15 20)
+q)tab
+items sales prices
+------------------
+nut   6     10
+bolt  8     20
+cam   0     15
+cog   3     20
+</pre>
+<ul><li>create table by specifying column names and initial values:
+</li></ul>
+<pre>
+q)tab2:([]items:`nut`bolt`cam`cog;sales:6 8 0 3;prices:10 20 15 20)
+
+q)tab~tab2              / tab and tab2 are identical
+1b
+</pre>
+<p>The form for the second method, for a table with j primary keys and n columns in total, is:
+</p>
+<dl><dd><code>t:([c<sub>1</sub>:v<sub>1</sub>;...;c<sub>j</sub>:v<sub>j</sub>]c<sub>j+1</sub>:v<sub>j+1</sub>;...;c<sub>n</sub>:v<sub>n</sub>)</code>
+</dd></dl>
+<p>Here table t is defined with column names c<sub>i</sub>, and corresponding values v<sub>i</sub>.
+The square brackets are for primary keys,
+and are required even if there are no primary keys.
+</p>
+<h2> <span class="mw-headline" id="4.3_Suppliers_and_Parts"> 4.3 Suppliers and Parts </span></h2>
+<p>The script sp.q defines C.J. Date's Suppliers and Parts database. You can view this script in an editor to see the definitions. Load the script with:
+</p>
+<pre>
+q)\l sp.q
+</pre>
+<h3> <span class="mw-headline" id="Table_s"> Table s </span></h3>
+<p>Table s has a primary key column, also called s, given as a list
+of symbols which should be unique. Note that in this example, the name "s" is
+used both for the table and the primary key column, but this is not required.
+</p><p>The remaining columns are of type symbol, integer, symbol.
+</p>
+<pre>
+s:([s:`s1`s2`s3`s4`s5]
+ name:`smith`jones`blake`clark`adams;
+ status:20 10 30 20 30;
+ city:`london`paris`paris`london`athens)
+</pre>
+<p>Display in q:
+</p>
+<pre>
+q)s
+s | name  status city
+--| -------------------
+s1| smith 20     london
+s2| jones 10     paris
+s3| blake 30     paris
+s4| clark 20     london
+s5| adams 30     athens
+</pre>
+<p>Note that the column types are set from the data given. If this were first created as an empty table,
+say table "t", then the column types could be defined explicitly as follows:
+</p>
+<pre>
+q)t:([s:`$()]name:`$();status:&quot;I&quot;$();city:`$())
+</pre>
+<p>Insert a row:
+</p>
+<pre>
+q)`t insert (`s1;`smith;20;`london)
+,0
+q)t
+s | name status city
+--| -------------------
+s1| smith 20 london
+</pre>
+<h3> <span class="mw-headline" id="Table_p"> Table p </span></h3>
+<p>Table p is created much like table s. As before, the table name and primary key name are both the same:
+</p>
+<pre>
+p:([p:`p1`p2`p3`p4`p5`p6]
+ name:`nut`bolt`screw`screw`cam`cog;
+ color:`red`green`blue`red`blue`red;
+ weight:12 17 17 14 12 19;
+ city:`london`paris`rome`london`paris`london)
+</pre>
+<p>Display in q:
+</p>
+<pre>
+q)p
+p | name  color weight city
+--| -------------------------
+p1| nut   red   12     london
+p2| bolt  green 17     paris
+p3| screw blue  17     rome
+p4| screw red   14     london
+p5| cam   blue  12     paris
+p6| cog   red   19     london
+</pre>
+<h3> <span class="mw-headline" id="Table_sp"> Table sp </span></h3>
+<p>Table sp is defined with no primary key. Columns s and p
+reference tables s and p respectively as foreign keys.
+The syntax for specifying another table's primary key
+as a foreign key is:
+</p>
+<pre>
+`tablename$data
+</pre>
+<p>The definition of sp is:
+</p>
+<pre>
+sp:([]
+ s:`s$`s1`s1`s1`s1`s4`s1`s2`s2`s3`s4`s4`s1;
+ p:`p$`p1`p2`p3`p4`p5`p6`p1`p2`p2`p2`p4`p5;
+ qty:300 200 400 200 100 100 300 400 200 200 300 400)
+</pre>
+<p>Display in q:
+</p>
+<pre>
+q)sp
+s  p  qty
+---------
+s1 p1 300
+s1 p2 200
+s1 p3 400
+s1 p4 200
+s4 p5 100
+...
+</pre>
+<h2> <span class="mw-headline" id="4.4_Stock_Data"> 4.4 Stock Data </span></h2>
+<p>The following is a typical layout populated with random data. The definitions
+are in script trades.q in the <a href="http://code.kx.com/wsvn/code/contrib/cburke/start" class="external text" rel="nofollow">start</a> directory.
+</p><p>Load as:
+</p>
+<pre>
+q)\l start/trades.q
+</pre>
+<p>A trade table might include: date, time, symbol, price, size,
+condition code:
+</p>
+<pre>
+q)trades:([]date:`date$();time:`time$();sym:`symbol$();
+    price:`real$();size:`int$(); cond:`char$())
+
+q)`trades insert (2010.02.21;10:03:54.347;`IBM;20.83e;40000;&quot;N&quot;)
+q)`trades insert (2010.02.21;10:04:05.827;`MSFT;88.75e;2000;&quot;B&quot;)
+q)trades
+date       time         sym  price size  cond
+---------------------------------------------
+2010.02.21 10:03:54.347 IBM  20.83 40000 N
+2010.02.21 10:04:05.827 MSFT 88.75 2000  B
+</pre>
+<p>The&#160;? verb will generate random data:
+</p>
+<pre>
+q)syms:`IBM`MSFT`UPS`BAC`AAPL
+q)tpd:100              / trades per day
+q)day:5                / number of days
+q)cnt:count syms       / number of syms
+q)len:tpd*cnt*day      / total number of trades
+q)date:2010.02.21+len?day
+q)time:&quot;t&quot;$raze (cnt*day)#enlist 09:30:00+15*til tpd
+q)time+:len?1000
+q)sym:len?syms
+q)price:len?100e
+q)size:100*len?1000
+q)cond:len?&quot; ABCDENZ&quot;
+
+q)`trades:0#trades      / empty trades table
+q)`trades insert (date;time;sym;price;size;cond)
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+..
+q)trades:`date`time xasc trades  / sort on time within date
+q)5#trades
+date       time         sym  price    size  cond
+------------------------------------------------
+2010.02.21 09:30:00.766 UPS  70.38    46900 A
+2010.02.21 09:30:00.801 IBM  89.24799 58600 N
+2010.02.21 09:30:00.942 UPS  38.4812  54600 A
+2010.02.21 09:30:15.116 IBM  25.56824 55700 A
+2010.02.21 09:30:15.224 MSFT 75.97006 23800 E
+</pre>
+<p>--
+Prev: <a href="ipc.html" title="Startingkdbplus/ipc">3. Q IPC</a>
+Next: <a href="hdb.html" title="Startingkdbplus/hdb">5. Historical Database</a>
+</p><p><a href="contents.html" title="Startingkdbplus/contents">Table of Contents</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 147/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:434-0!*!0!!en!*!edit=0 and timestamp 20131013141729 -->
+<div class="printfooter">
+Retrieved from "<a href="tables.html">http://code.kx.com/wiki/Startingkdbplus/tables</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../Category_Tutorials.html" title="Category:Tutorials">Tutorials</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Startingkdbplus/tables" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="tables.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Startingkdbplus/tables&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="tables.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/tables&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/tables&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Startingkdbplus/tables" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Startingkdbplus/tables" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/tables&amp;oldid=2289" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Startingkdbplus%2Ftables" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Startingkdbplus%2Ftables&amp;oldid=2289&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/tables&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 4 July 2011, at 12:03.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Startingkdbplus/tables", "wgTitle": "Startingkdbplus/tables", "wgAction": "view", "wgArticleId": 434, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2289, "wgCategories": ["Tutorials"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.055 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Startingkdbplus/tables by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

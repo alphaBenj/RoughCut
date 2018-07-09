@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/IntegratingWithJ by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/IntegratingWithJ - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_IntegratingWithJ skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/IntegratingWithJ</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#JQ:_J_Client_for_Q"><span class="tocnumber">1</span> <span class="toctext">JQ: J Client for Q</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Sample_Session"><span class="tocnumber">1.1</span> <span class="toctext">Sample Session</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-3"><a href="#QJ:_J_Engine_within_Kdb.2B"><span class="tocnumber">2</span> <span class="toctext">QJ: J Engine within Kdb+</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Install"><span class="tocnumber">2.1</span> <span class="toctext">Install</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Function_List"><span class="tocnumber">2.2</span> <span class="toctext">Function List</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Datatype_Map"><span class="tocnumber">2.3</span> <span class="toctext">Datatype Map</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Sample_Usage"><span class="tocnumber">2.4</span> <span class="toctext">Sample Usage</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="JQ:_J_Client_for_Q"> JQ: J Client for Q </span></h1>
+<p><a href="http://code.kx.com/wsvn/code/contrib/cburke/jk" class="external text" rel="nofollow">JQ</a> is a socket interface to Q from J, for example to provide a GUI for a Q server. JQ was written in J602 for KDB+2.4, and has been tested on w32, l32 and l64.
+</p><p>A sample session is given below. For more information see:
+</p>
+<ul><li><a href="InterfacingwithJ/Manual.html" title="Cookbook/InterfacingwithJ/Manual">Manual</a>
+</li><li><a href="InterfacingwithJ/MessageFormat.html" title="Cookbook/InterfacingwithJ/MessageFormat">Message Format</a>
+</li></ul>
+<h2> <span class="mw-headline" id="Sample_Session"> Sample Session </span></h2>
+<p>Start a Q session, listening on a given port. Load J, then:
+</p>
+<pre>
+   load 'qclient.ijs'           NB. load JQ client application
+</pre>
+<p>Create a client instance, defining cover functions in z:
+</p>
+<pre>
+   1 conew 'cqclient'
++-+
+|1|
++-+
+   connect 'robot';5001;'elmo'  NB. connect to robot on port 5001 with user elmo
+
+   cmd 'trade:([]time:();sym:();price:();size:())' NB. create trade database
+</pre>
+<p>Send a command string to insert a record:
+</p>
+<pre>
+   cmd '`trade insert(09:30:00;`a;10.75;100)'
+
+   get 'trade' NB. get database
++-----+----+------+-----+
+|`time|`sym|`price|`size|
++-----+----+------+-----+
+|34200|`a  |10.75 |100  |
++-----+----+------+-----+
+</pre>
+<p>Get database in extended format. Each item is a pair: Qdatatype;value.
+The display shows that trade is the flip (type 98) of a dict (type 99). The dict
+is a pair: varchar, object list.
+</p>
+<pre>
+   getx 'trade'
++--+------------------------------------------------------------------------------+
+|98|+--+-------------------------------------------------------------------------+|
+|  ||99|+----------------------------+------------------------------------------+||
+|  ||  ||+--+-----------------------+|+-+--------------------------------------+|||
+|  ||  |||11|`time `sym `price `size|||0|+----------+-------+---------+-------+||||
+|  ||  ||+--+-----------------------+|| ||+--+-----+|+--+--+|+-+-----+|+-+---+|||||
+|  ||  ||                            || |||18|34200|||11|`a|||9|10.75|||6|100||||||
+|  ||  ||                            || ||+--+-----+|+--+--+|+-+-----+|+-+---+|||||
+|  ||  ||                            || |+----------+-------+---------+-------+||||
+|  ||  ||                            |+-+--------------------------------------+|||
+|  ||  |+----------------------------+------------------------------------------+||
+|  |+--+-------------------------------------------------------------------------+|
++--+------------------------------------------------------------------------------+
+</pre>
+<p>Insert records using the insert function. The result is the record number:
+</p>
+<pre>
+   execr 'insert';(s:&lt;'trade');&lt;('09:31:12';(s:&lt;'a');11.01;200)
+1
+   execr 'insert';(s:&lt;'trade');&lt;('09:31:15';(s:&lt;'bc');10.80;150)
+2
+</pre>
+<p>The next example has a numeric time field, and integer price field. Extended format ensures the correct
+datatypes are sent:
+</p>
+<pre>
+   execr 'insert';(s:&lt;'trade');&lt;((,:18;34301);(s:&lt;'bc');(,:9;22);500)
+3
+</pre>
+<p>The utility col, defined below, formats cells into columns:
+</p>
+<pre>
+   col=: ,.@:&gt;L:0
+
+   col getf 'trade'
++--------+----+------+-----+
+|`time   |`sym|`price|`size|
++--------+----+------+-----+
+|09:30:00|`a  |10.75 |100  |
+|09:31:12|`a  |11.01 |200  |
+|09:31:15|`bc | 10.8 |150  |
+|09:31:41|`bc |   22 |500  |
++--------+----+------+-----+
+</pre>
+<p>The next result is displayed as a pair - key columns and data columns.
+</p>
+<pre>
+   col cmdr 'select sum size by sym from trade'
++------+-------+
+|+----+|+-----+|
+||`sym|||`size||
+|+----+|+-----+|
+||`a  |||300  ||
+||`bc |||650  ||
+|+----+|+-----+|
++------+-------+
+</pre>
+<p>Send command string to load the sp.q database:
+</p>
+<pre>
+   cmd '\l sp.q'
+</pre>
+<p>Query the sp.q database:
+</p>
+<pre>
+   col cmdr 'select sum qty by p.color from sp'
++--------+------+
+|+------+|+----+|
+||`color|||`qty||
+|+------+|+----+|
+||`blue ||| 900||
+||`green|||1000||
+||`red  |||1200||
+|+------+|+----+|
++--------+------+
+
+   col get 's'
++-----+------------------------+
+|+---+|+------+-------+-------+|
+||`s |||`name |`status|`city  ||
+|+---+|+------+-------+-------+|
+||`s1|||`smith|20     |`london||
+||`s2|||`jones|10     |`paris ||
+||`s3|||`blake|30     |`paris ||
+||`s4|||`clark|20     |`london||
+||`s5|||`adams|30     |`athens||
+|+---+|+------+-------+-------+|
++-----+------------------------+
+</pre>
+<h1> <span class="mw-headline" id="QJ:_J_Engine_within_Kdb.2B"> QJ: J Engine within Kdb+ </span></h1>
+<p><a href="http://code.kx.com/wsvn/code/contrib/zuoqianxu/qj" class="external text" rel="nofollow">QJ</a> is a c extension for kdb+,working as a frontend of J engine dll,so we can use the <a href="http://www.jsoftware.com/help/dictionary/vocabul.htm" class="external text" rel="nofollow">J engine</a> and the <a href="http://www.jsoftware.com/jwiki/JAL/j701" class="external text" rel="nofollow">J Application Library</a> within kdb+.It has been tested on l64 with j701beta.
+</p>
+<h2> <span class="mw-headline" id="Install"> Install </span></h2>
+<ul><li>In qj dir,run mkqjfe.sh,then copy qjfe.so to $QHOME/l64/.
+</li><li>Install j701beta from <a href="http://www.jsoftware.com/download/j701a_linux64.sh" class="external text" rel="nofollow">j701a_linux64.sh</a>.
+</li><li>Install J Application Library:run jconsole
+</li></ul>
+<pre>
+load 'pacman'
+'update' jpkg ''
+'install' jpkg 'all'
+</pre>
+<h2> <span class="mw-headline" id="Function_List"> Function List </span></h2>
+<ul><li>jeinit:{[x]} Load libj.so from directory x.
+</li><li>jefree:{[]} Free libj.so.
+</li><li>j2q:{[x]} Get q data from J name x.
+</li><li>q2j:{[x;y]}Set q data y to J name x.
+</li><li>jedo:{[x]Run J code x,then return result to q.
+</li><li>jemv:{[x;y]}Run J code x with right operand y,then return result to q.
+</li><li>jedv:{[x;y;z]}Run J code x with left operand x and right operand y,then return result to q.
+</li><li>initj:{[x]} Load libj.so from directory x,then load profile.ijs from x,it's required for using librarys.
+</li></ul>
+<h2> <span class="mw-headline" id="Datatype_Map"> Datatype Map </span></h2>
+<ul><li>There are natural map of some J/Q datatypes on l64:boolean,char,double,J int&lt;=&gt;Q long.
+</li><li>J complex atom A will be convert to a 2 elems double array (Re A;Im A).J complex array L will be convert to a 2 elems list whose items are double arrays (Re L;Im L).
+</li><li>For convenience on l64 Q int will be auto-converted to J int,but 0N 0W -0W will not be correctly converted.
+</li><li>Q mixed list maps to J boxed array,items will be converted for supported datatypes.
+</li></ul>
+<h2> <span class="mw-headline" id="Sample_Usage"> Sample Usage </span></h2>
+<p>Start a Q session, then load qj.q
+</p>
+<pre>
+q)\l qj.q
+</pre>
+<p>Load J Runtime
+</p>
+<pre>
+q)initj[&quot;/opt/j64-701/bin&quot;];
+</pre>
+<p>Set data to J
+</p>
+<pre>
+q)q2j[&quot;a&quot;;(01b;2 3 4j;5;1 0n 0w -0w -2f;&quot;abcd&quot;)]
+</pre>
+<p>Get data from J
+</p>
+<pre>
+q)2jq[&quot;a&quot;]
+01b
+2 3 4j
+5j
+1 0n 0w -0w -2
+&quot;abcd&quot;
+</pre>
+<p>Eval J sentences:
+</p>
+<pre>
+q)jedo &quot;i.2 3 4&quot;
+0 1 2  3    4 5 6  7    8 9 10 11
+12 13 14 15 16 17 18 19 20 21 22 23
+</pre>
+<p>Call J monads:
+</p>
+<pre>
+q)jemv[&quot;q:&quot;] 1234567890j
+2 3 3 5 3607 3803j
+</pre>
+<p>Call J  dyads:
+</p>
+<pre>
+q)jedv[&quot;e.&quot;;&quot;cat&quot;;&quot;abcd&quot;]
+110b
+</pre>
+<p>Use J <a href="http://www.jsoftware.com/jwiki/Plot" class="external text" rel="nofollow">plot</a>  library:
+</p>
+<pre>
+q)jedo &quot;load 'plot'&quot;;
+q)jemv[&quot;plot&quot;] 100?1f;
+q).q.plot:jedv[&quot;plot&quot;];
+q)&quot;type bar&quot; plot 10?1f;
+</pre>
+<p>Use J fftw library:
+</p>
+<pre>
+q)jedo &quot;load 'math/fftw'&quot;;
+q)jemv[&quot;fftw&quot;]  til 8
+28 -4       -4 -4       -4 -4        -4 -4
+0  9.656854 4  1.656854 0  -1.656854 -4 -9.656854
+</pre>
+<p>Use J tara library to read excel files:
+</p>
+<pre>
+q)jedo &quot;load 'tables/tara'&quot;;
+q)\wget http://www.iso15022.org/MIC/ISO10383_MIC_v1_78.xls -O /tmp/10383.xls
+q){flip (`$x[0])!flip 1_x} trim jedo &quot;\&quot;:&gt;readexcel '/tmp/10383.xls'&quot;
+COUNTRY     CC   MIC    INSTITUTION DESCRIPTION              ACR     CITY    ..
+-----------------------------------------------------------------------------..
+&quot;ALBANIA&quot;   &quot;AL&quot; &quot;XTIR&quot; &quot;TIRANA STOCK EXCHANGE&quot;              &quot;&quot;      &quot;TIRANA&quot;..
+&quot;ALGERIA&quot;   &quot;DZ&quot; &quot;XALG&quot; &quot;ALGIERS STOCK EXCHANGE&quot;             &quot;&quot;      &quot;ALGIERS..
+&quot;ARGENTINA&quot; &quot;AR&quot; &quot;BACE&quot; &quot;BUENOS AIRES CEREAL EXCHANGE&quot;       &quot;&quot;      &quot;BUENOS ..
+..
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 155/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:319-0!*!0!!en!*!edit=0 and timestamp 20131013192908 -->
+<div class="printfooter">
+Retrieved from "<a href="IntegratingWithJ.html">http://code.kx.com/wiki/Cookbook/IntegratingWithJ</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../Category_Interfaces.html" title="Category:Interfaces">Interfaces</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/IntegratingWithJ" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="IntegratingWithJ.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/IntegratingWithJ&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="IntegratingWithJ.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/IntegratingWithJ&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/IntegratingWithJ&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/IntegratingWithJ" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/IntegratingWithJ" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/IntegratingWithJ&amp;oldid=2419" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FIntegratingWithJ" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FIntegratingWithJ&amp;oldid=2419&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/IntegratingWithJ&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 16 November 2011, at 18:20.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/IntegratingWithJ", "wgTitle": "Cookbook/IntegratingWithJ", "wgAction": "view", "wgArticleId": 319, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2419, "wgCategories": ["Interfaces"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.093 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/IntegratingWithJ by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Reference/wj by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Reference/wj - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Reference_wj skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Reference/wj</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#wj_wj1_.28window_join_function.29"><span class="tocnumber">1</span> <span class="toctext">wj wj1 (window join function)</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Syntax"><span class="tocnumber">2</span> <span class="toctext">Syntax</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Example"><span class="tocnumber">3</span> <span class="toctext">Example</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#See_also"><span class="tocnumber">4</span> <span class="toctext">See also</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="wj_wj1_.28window_join_function.29"> wj wj1 (window join function) </span></h2>
+<p>Window join is a generalization of asof join, and is available from kdb+ 2.6. asof join takes a snapshot of the current state, while window join aggregates all values of specified columns within intervals.
+</p>
+<h2> <span class="mw-headline" id="Syntax"> Syntax </span></h2>
+<pre>
+  wj[w;c;t;(q;(f0;c0);(f1;c1))]
+</pre>
+<p>where:
+</p>
+<ul><li><tt>t</tt> and <tt>q</tt> are the unkeyed tables to be joined. <tt>q</tt> should be sorted <tt>`sym`time</tt> with <tt>`p#</tt> on sym
+</li><li><tt>w</tt> is a pair of lists of times/timestamps, begin and end
+</li><li><tt>c</tt> are the names of the two common columns, syms and times
+</li><li><tt>f0</tt>,<tt>f1</tt> are aggregation functions applied to values in q columns <tt>c0</tt>,<tt>c1</tt> over the intervals
+</li></ul>
+<p>Typically. this might be:
+</p>
+<pre>
+  wj[w;`sym`time;trade;(quote;(max;`ask);(min;`bid))]
+</pre>
+<p>For each record in <tt>t</tt>, the result has a record with additional columns <tt>c0</tt> and <tt>c1</tt>, which are the results of the aggregation functions applied to values over the matching intervals in <tt>w</tt>.
+</p><p>A quote is understood to be in existence until the next quote.
+</p><p>Since v3.0, wj and wj1 are both [] interval, i.e. they consider quotes&gt;=beginning and &lt;=end of the interval.
+</p><p>For wj, the prevailing quote on entry to the window is considered valid as quotes are a step function.
+</p><p>wj1 considers quotes on or after entry to the window. If the join is to consider quotes that arrive from the beginning of the interval, please use <b>wj1</b>.
+</p><p><br />
+Prior to v3.0, wj1 considers only quotes in the window except for the window end (i.e. quotes &gt;= start and &lt; end).
+</p><p><b>Interval behaviour by version</b>
+</p>
+<table class="wikitable">
+
+<tr>
+<td><b>Version</b></td>
+<td><b>wj1</b></td>
+<td><b>wj</b>
+</td></tr>
+<tr>
+<td>3.0</td>
+<td>[]</td>
+<td>prevailing + []
+</td></tr>
+<tr>
+<td>2.7/2.8</td>
+<td>[)</td>
+<td>prevailing + []
+</td></tr>
+</table>
+<h2> <span class="mw-headline" id="Example"> Example </span></h2>
+<pre>
+q)t:([]sym:3#`ibm;time:10:01:01 10:01:04 10:01:08;price:100 101 105)
+q)t
+sym time     price
+------------------
+ibm 10:01:01 100
+ibm 10:01:04 101
+ibm 10:01:08 105
+
+q)q:([]sym:9#`ibm;time:10:01:01+til 9;ask:101 103 103 104 104 107 108 107 108;bid:98 99 102 103 103 104 106 106 107)
+q)q
+sym time     ask bid
+--------------------
+ibm 10:01:01 101 98
+ibm 10:01:02 103 99
+ibm 10:01:03 103 102
+ibm 10:01:04 104 103
+ibm 10:01:05 104 103
+ibm 10:01:06 107 104
+ibm 10:01:07 108 106
+ibm 10:01:08 107 106
+ibm 10:01:09 108 107
+
+q)f:`sym`time
+q)w:-2 1+\:t.time
+
+q)wj[w;f;t;(q;(max;`ask);(min;`bid))]
+sym time     price ask bid
+--------------------------
+ibm 10:01:01 100   103 98
+ibm 10:01:04 101   104 99
+ibm 10:01:08 105   108 104
+</pre>
+<p>The interval values may be seen as:
+</p>
+<pre>
+q)wj[w;f;t;(q;(::;`ask);(::;`bid))]
+sym time     price ask             bid
+--------------------------------------------------
+ibm 10:01:01 100   101 103         98 99
+ibm 10:01:04 101   103 103 104 104 99 102 103 103
+ibm 10:01:08 105   107 108 107 108 104 106 106 107
+</pre>
+<h2> <span class="mw-headline" id="See_also"> See also </span></h2>
+<ul><li><a href="asof.html" title="Reference/asof">asof</a>
+</li><li><a href="aj.html" title="Reference/aj">aj</a>
+</li></ul>
+<hr />
+<p>For a complete list of functions, see the <a href="../Reference.html" title="Reference">kdb+ Function Reference</a>.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 58/1000000
+Post-expand include size: 94/2097152 bytes
+Template argument size: 46/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:342-0!*!0!!en!*!edit=0 and timestamp 20131013175640 -->
+<div class="printfooter">
+Retrieved from "<a href="wj.html">http://code.kx.com/wiki/Reference/wj</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../Category_Joins.html" title="Category:Joins">Joins</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Reference/wj" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="wj.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Reference/wj&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="wj.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/wj&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/wj&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Reference/wj" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Reference/wj" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/wj&amp;oldid=2837" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Reference%2Fwj" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Reference%2Fwj&amp;oldid=2837&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/wj&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 12 April 2013, at 14:34.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Reference/wj", "wgTitle": "Reference/wj", "wgAction": "view", "wgArticleId": 342, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2837, "wgCategories": ["Joins"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.032 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Reference/wj by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/UnitTesting by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/UnitTesting - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_UnitTesting skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/UnitTesting</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Unit_testing_with_Kdb.2B"><span class="tocnumber">1</span> <span class="toctext">Unit testing with Kdb+</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Introduction"><span class="tocnumber">1.1</span> <span class="toctext">Introduction</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Starting_up_k4unit"><span class="tocnumber">1.2</span> <span class="toctext">Starting up k4unit</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#Writing_test_descriptions"><span class="tocnumber">1.2.1</span> <span class="toctext">Writing test descriptions</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-5"><a href="#Example_test_description"><span class="tocnumber">1.3</span> <span class="toctext">Example test description</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Loading_test_descriptions"><span class="tocnumber">1.4</span> <span class="toctext">Loading test descriptions</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Running_unit_tests"><span class="tocnumber">1.5</span> <span class="toctext">Running unit tests</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Inspecting_the_results_of_unit_tests"><span class="tocnumber">1.6</span> <span class="toctext">Inspecting the results of unit tests</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Saving_the_results_of_unit_tests_to_disk"><span class="tocnumber">1.7</span> <span class="toctext">Saving the results of unit tests to disk</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Restarting"><span class="tocnumber">1.8</span> <span class="toctext">Restarting</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Configuration_parameters"><span class="tocnumber">1.9</span> <span class="toctext">Configuration parameters</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Unit_testing_with_Kdb.2B"> Unit testing with Kdb+ </span></h1>
+<h2> <span class="mw-headline" id="Introduction"> Introduction </span></h2>
+<p>The goal of unit testing is to check that the individual parts of a
+program are correct. Unit testing provides a written contract that a piece of code must satisfy. See
+<a href="http://en.wikipedia.org/wiki/Unit_testing" class="external free" rel="nofollow">http://en.wikipedia.org/wiki/Unit_testing</a> for more information on the
+topic.
+</p><p>Kdb+ supports unit testing with the script k4unit.q, available from <a href="http://code.kx.com/wsvn/code/contrib/simon/k4unit" class="extiw" title="source:contrib/simon/k4unit">source:contrib/simon/k4unit</a>.
+K4unit loads test descriptions from CSV files, runs the tests, and writes result to a Kdb+ table.
+</p>
+<h2> <span class="mw-headline" id="Starting_up_k4unit"> Starting up k4unit </span></h2>
+<p>To use k4unit, you first have to load the script file
+</p>
+<pre>
+q k4unit.q -p 5001
+</pre>
+<h3> <span class="mw-headline" id="Writing_test_descriptions"> Writing test descriptions </span></h3>
+<p>Tests descriptions are written in a CSV file, with the following format:
+</p>
+<pre>
+action, ms, lang, code
+</pre>
+<p>The meaning of each column is as follows.
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Column</td>
+<td>Description</td>
+<td>Notes
+</td></tr>
+<tr>
+<td>code</td>
+<td>code to be executed</td>
+<td>if your code contains commas enclose the whole code in "quotes"
+</td></tr>
+<tr>
+<td>lang</td>
+<td>k or q</td>
+<td>if empty, default is q
+</td></tr>
+<tr>
+<td>ms</td>
+<td>max milliseconds it should take to run</td>
+<td>if 0, ignore
+</td></tr>
+<tr>
+<td>action</td>
+<td>beforeany, beforeeach, before, run, true, fail, after, aftereach, afterall</td>
+<td>See below for description
+</td></tr></table>
+<p>Where the actions have the following meaning:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Action</td>
+<td>Description
+</td></tr>
+<tr>
+<td><tt>`beforeany</tt></td>
+<td>one time, run code before any tests
+</td></tr>
+<tr>
+<td><tt>`beforeeach</tt></td>
+<td>run code before tests in every file
+</td></tr>
+<tr>
+<td><tt>`before</tt></td>
+<td>run code before tests in this file
+</td></tr>
+<tr>
+<td><tt>`run</tt></td>
+<td>run code, check execution time against ms
+</td></tr>
+<tr>
+<td><tt>`true</tt></td>
+<td>run code, check if returns true(1b)
+</td></tr>
+<tr>
+<td><tt>`fail</tt></td>
+<td>run code, it should fail (e.g.  2+two)
+</td></tr>
+<tr>
+<td><tt>`after</tt></td>
+<td>run code after tests in this file
+</td></tr>
+<tr>
+<td><tt>`aftereach</tt></td>
+<td>run code after tests in each file
+</td></tr>
+<tr>
+<td><tt>`afterall</tt></td>
+<td>one time, run code after all tests
+</td></tr></table>
+<p>N.B. <tt>fail is not opposite of </tt>true or "false". If your code returns 0b, use "not" to make it <tt>`true.</tt>
+</p>
+<h2> <span class="mw-headline" id="Example_test_description"> Example test description </span></h2>
+<pre>
+comment,0,,this will be ignored
+before,,k,aa::22
+before,0,k,aa::22
+before,0,q,aa::22
+before,0,q,aa::22
+true,0,k,2=+/1 1
+true,0,q,2=sum 1 1
+true,0,k,2=sum 1 1
+true,0,k,(*/2 2)~+/2 2
+true,0,k,(*/2 2)~+/2 3
+run,10,k,do[100;+/1.1+!10000]
+fail,0,q,2=`aa
+after,0,k,bb::33
+before,0,k,aa::22
+before,0,k,aa::22
+</pre>
+<h2> <span class="mw-headline" id="Loading_test_descriptions"> Loading test descriptions </span></h2>
+<p>Invoke the function KUltf (load test file) with a file name as its parameter.
+</p>
+<pre>
+KUltf `:unitExample.csv
+</pre>
+<p>When the script k4unit.q is loaded, it creates the table KUT (KUnit Tests). It's empty initially:
+</p>
+<pre>
+q)KUT
+action ms lang code file
+------------------------
+</pre>
+<p>and will contain test descriptions after tests are loaded with <tt>KUltf</tt>.
+</p>
+<pre>
+q)KUT
+action  ms lang code                 file
+-----------------------------------------------------
+comment 0  q    this will be ignored&#160;:unitExample.csv
+before  0  k    aa::22              &#160;:unitExample.csv
+before  0  k    aa::22              &#160;:unitExample.csv
+before  0  q    aa::22              &#160;:unitExample.csv
+before  0  q    aa::22              &#160;:unitExample.csv
+true    0  k    2=+/1 1             &#160;:unitExample.csv
+true    0  q    2=sum 1 1           &#160;:unitExample.csv
+true    0  k    2=sum 1 1           &#160;:unitExample.csv
+true    0  k    (*/2 2)~+/2 2       &#160;:unitExample.csv
+true    0  k    (*/2 2)~+/2 3       &#160;:unitExample.csv
+run     10 k    do[100;+/1.1+!10000]&#160;:unitExample.csv
+fail    0  q    2=`aa               &#160;:unitExample.csv
+after   0  k    bb::33              &#160;:unitExample.csv
+before  0  k    aa::22              &#160;:unitExample.csv
+before  0  k    aa::22              &#160;:unitExample.csv
+</pre>
+<p>It is possible to load multiple description files in the same directory with <tt>KUltd</tt> (load test dir). This
+</p>
+<pre>
+KUltd `:dirname
+</pre>
+<p>loads all *.csv files in that directory into table KUT.
+</p>
+<h2> <span class="mw-headline" id="Running_unit_tests"> Running unit tests </span></h2>
+<p>Invoke the function KUrt (run tests) with an empty parameter list
+</p>
+<pre>
+q) KUrt[]
+q)KUrt[]
+2006.10.04T13:07:36.328 start
+2006.10.04T13:07:36.328&#160;:unitExample.csv 7 test(s)
+2006.10.04T13:07:36.453 end
+7
+</pre>
+<h2> <span class="mw-headline" id="Inspecting_the_results_of_unit_tests"> Inspecting the results of unit tests </span></h2>
+<p>When k4unit is loaded, it creates the table KUTR (KUnit Test Results). It's empty initially
+</p>
+<pre>
+q)KUTR
+action ms lang code file msx ok okms valid timestamp
+----------------------------------------------------
+</pre>
+<p>and will contain results of unit tests after <tt>KUrt[]</tt> is invoked. Results can be inspected by showing the whole table
+</p>
+<pre>
+q)KUT
+q)KUTR
+action ms lang code                 file             msx ok okms valid timest..
+-----------------------------------------------------------------------------..
+run    10 k    do[100;+/1.1+!10000]&#160;:unitExample.csv 124 1  0    1     2006.1..
+true   0  k    2=+/1 1             &#160;:unitExample.csv 0   1  1    1     2006.1..
+true   0  q    2=sum 1 1           &#160;:unitExample.csv 0   1  1    1     2006.1..
+true   0  k    2=sum 1 1           &#160;:unitExample.csv 0   1  1    1     2006.1..
+true   0  k    (*/2 2)~+/2 2       &#160;:unitExample.csv 0   1  1    1     2006.1..
+true   0  k    (*/2 2)~+/2 3       &#160;:unitExample.csv 0   0  1    1     2006.1..
+fail   0  q    2=`aa               &#160;:unitExample.csv 0   1  1    1     2006.1..
+</pre>
+<p>or by using Kdb+ queries . For instance:
+</p>
+<pre>
+q)show select from KUTR where not ok
+q)show select from KUTR where not okms
+q)show select count i by ok,okms,action from KUTR
+q)show select count i by ok,okms,action,file from KUTR
+</pre>
+<p>The fields action, ms, lang, and code are as described above. The rest are as follows:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Column</td>
+<td>Description</td>
+<td>Notes
+</td></tr>
+<tr>
+<td>file</td>
+<td>name of test descriptions file</td>
+<td>
+</td></tr>
+<tr>
+<td>msx</td>
+<td>milliseconds taken to eXecute code</td>
+<td>
+</td></tr>
+<tr>
+<td>ok</td>
+<td> true if the test completes correctly</td>
+<td>it is correct for a fail task to fail
+</td></tr>
+<tr>
+<td>okms</td>
+<td>true if msx is not greater than ms, ie if performance is ok</td>
+<td>
+</td></tr>
+<tr>
+<td>valid</td>
+<td>true if the code is valid (ie doesn't crash)</td>
+<td>fail code is valid if it fails
+</td></tr>
+<tr>
+<td>timestamp</td>
+<td>when test was run</td>
+<td>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Saving_the_results_of_unit_tests_to_disk"> Saving the results of unit tests to disk </span></h2>
+<p>Invoking the function <tt>KUstr[]</tt> saves the table KUtr to a CSV file 'KUTR.csv'.
+</p>
+<h2> <span class="mw-headline" id="Restarting"> Restarting </span></h2>
+<p>The functions <tt>KUit</tt> and <tt>KUitr</tt> initialize the tables KUT and KUTR to empty.
+</p>
+<h2> <span class="mw-headline" id="Configuration_parameters"> Configuration parameters </span></h2>
+<p>When the script k4unit.q is loaded, two configuration variables are defined in Kdb+ directory ".KU"
+</p>
+<pre>
+q).KU
+       |&#160;::
+VERBOSE| 1
+DEBUG  | 0
+</pre>
+<p>The values allowed for VERBOSE are
+</p>
+<pre>
+0  - no logging to console
+1  - log filenames
+&gt;1 - log tests
+</pre>
+<p>The values allowed for DEBUG are
+</p>
+<pre>
+0 - trap errors, press on regardless
+1 - suspend if errors (except if action=`fail)
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 150/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:170-0!*!0!!en!*!edit=0 and timestamp 20131013192902 -->
+<div class="printfooter">
+Retrieved from "<a href="UnitTesting.html">http://code.kx.com/wiki/Cookbook/UnitTesting</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/UnitTesting" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="UnitTesting.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/UnitTesting&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="UnitTesting.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/UnitTesting&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/UnitTesting&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/UnitTesting" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/UnitTesting" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/UnitTesting&amp;oldid=2423" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FUnitTesting" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FUnitTesting&amp;oldid=2423&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/UnitTesting&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 16 November 2011, at 23:09.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/UnitTesting", "wgTitle": "Cookbook/UnitTesting", "wgAction": "view", "wgArticleId": 170, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2423, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.122 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/UnitTesting by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

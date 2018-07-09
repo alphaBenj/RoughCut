@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/log4q by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/log4q - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_log4q skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/log4q</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Outline"><span class="tocnumber">1</span> <span class="toctext">Outline</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Command_line_options"><span class="tocnumber">2</span> <span class="toctext">Command line options</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#User_functions"><span class="tocnumber">3</span> <span class="toctext">User functions</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Logger_functions"><span class="tocnumber">3.1</span> <span class="toctext">Logger functions</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Sink_functions_-_log_outputs"><span class="tocnumber">3.2</span> <span class="toctext">Sink functions - log outputs</span></a>
+<ul>
+<li class="toclevel-3 tocsection-6"><a href="#STD_out.2Ferr"><span class="tocnumber">3.2.1</span> <span class="toctext">STD out/err</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#File_handle"><span class="tocnumber">3.2.2</span> <span class="toctext">File handle</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#TCP_handle"><span class="tocnumber">3.2.3</span> <span class="toctext">TCP handle</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#Email"><span class="tocnumber">3.2.4</span> <span class="toctext">Email</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#syslog"><span class="tocnumber">3.2.5</span> <span class="toctext">syslog</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-11"><a href="#Logger_pattern_layouts"><span class="tocnumber">4</span> <span class="toctext">Logger pattern layouts</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#Examples"><span class="tocnumber">5</span> <span class="toctext">Examples</span></a>
+<ul>
+<li class="toclevel-2 tocsection-13"><a href="#Simple_app_utilizing_log4.q"><span class="tocnumber">5.1</span> <span class="toctext">Simple app utilizing log4.q</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#TCP_log_messages"><span class="tocnumber">5.2</span> <span class="toctext">TCP log messages</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Adding_and_removing_sink"><span class="tocnumber">5.3</span> <span class="toctext">Adding and removing sink</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-16"><a href="#Reporting_bugs"><span class="tocnumber">6</span> <span class="toctext">Reporting bugs</span></a></li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Outline"> Outline </span></h1>
+<p><a href="http://code.kx.com/wsvn/code/contrib/pkbukowi/log4q/log4.q" class="external text" rel="nofollow">log4q</a> is a concise implementation of logger for q/kdb+ applications.<br />
+It allows you to control the amount of logging messages generated very effectively.<br />
+You can setup the logging severity level which will filter out messages dynamically.<br />
+You can redirect logging messages to an entirely different outputs (append to a file, send by email etc.) simultaneously.
+log4q Provides simple api and ready to use setup.<br />
+</p><p><br />
+</p>
+<dl><dt>Features summary
+</dt></dl>
+<ul><li> various severity levels
+</li><li> various logging levels
+</li><li> various output sinks - STDIN/OUT, FILE, TCP, EMAIL and partial syslog support 
+</li><li> particular log levels are sent only to chosen sinks, filtered by severity level
+</li><li> simplified set of pattern layouts available - run-time switchable
+</li><li> <i>printf</i> alike variables injecting
+</li></ul>
+<p><br />
+</p>
+<h1> <span class="mw-headline" id="Command_line_options"> Command line options </span></h1>
+<p>Options are not mandatory, options arguments are mandatory.
+</p>
+<dl><dt>-log (debug|info|warn|error|fatal|silent)
+</dt><dd>sets severity level, only [level] or above will be sent to appropriate sink
+</dd><dd>default severity: info
+</dd></dl>
+<p><br />
+</p>
+<h1> <span class="mw-headline" id="User_functions"> User functions </span></h1>
+<dl><dt>log4g defines six logger functions in global namespace
+</dt><dd>SILENT DEBUG INFO WARN ERROR or FATAL
+</dd><dt>sinks management
+</dt><dd>.l.a - adds sink
+</dd><dd>.l.r - removes sink
+</dd></dl>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> All logic is placed in <b>.l</b> namespace.</blockquote>
+<h2> <span class="mw-headline" id="Logger_functions"> Logger functions </span></h2>
+<dl><dt>synopsis
+</dt><dd>LOG_FUNCTION + PARAM
+</dd></dl>
+<p>possible parameters
+</p>
+<dl><dd><ul><li>atom
+</li><li>list
+</li><li>(string;atom)  
+</li><li>(string;list)
+</li></ul>
+</dd></dl>
+<p>Last two parameter layouts supports <i>C-printf</i> alike variable injecting 
+</p>
+<dl><dt>Format keywords 
+</dt><dd><pre>&quot;(%[1-9])+&quot;</pre>
+</dd><dd><pre>(&quot;param1:&#160;%1, param2:&#160;%2&quot;;(`one;2)) will produce ==&gt; &quot;param1: `one, param2: 2&quot;</pre>
+</dd></dl>
+<dl><dt>examples
+</dt></dl>
+<pre>
+ERROR &quot;simple message&quot;;
+INFO (23.;`test);
+WARN `test;
+SILENT 23;
+INFO (&quot;%1&#160;%2&quot;;(`Test;2));
+</pre>
+<p><br />
+</p>
+<h2> <span class="mw-headline" id="Sink_functions_-_log_outputs"> Sink functions - log outputs </span></h2>
+<p>Sink is generic name for log message output.<br />
+All defined sinks will receive their messages <i>simultaneously</i> - means one message sent to various outputs.<br />
+Those can be as follows, but certainly not limited to this list;
+</p>
+<h3> <span class="mw-headline" id="STD_out.2Ferr"> STD out/err </span></h3>
+<p>Stdout and stderr are predefined out of the box as follows:
+</p>
+<dl><dd><pre>a[1;`SILENT`DEBUG`INFO`WARN];a[2;`ERROR`FATAL];</pre>
+</dd><dd>messages <i>silent, debug, info and warn</i> will be sent to stdout (1)
+</dd><dd><i>warn, error and fatal</i> will be sent to stderr (2)
+</dd></dl>
+<h3> <span class="mw-headline" id="File_handle"> File handle </span></h3>
+<dl><dd><pre>.l.a[hopen `:my_test2.log;`DEBUG`INFO]</pre>
+</dd><dd>will push all DEBUG and INFO messages to <i>./my_test2.log</i> file
+</dd></dl>
+<h3> <span class="mw-headline" id="TCP_handle"> TCP handle </span></h3>
+<dl><dd><pre>.l.a[(hopen `::5555:user:pass;{x@(`upd;`msg;y)});`INFO`ERROR`FATAL]</pre>
+</dd><dd>above will send updates to server 5555@localhost when any of INFO,ERROR or FATAL message will occur.
+</dd></dl>
+<h3> <span class="mw-headline" id="Email"> Email </span></h3>
+<dl><dd><pre>.l.a[(-333;{[x;y]sub:&quot;log4q message&quot;;addr:&quot;group@abc.com&quot;;system &quot;echo \&quot;&quot;,y,&quot;\&quot; | mailx -s \&quot;&quot;,sub,&quot;\&quot; &quot;,addr;});`ERROR`FATAL]</pre>
+</dd><dd>this will send email to <i>group@abc.com</i> when any ERROR or FATAL message will happen
+</dd></dl>
+<h3> <span class="mw-headline" id="syslog"> syslog </span></h3>
+<dl><dd><pre>.l.a[(-334;{[x;y] system &quot;logger &quot;,y;});`INFO`ERROR`FATAL];</pre>
+</dd><dd>simple syslog message post using <i>logger</i> app, please check <i>man logger</i> for more advanced features
+</dd><dd>if there will be a community request for native syslog support, I can contribute a c-syslog-library.
+</dd></dl>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a>  <b>Reminder</b>
+<ul><li> low severity messages might not be sent anywhere, if you'll set up high (fatal) or silent severity
+</li><li> sinks can be added or removed any time, but remember about below:
+</li><li> user is responsible for handles management, so be aware of handle duplicates and closing
+</li></ul>
+</blockquote>
+<p><br />
+</p>
+<h1> <span class="mw-headline" id="Logger_pattern_layouts"> Logger pattern layouts </span></h1>
+<p>log4q focus on keywords more natural for q than for java or perl logger libraries.<br />
+User can define output format using predefined patterns which is of following format:
+</p>
+<pre>&quot;%[a-zA-Z]&quot;</pre>
+<p>default format 
+</p>
+<pre>.l.fm:&quot;%c\t[%p]:H=%h:PID[%i]:%d:%t:%f:&#160;%m\r\n&quot;</pre>
+<p><br />
+<b>Supported formats:</b>
+</p>
+<hr />
+<pre>
+   &#160;%c Category of the logging event.
+   &#160;%d Current date  (.z.d)
+   &#160;%t Current time (.z.t)
+   &#160;%f File where the logging event occurred (.z.f)
+   &#160;%h Hostname (.z.h)
+   &#160;%m The message to be logged
+   &#160;%p Timestamp (.z.p)
+   &#160;%i pid of the current process
+</pre>
+<p><br />
+</p>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a>  <b>Reminder</b>
+<ul><li> format in <b>.l.fm</b> can be switched in run-time
+</li><li> supported formats can be changed and extended in <b>.l.m</b> dictionary
+</li></ul>
+</blockquote>
+<p><br />
+</p><p>Example runtime format switch
+</p>
+<pre>
+q)ERROR &quot;simple message&quot;;
+    ERROR   [2012.03.01D23:32:30.609375000]:PID[1924];log4.q: simple message
+
+q).l.fm:&quot;%c\t[%p]:H:%h;PID[%i];%d;%t;%f:&#160;%m\r\n&quot;
+q)ERROR (&quot;%1 simple message&quot;;`another);
+    ERROR   [2012.03.01D23:34:30.234375000]:H:prodrive-notebo;PID[1924];2012.03.01;23:34:30.234;log4.q: `another simple message
+</pre>
+<p><br />
+</p>
+<h1> <span class="mw-headline" id="Examples"> Examples </span></h1>
+<h2> <span class="mw-headline" id="Simple_app_utilizing_log4.q"> Simple app utilizing log4.q </span></h2>
+<pre>
+\l log4.q
+
+// adding logging to file on ERROR and FATAL messages
+.l.a[hopen `:./app_logging.log;`ERROR`FATAL];
+
+foo:{ $[x; INFO (&quot;Param x:%1 correct&quot;;x); WARN (&quot;Param x:%1 suspicious&quot;;x)];}
+.z.exit:{ERROR &quot;App finished&quot;;}
+
+
+INFO &quot;App initialized&quot;;
+
+foo[1];
+foo[0];
+
+</pre>
+<p><br />
+It will produce following outputs<br />
+severity - <b>info</b>
+</p>
+<pre>
+q app.q -log info
+KDB+ 2.8 2012.02.02 Copyright (C) 1993-2012 Kx Systems
+w32/ 1()core 2038MB prodrive11 prodrive-notebo xxx.xx.xx.xx PLAY 2012.05.02
+
+INFO    [2012.03.03D21:09:51.109375000]:H=prodrive-notebo:PID[3460]:2012.03.03:21:09:51.109:app.q: App initialized
+INFO    [2012.03.03D21:09:51.109375000]:H=prodrive-notebo:PID[3460]:2012.03.03:21:09:51.109:app.q: Param x:1 correct
+WARN    [2012.03.03D21:09:51.109375000]:H=prodrive-notebo:PID[3460]:2012.03.03:21:09:51.109:app.q: Param x:0 suspicious
+q)\\
+ERROR   [2012.03.03D21:09:52.421875000]:H=prodrive-notebo:PID[3460]:2012.03.03:21:09:52.421:app.q: App finished
+
+</pre>
+<p><br />
+severity - <b>warn</b>
+</p>
+<pre>
+q app.q -log warn
+KDB+ 2.8 2012.02.02 Copyright (C) 1993-2012 Kx Systems
+w32/ 1()core 2038MB prodrive11 prodrive-notebo xxx.xx.xx.xx PLAY 2012.05.02
+
+WARN    [2012.03.03D21:10:00.234375000]:H=prodrive-notebo:PID[4000]:2012.03.03:21:10:00.234:app.q: Param x:0 suspicious
+q)\\
+ERROR   [2012.03.03D21:10:08.703125000]:H=prodrive-notebo:PID[4000]:2012.03.03:21:10:08.703:app.q: App finished
+
+</pre>
+<p><br />
+After two above runs file <b>./app_logging.log</b> will have following output (pay attention to different PIDs):
+</p>
+<pre>
+ERROR	[2012.03.03D21:09:52.421875000]:H=prodrive-notebo:PID[3460]:2012.03.03:21:09:52.421:app.q: App finished
+ERROR	[2012.03.03D21:10:08.703125000]:H=prodrive-notebo:PID[4000]:2012.03.03:21:10:08.703:app.q: App finished
+</pre>
+<p><br />
+</p>
+<h2> <span class="mw-headline" id="TCP_log_messages"> TCP log messages </span></h2>
+<pre>
+#start process which would like to listen for any logs 
+q -p 5555
+
+q)upd:{[x;y] 0N!(x;y);}
+</pre>
+<pre>
+#start a process which will produce some logs
+q log4.q -p 5001 -log info
+
+q)INFO (&quot;Test&#160;%1 log&quot;;1222);
+    INFO    [2012.03.01D23:14:17.718750000]:log4.q: Test 1222 log
+q)DEBUG (&quot;Test&#160;%1 log&quot;;1222);
+q).l.snk
+    SILENT| 1
+    DEBUG | 1
+    INFO  | 1
+    WARN  | 1
+    ERROR | 2
+    FATAL | 2
+</pre>
+<p><br />
+Add TCP sink with function which will send a update message to defined handle
+</p>
+<pre>
+q).l.a[(hopen `::5555:user:pass;{x@(`upd;`msg;y)});`INFO`ERROR`FATAL]
+q).l.snk
+    SILENT| ,1
+    DEBUG | ,1
+    INFO  | 1 1800
+    WARN  | ,1
+    ERROR | 2 1800
+    FATAL | 2 1800
+	
+q)ERROR (&quot;Test&#160;%1 log&quot;;1222);
+    ERROR   [2012.03.01D23:15:22.609375000]:log4.q: Test 1222 log
+</pre>
+<p><br />
+On our 5555 listener we see that the log was received.
+See that log was also printed to stderr on our 5001 process.
+</p>
+<pre>
+q)(`msg;&quot;ERROR\t[2012.03.01D23:15:22.609375000]:log4.q: Test 1222 log\r\n&quot;)
+</pre>
+<h2> <span class="mw-headline" id="Adding_and_removing_sink"> Adding and removing sink </span></h2>
+<pre>
+q).l.r[1;`DEBUG`INFO] /removes logging to stdout at DEBUG and `INFO severity
+
+q).l.a[hopen `:my_test2.log;`INFO`ERROR]
+q).l.snk
+    SILENT| ,1
+    DEBUG | ,1
+    INFO  | 1 1800
+    WARN  | ,1
+    ERROR | 2 1800
+    FATAL | ,2
+
+q).l.r[1800;`INFO`ERROR]
+q).l.snk
+    SILENT| 1
+    DEBUG | 1
+    INFO  | 1
+    WARN  | 1
+    ERROR | 2
+    FATAL | 2
+
+q).l.a[1800;`INFO`ERROR]
+q).l.snk
+    SILENT| ,1
+    DEBUG | ,1
+    INFO  | 1 1800
+    WARN  | ,1
+    ERROR | 2 1800
+    FATAL | ,2
+</pre>
+<p><br />
+</p>
+<h1> <span class="mw-headline" id="Reporting_bugs"> Reporting bugs </span></h1>
+<p>Report bugs to <a href="mailto:p.bukowinski@gmail.com" class="external text" rel="nofollow">patryk</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 269/1000000
+Post-expand include size: 633/2097152 bytes
+Template argument size: 459/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:468-0!*!0!!en!2!edit=0 and timestamp 20131013192917 -->
+<div class="printfooter">
+Retrieved from "<a href="log4q.html">http://code.kx.com/wiki/Cookbook/log4q</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/log4q" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="log4q.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/log4q&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="log4q.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/log4q&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/log4q&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/log4q" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/log4q" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/log4q&amp;oldid=2533" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2Flog4q" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2Flog4q&amp;oldid=2533&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/log4q&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 3 March 2012, at 21:27.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/log4q", "wgTitle": "Cookbook/log4q", "wgAction": "view", "wgArticleId": 468, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2533, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.114 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/log4q by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

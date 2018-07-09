@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Startingkdbplus/introduction by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Startingkdbplus/introduction - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Startingkdbplus_introduction skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Startingkdbplus/introduction</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#1._Introduction"><span class="tocnumber">1</span> <span class="toctext">1. Introduction</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#1.1_Overview"><span class="tocnumber">2</span> <span class="toctext">1.1 Overview</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#1.2_Kdb.2B"><span class="tocnumber">3</span> <span class="toctext">1.2 Kdb+</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#1.3_Resources"><span class="tocnumber">4</span> <span class="toctext">1.3 Resources</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Kx_wiki"><span class="tocnumber">4.1</span> <span class="toctext">Kx wiki</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Kx_Html_Pages"><span class="tocnumber">4.2</span> <span class="toctext">Kx Html Pages</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Other_Web_Pages"><span class="tocnumber">4.3</span> <span class="toctext">Other Web Pages</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Discussion_groups"><span class="tocnumber">4.4</span> <span class="toctext">Discussion groups</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Additional_Files"><span class="tocnumber">4.5</span> <span class="toctext">Additional Files</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="#1.4_Install_Trial_System"><span class="tocnumber">5</span> <span class="toctext">1.4 Install Trial System</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#1.5_Directory_Layout"><span class="tocnumber">6</span> <span class="toctext">1.5 Directory Layout</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#1.6_Example_Files"><span class="tocnumber">7</span> <span class="toctext">1.6 Example Files</span></a></li>
+<li class="toclevel-1 tocsection-13"><a href="#1.7_GUI"><span class="tocnumber">8</span> <span class="toctext">1.7 GUI</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="1._Introduction"> 1. Introduction </span></h2>
+<h2> <span class="mw-headline" id="1.1_Overview"> 1.1 Overview </span></h2>
+<p>This is a quick start guide to kdb+ from Kx Systems, aimed primarily at those learning independently. It covers system installation, the q environment, q ipc, kdb+ tables and typical databases, and where to find more material. After completing this you should be able to follow the Borror tutorials <a href="http://code.kx.com/wiki/JB:QforMortals2/contents" title="JB:QforMortals2/contents">Q for Mortals</a> and <a href="http://code.kx.com/wiki/JB:KdbplusForMortals/contents" title="JB:KdbplusForMortals/contents">Kdb+ For Mortals</a>, and the wiki Reference and Cookbooks pages.
+</p><p>One caution: you can learn kdb+ reasonably well by independent study, but for serious evaluation of the product you need the help of a kdb+ consultant. This is because kdb+ is typically used for very demanding applications that require experience to set up properly. Contact Kx Systems or one of its partners for help with such evaluations.
+</p>
+<h2> <span class="mw-headline" id="1.2_Kdb.2B"> 1.2 Kdb+ </span></h2>
+<p>The kdb+ system is both a database and a programming language:
+</p>
+<dl><dd><b>kdb+</b> the database (<i>k database plus</i>).
+</dd></dl>
+<dl><dd><b>q</b> the programming language for working with kdb+
+</dd></dl>
+<p>Both kdb+ and q are written in the k programming language. You do not need to know k to work with kdb+, but will occasionally see references to it. For example, q is defined in the distributed script q.k.
+</p>
+<h2> <span class="mw-headline" id="1.3_Resources"> 1.3 Resources </span></h2>
+<h3> <span class="mw-headline" id="Kx_wiki"> Kx wiki </span></h3>
+<p>The <a href="../Main_Page.html" title="Main Page">Kx wiki</a> is the best resource for learning kdb+, and includes:
+</p>
+<ul><li>Jeff Borror's tutorials <a href="http://code.kx.com/wiki/JB:QforMortals2/contents" title="JB:QforMortals2/contents">Q for Mortals</a> and <a href="http://code.kx.com/wiki/JB:KdbplusForMortals/contents" title="JB:KdbplusForMortals/contents">Kdb+ For Mortals</a>.
+</li></ul>
+<ul><li>a <a href="../Cookbook.html" title="Cookbook">cookbook</a> of common tasks
+</li></ul>
+<ul><li>a <a href="../Reference.html" title="Reference">reference</a> on the built-in functions
+</li></ul>
+<ul><li>an <a href="http://code.kx.com/wsvn/code/" class="extiw" title="source:">svn</a> repository with user and Kx contributed code.
+</li></ul>
+<h3> <span class="mw-headline" id="Kx_Html_Pages"> Kx Html Pages </span></h3>
+<p>Some older, but still useful, html pages are at <a href="http://kx.com/documentation.php" class="external text" rel="nofollow">kx.com/documentation.php</a>. See in particular, Dennis Shasha's <a href="http://www.kx.com/q/d/primer.htm" class="external text" rel="nofollow">Kdb+ Database and Language Primer</a>.
+</p>
+<h3> <span class="mw-headline" id="Other_Web_Pages"> Other Web Pages </span></h3>
+<ul><li>the Knowledge_Base <a href="http://www.thalesians.com/finance/index.php/Knowledge_Base/Databases/Kdb" class="external text" rel="nofollow">Kdb</a> has a good overview
+</li></ul>
+<h3> <span class="mw-headline" id="Discussion_groups"> Discussion groups </span></h3>
+<ul><li>the main discussion forum is the <a href="http://www.listbox.com/subscribe/?listname=k4" class="external text" rel="nofollow">k4 listbox</a>. This is available only to licensed customers - please use a work email address to apply for access.
+</li></ul>
+<ul><li>the <a href="http://groups.google.com/group/personal-kdbplus" class="external text" rel="nofollow">Kdb+ Personal Developers</a> forum is an open Google discussion group for users of the trial system.
+</li></ul>
+<h3> <span class="mw-headline" id="Additional_Files"> Additional Files </span></h3>
+<p>The <a href="http://www.kx.com/q" class="external text" rel="nofollow">kx.com/q</a> directory has various supporting files, for example the script sp.q referenced in this guide (which is also included with the trial system). These files are also copied to the svn repository, so for example, the sp.q script can also be found at
+<a href="http://code.kx.com/wsvn/code/kx/kdb+" class="extiw" title="source:kx/kdb+">kdb+</a>.
+</p>
+<h2> <span class="mw-headline" id="1.4_Install_Trial_System"> 1.4 Install Trial System </span></h2>
+<p>If you do not already have access to a licensed copy of kdb+, then get the 32-bit trial version from
+<a href="http://kx.com/Developers/software.php" class="external text" rel="nofollow">kx.com/Developers</a>. This is limited to a 32-bit address space, a 2 hour timeout
+and expiry every 90 days. Otherwise, it is a complete system and ideal for learning kdb+.
+</p><p>When unzipping the install, take care to retain the folder structure.
+</p>
+<h2> <span class="mw-headline" id="1.5_Directory_Layout"> 1.5 Directory Layout </span></h2>
+<p>Kdb+ can be installed anywhere, but typically into a q subdirectory. For example:
+</p><p>in Linux/Mac:
+</p>
+<pre>
+~/q                    / main q directory (under home)
+~/q/l32                / location of l32 executable
+</pre>
+<p>in Windows:
+</p>
+<pre>
+c:\q                   / main q directory
+c:\q\w32               / location of w32 executable
+</pre>
+<p>If you need to install q elsewhere, set the environment variable 
+QHOME to point to the new directory. If QHOME is not defined,
+kdb+ defaults to $HOME/q for unix-based systems, and c:\q for Windows.
+</p><p>To run the system, see instructions in the next section, <a href="qlanguage.html" title="Startingkdbplus/qlanguage">2. Q Language</a>.
+</p>
+<h2> <span class="mw-headline" id="1.6_Example_Files"> 1.6 Example Files </span></h2>
+<p>Two sets of scripts are referenced in this guide:
+</p><p>1. The trial system is distributed with the following example scripts in the main directory:
+</p>
+<ul><li>sp.q   - the Suppliers and Parts sample database
+</li><li>trade.q   - a stock trades sample database
+</li></ul>
+<p>If you do not have these scripts, get them from <a href="http://www.kx.com/q" class="external text" rel="nofollow">kx.com/q</a> and save in your q directory.
+</p><p>2. Other examples are in the svn <a href="http://code.kx.com/wsvn/code/contrib/cburke/start" class="extiw" title="source:contrib/cburke/start">start</a> directory.
+To install, download <a href="http://code.kx.com/wsvn/code/contrib/cburke/dist/start.zip" class="extiw" title="source:contrib/cburke/dist/start.zip">start.zip</a> and unzip in
+the q directory, creating directory q/start.
+</p>
+<h2> <span class="mw-headline" id="1.7_GUI"> 1.7 GUI </span></h2>
+<p>kdb+ has only a console interface, but there are some GUIs:
+</p>
+<ul><li>the most popular is Charlie Skelton's <a href="../StudioForKdb%2b.html" title="StudioForKdb+">studio for kdb+</a>, a cross-platform execution environment. It is worth having this available even if you use another interface.
+</li><li><a href="http://timestored.com/qStudio" class="external text" rel="nofollow">qStudio</a>, a cross-platform IDE with charting and autocompletion by TimeStored.
+</li><li><a href="http://www.firstderivatives.com/" class="external text" rel="nofollow">First Derivatives</a> offer their clients the qIDE development system
+</li><li><a href="http://www.qkdt.org/" class="external text" rel="nofollow">Q and K Development Tools</a> has an eclipse plugin
+</li><li><a href="http://www.qinsightpad.com/" class="external text" rel="nofollow">Q Insight Pad</a> is an IDE for Windows
+</li><li><a href="http://code.kx.com/wsvn/code/contrib/cburke/qconsole" class="extiw" title="source:contrib/cburke/qconsole">Qconsole</a> is an IDE using GTK
+</li></ul>
+<hr />
+<p>Prev: <a href="contents.html" title="Startingkdbplus/contents">Table of Contents</a>
+Next: <a href="qlanguage.html" title="Startingkdbplus/qlanguage">2. Q Language</a>
+</p><p><a href="contents.html" title="Startingkdbplus/contents">Table of Contents</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 68/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:429-0!*!0!!en!*!edit=0 and timestamp 20131013141551 -->
+<div class="printfooter">
+Retrieved from "<a href="introduction.html">http://code.kx.com/wiki/Startingkdbplus/introduction</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../Category_Tutorials.html" title="Category:Tutorials">Tutorials</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Startingkdbplus/introduction" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="introduction.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Startingkdbplus/introduction&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="introduction.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/introduction&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/introduction&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Startingkdbplus/introduction" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Startingkdbplus/introduction" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/introduction&amp;oldid=2785" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Startingkdbplus%2Fintroduction" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Startingkdbplus%2Fintroduction&amp;oldid=2785&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/introduction&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 8 February 2013, at 10:20.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Startingkdbplus/introduction", "wgTitle": "Startingkdbplus/introduction", "wgAction": "view", "wgArticleId": 429, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2785, "wgCategories": ["Tutorials"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.034 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Startingkdbplus/introduction by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

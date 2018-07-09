@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Websockets</title>
+<script type="text/javascript" src="c.js"></script>
+</head>
+<body>
+<form action="">
+<input type="button" value="connect" onclick="connect()" />
+<input type="text" id="x" placeholder="q)" />
+<input type="submit" value="send" onclick="return send()"/>
+<input type="button" value="disconnect" onclick="ws.close()" />
+</form>
+<textarea id="out" rows=25 cols=80></textarea>
+<script>
+var ws,out=document.getElementById("out")
+function connect(){
+ if ("WebSocket" in window)
+ {ws=new WebSocket("ws://localhost:5020/");
+ ws.binaryType = "arraybuffer"
+ out.value="connecting..." ;
+ ws.onopen=function(e){out.value="connected";}
+ ws.onclose=function(e){out.value="disconnected";}
+ ws.onmessage=function(e){out.value=deserialize(e.data);}
+ ws.onerror=function(e){out.value=e.data;}
+ }
+ else alert("WebSockets not supported on your browser.");
+}
+function send(){
+ x=document.getElementById("x");
+ v=x.value;
+ ws.send(serialize(v));
+ return false;
+}
+</script>
+</body>
+</html>

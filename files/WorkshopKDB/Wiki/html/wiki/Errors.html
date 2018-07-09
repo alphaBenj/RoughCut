@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Errors by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Errors - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Errors skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Errors</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<p><a href="http://code.kx.com/wsvn/code/contrib/simon/help/texts/errors.txt" class="external text" rel="nofollow">simon's list</a>
+</p>
+<table class="wikitable">
+
+<tr>
+<td><b>error</b></td>
+<td><i>example</i></td>
+<td><b>explanation</b>
+</td></tr>
+<tr>
+<td>Mlim</td>
+<td></td>
+<td>more than 999 nested columns in splayed tables
+</td></tr>
+<tr>
+<td>Q7</td>
+<td></td>
+<td>nyi op on file nested array
+</td></tr>
+<tr>
+<td>XXX</td>
+<td><tt>delete x from system"d";x</tt></td>
+<td>value error (XXX undefined)
+</td></tr>
+<tr>
+<td><tt>[/(/{/]/)/}/"</tt></td>
+<td><tt>"hello</tt></td>
+<td>open ([{ or "
+</td></tr>
+<tr>
+<td>arch</td>
+<td><tt>`:test set til 100</tt><br /><tt>-17!`:test</tt></td>
+<td>attempt to load file of wrong endian format
+</td></tr>
+<tr>
+<td>access</td>
+<td></td>
+<td>attempt to read files above directory, run system commands or failed usr/pwd
+</td></tr>
+<tr>
+<td>accp</td>
+<td></td>
+<td> tried to accept an incoming tcp/ip connection but failed to do so
+</td></tr>
+<tr>
+<td>assign</td>
+<td><tt>cos:12</tt></td>
+<td>attempt to reuse a reserved word
+</td></tr>
+<tr>
+<td>badtail</td>
+<td></td>
+<td> incomplete transaction at end of file, get good (count;length) with <tt>-11!(-2;`:file)</tt>
+</td></tr>
+<tr>
+<td>branch</td>
+<td><tt>a:"1;",254#"0;"</tt><br /><tt>value "{if[",a,"]}"</tt></td>
+<td>a branch(if;do;while;$[.;.;.]) more than 255 byte codes away
+</td></tr>
+<tr>
+<td>cast</td>
+<td><tt>s:`a`b; c:`s$`a`e</tt></td>
+<td>value not in enumeration
+</td></tr>
+<tr>
+<td>char</td>
+<td><tt>value "\000"</tt></td>
+<td>invalid character
+</td></tr>
+<tr>
+<td>conn</td>
+<td></td>
+<td>too many incoming connections (1022 max)
+</td></tr>
+<tr>
+<td>constants</td>
+<td><tt>a:";"sv string 2+til 97;</tt><br /><tt>value"{",a,"}"</tt></td>
+<td>too many constants (max 96)
+</td></tr>
+<tr>
+<td>cores</td>
+<td></td>
+<td>too many cores for license
+</td></tr>
+<tr>
+<td>cpu</td>
+<td></td>
+<td>too many cpus for license
+</td></tr>
+<tr>
+<td>domain</td>
+<td><tt>1?`10</tt></td>
+<td>out of domain
+</td></tr>
+<tr>
+<td>elim</td>
+<td> <tt>((-58?`3) set\:(),`a)$`a</tt></td>
+<td>too many enumerations (max: 57)
+</td></tr>
+<tr>
+<td>exp</td>
+<td></td>
+<td>expiry date passed
+</td></tr>
+<tr>
+<td>from</td>
+<td><tt>select price trade</tt></td>
+<td>Badly formed select statement
+</td></tr>
+<tr>
+<td>glim</td>
+<td></td>
+<td><tt>`g#</tt> limit, kdb+ currently limited to 99 concurrent <tt>`g#</tt>
+</td></tr>
+<tr>
+<td>globals</td>
+<td><tt>a:"::a"sv string til 32;</tt><br /><tt>value"{a",a,"::0}"</tt></td>
+<td>too many global variables (31 max)
+</td></tr>
+<tr>
+<td>host</td>
+<td></td>
+<td>unlicensed host
+</td></tr>
+<tr>
+<td>insert</td>
+<td><tt>t:([k:0 1]a:2 3);`t insert(0;3)</tt></td>
+<td>attempt to insert a record with an existing key into a keyed table
+</td></tr>
+<tr>
+<td>k4.lic</td>
+<td></td>
+<td>k4.lic file not found, check QHOME/QLIC
+</td></tr>
+<tr>
+<td>length</td>
+<td><tt>()+til 1</tt></td>
+<td>incompatible lengths
+</td></tr>
+<tr>
+<td>limit</td>
+<td><tt>0W#2</tt></td>
+<td>tried to generate a list longer than 2,000,000,000
+</td></tr>
+<tr>
+<td>locals</td>
+<td><tt>a:":a"sv string til 24;</tt><br /><tt>value"{a",a,":0}"</tt></td>
+<td>too many local variables (23 max)
+</td></tr>
+<tr>
+<td>loop</td>
+<td><tt>a::a</tt></td>
+<td>dependency loop
+</td></tr>
+<tr>
+<td>mismatch</td>
+<td><tt>([]a:til 4),([]b:til 3)</tt></td>
+<td>columns that can't be aligned for R,R or K,K
+</td></tr>
+<tr>
+<td>mq</td>
+<td></td>
+<td>Multi-threading not allowed.
+</td></tr>
+<tr>
+<td>noamend</td>
+<td><tt>t:([]a:1 2 3)</tt><br /><tt>n:`a`b`c</tt><br /><tt>update b:{`n?`d;:`n?`d}[]</tt><br /><tt>&#160;&#160;from `t</tt></td>
+<td>Cannot perform global amend from within an amend.
+</td></tr>
+<tr>
+<td>noupdate</td>
+<td><tt>{a::x}peach 0 1</tt></td>
+<td>a thread other than the main q thread has attempted to update a global variable. Seen with peach+slave threads or multithreaded input queue
+</td></tr>
+<tr>
+<td>nyi</td>
+<td><tt>"a"like"**"</tt></td>
+<td>not yet implemented. Interpret as "it probably makes sense, but it's not defined nor implemented, and needs more thinking about as the language evolves".
+</td></tr>
+<tr>
+<td>os</td>
+<td></td>
+<td>Operating System error OR wrong os (if licence error)
+</td></tr>
+<tr>
+<td>par</td>
+<td></td>
+<td>trying to update a partitioned table
+</td></tr>
+<tr>
+<td>params</td>
+<td><tt>f:{[a;b;c;d;e;f;g;h;e]} </tt></td>
+<td>too many parameters (8 max)
+</td></tr>
+<tr>
+<td>parse</td>
+<td></td>
+<td>invalid syntax
+</td></tr>
+<tr>
+<td>part</td>
+<td></td>
+<td>something wrong with the partitions in the hdb
+</td></tr>
+<tr>
+<td>pl</td>
+<td></td>
+<td>peach can't handle parallel lambda's (2.3 only)
+</td></tr>
+<tr>
+<td>pwuid</td>
+<td></td>
+<td>OS is wongly configured, missing libraries for getpwuid call.
+</td></tr>
+<tr>
+<td>rank</td>
+<td><tt>+[2;3;4]</tt></td>
+<td>invalid rank or valence
+</td></tr>
+<tr>
+<td>s-fail</td>
+<td><tt>`s#3 2</tt></td>
+<td>invalid attempt to set "sorted" attribute
+</td></tr>
+<tr>
+<td>splay</td>
+<td></td>
+<td>nyi op on splayed table
+</td></tr>
+<tr>
+<td>srv</td>
+<td></td>
+<td>attempt to use client-only license in server mode
+</td></tr>
+<tr>
+<td>stack</td>
+<td><tt>{.z.s[]}[]</tt></td>
+<td>ran out of stack space
+</td></tr>
+<tr>
+<td>stop</td>
+<td></td>
+<td>user interrupt(ctrl-c) or time limit (-T)
+</td></tr>
+<tr>
+<td>stype</td>
+<td><tt>'42</tt></td>
+<td>invalid type used to signal
+</td></tr>
+<tr>
+<td>sys</td>
+<td><tt>{system "ls"}peach 0 1</tt></td>
+<td>using system call from thread other than main thread
+</td></tr>
+<tr>
+<td>type</td>
+<td><tt>key 2.2</tt></td>
+<td>wrong type
+</td></tr>
+<tr>
+<td>u-fail</td>
+<td><tt>`u#2 2</tt></td>
+<td>invalid attempt to set "unique" attribute
+</td></tr>
+<tr>
+<td>upd</td>
+<td></td>
+<td>attempt to use version of kdb+ more recent than update date
+</td></tr>
+<tr>
+<td>user</td>
+<td></td>
+<td>unlicensed user
+</td></tr>
+<tr>
+<td>unmappable</td>
+<td><tt>t:([]sym:`a`b;a:(();()))</tt><br /><tt>.Q.dpft[`:thdb;.z.d;`sym;`t]</tt></td>
+<td>when saving partitioned data,<br />each column must be mappable. () and  ("";"";"") is ok
+</td></tr>
+<tr>
+<td>value</td>
+<td></td>
+<td>no value
+</td></tr>
+<tr>
+<td>vd1</td>
+<td></td>
+<td>attempted multithread update
+</td></tr>
+<tr>
+<td>view</td>
+<td></td>
+<td>Trying to re-assign a view to something else
+</td></tr>
+<tr>
+<td>wha</td>
+<td></td>
+<td>invalid system date (release date is after system date)
+</td></tr>
+<tr>
+<td>wsfull</td>
+<td><tt>999999999#0j</tt></td>
+<td>malloc failed. ran out of swap (or addressability on 32bit). or hit -w limit.
+</td></tr></table>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 1/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:291-0!*!0!!*!*!edit=0 and timestamp 20131013144410 -->
+<div class="printfooter">
+Retrieved from "<a href="Errors.html">http://code.kx.com/wiki/Errors</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Errors" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="Errors.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Errors&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="Errors.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Errors&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Errors&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../mediawiki/skins/common/images/kxmedia.png);" href="Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Errors" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Errors" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Errors&amp;oldid=2923" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Errors" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Errors&amp;oldid=2923&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Errors&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 2 October 2013, at 10:43.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Errors", "wgTitle": "Errors", "wgAction": "view", "wgArticleId": 291, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2923, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.029 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Errors by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

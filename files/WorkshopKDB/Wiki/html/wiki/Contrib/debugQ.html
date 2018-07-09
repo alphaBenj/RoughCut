@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Contrib/debugQ by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Contrib/debugQ - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Contrib_debugQ skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Contrib/debugQ</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Q_Debugger"><span class="tocnumber">1</span> <span class="toctext">Q Debugger</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Usage"><span class="tocnumber">2</span> <span class="toctext">Usage</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Tuning"><span class="tocnumber">3</span> <span class="toctext">Tuning</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Remote_debugging"><span class="tocnumber">4</span> <span class="toctext">Remote debugging</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#WEB_front_end_to_debug.q"><span class="tocnumber">5</span> <span class="toctext">WEB front end to debug.q</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Files_.26_contacts"><span class="tocnumber">6</span> <span class="toctext">Files &amp; contacts</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Q_Debugger"> Q Debugger </span></h2>
+<p>debug.q is a Q interpreter in Q. It executes bytecode instruction by instruction and has full control over program flow. It can stop at any instruction, on exceptions and even breakpoints.
+</p><p>Basically any valid Q program can be executed by it - it supports all Q structures, functions, adverbs, exception handling blocks, QSQL and etc.
+</p><p>Limitations are: it can't enter QSQL statements so functions used in "select" for example can't be debugged (you may call the debugger from inside such a function though). Also it will not follow "value" and similar functions that may parse and execute some instructions. It has a state so it obviously can't be used with peach and with read only threads.
+</p><p>Note that the debugger doesn't affect the Q environment in any way except its own .d namespace. You may call its functions from other functions, call any other function during the debugging, restart the debugging at any point and etc.
+</p><p>The debugger doesn't use the original source code to show its progress. Instead it recreates the source code from the bytecode, sometimes the result may look strange (all selects will look like functional selects for example) but this should not be a problem.
+</p><p>Adverbs are realized as functions so you will be able to enter them. By default the debugger doesn't stop in adverbs, if you finish one "each" iteration for example you will be immediately transfered to the start of the same function. The number of remaining iterations can be seen on the top of the stack.
+</p><p>Debugger doesn't enter functions from some namespaces - .q and .h. Also some debugger functions are skipped. K functions are not a problem though because they have the same format as Q functions. You may even use the debugger to Q-fy K functions because it will show how they would look in Q.
+</p>
+<h2> <span class="mw-headline" id="Usage"> Usage </span></h2>
+<p>To start the debugger you should first load debug.q file. Then you have two options - you may either run a function until it finishes, fails or reaches a breakpoint or you may initialize the debugger and then use step functions:
+</p>
+<pre>
+.d.r[{x*y};(10;20)]
+.d.r[{x*20};10]
+
+.d.i[{x*y};(10;20)]
+</pre>
+<p>.d.r will run a function and .d.i will init the debugger with the function. Args should be in the format suitable for "." function. If you call a monad with an atom then you may drop enlist.
+</p><p>Step functions and .d.r will always print the state of the debugger if the function is not finished:
+</p>
+<pre>
+q).d.r[{x*y; x*`l};(10;20)]
+Exception: Binary * has failed with args (`l;10): type
+Top of the stack:
+.d.st[0]: Fn call, line: 0:&#160;: &quot;Entry point&quot;
+.d.st[1]: `l
+.d.st[2]: 10
+Current line: 1:&#160;: x * `l
+</pre>
+<p>First the reason why the debugger has stopped is printed. Here it is an exception. Then the top 10 entries of the stack are printed. Note that you are free to modify it to remove the cause of the exception. Finally the current line is printed.
+</p><p>If you wonder where in the function you are you may print it with .d.f:
+</p>
+<pre>
+.d.f[]
+0:  x * y;
+1: &#160;: x * `l
+</pre>
+<p>As you can see the representation of the function differs from the original one. The debugger breaks functions at important points like ";" to make the debugging easier. Now you may modify the stack and continue the execution:
+</p>
+<pre>
+q).d.st[1]:20
+q).d.cont[]
+200
+</pre>
+<p>While you are in the debugging mode you can use the following functions to execute the pieces of code:
+</p>
+<pre>
+.d.cont[] - continue execution
+.d.next[] - next line inside the current function (doesn't enter functions)
+.d.ef[] - finish the current function
+.d.l[] - next line (enters functions)
+.d.s[] - next instruction
+</pre>
+<p>.d.s executes the code by 1 bytecode at a time, you can use it to understand what happens inside some line of code. .d.l and .d.next can be used to move to the next line of code (.d.l will enter the func calls and .d.next will not). .d.ef will work until the current function is finished, if you use it inside an adverb it may look like nothing has happened (but really you are at the next item!). .d.cont will work until the end, it will break only on a breakpoint or an exception.
+</p><p>Now to the breakpoints. The debugger is an interpreter so it can stop at any point you like. Suppose you have this function:
+</p>
+<pre>
+f:{x*y; x+y; x-y; x%y}
+</pre>
+<p>and you want to stop at the third expression. First you need to print this function to see the line number of this expression using .d.pf:
+</p>
+<pre>
+q)f:{x*y; x+y; x-y; x%y}
+q).d.pf f
+0:  x * y;
+1:  x+y;
+2:  x-y;
+3: &#160;: x&#160;% y
+</pre>
+<p>The line number is 2. Now you may add a breakpoint using .d.ba:
+</p>
+<pre>
+q).d.ba[f;2]
+q).d.pf[f]
+0:  x * y;
+1:  x+y;
+2:* x-y;
+3: &#160;: x&#160;% y
+</pre>
+<p>Note that breakpoints are marked with * in the .d.pf output. Now you may run this function:
+</p>
+<pre>
+q).d.r[f;(10;20)]
+Breakpoint
+Top of the stack:
+.d.st[0]: Fn call, line: 0:&#160;: &quot;Entry point&quot;
+Current line: 2: x-y;
+</pre>
+<p>The debugger has stopped at the breakpoint. Now you may use step functions to move in code.
+</p><p>All other breakpoint related functions:
+</p>
+<pre>
+.d.pf[func] - shows the function with the breakpoint line numbers, bps are marked with *
+.d.ba[`;line numbers] - add breakpoints to lines in the current function
+.d.ba[func;line numbers] - add breakpoints to lines in the function
+.d.bd[func;line numbers] - delete breakpoints from lines in the function
+.d.bs[func;line numbers] - set breakpoints in the function to these lines
+.d.bc[] - clear all breakpoints
+</pre>
+<p>The last useful function is .d.h[] - it will print a short help on all other functions.
+</p>
+<h2> <span class="mw-headline" id="Tuning"> Tuning </span></h2>
+<p>The debugger has some important parameters that can affect it.
+</p><p>.d.e - is the number of exceptions the debugger will handle silently. Sometime Q catch blocks do not allow you to see the real cause of the problem, in this case you may set .d.e to 0 and the debugger will stop on the first exception ignoring the catch blocks. You may then set it to 1 and use .d.cont to continue the execution. Also you can set .d.e to whatever you want - the debugger decrements it on each exception.
+</p><p>.d.timeout - 5 minutes by default. The debugger will stop after 5 minutes whatever it is doing. Thus you are guaranteed that it will not hang forever. This is especially useful when you debug remotely. You may use .d.cont to continue, timeout doesn't break the debugger's state.
+</p><p>.d.noadv - 1b by default. The debugger will skip the internals of all adverbs though it still may stop inside them on exceptions or breakpoints. This option allows you to not debug the debugger functions.
+</p><p>.d.na - 0b by default. If this option is 1b the debugger will execute all functions natively outside the debugger. You may use this val to walk over functions that take too much time if executed in the debugger. That is: set .d.na to 1b, step over some function, set it to 0b again.
+</p>
+<h2> <span class="mw-headline" id="Remote_debugging"> Remote debugging </span></h2>
+<p>All step functions support the remote debugging. Connect to the remote process and execute the commands as usual. They will return either the final result or a string with the debugger state.
+</p><p>Another option - use some frontend to debug.q. Currently there are two options - WEB 2.0 based debug.html and QPad editor (www.qinsightpad.com).
+</p><p><br />
+</p>
+<h2> <span class="mw-headline" id="WEB_front_end_to_debug.q"> WEB front end to debug.q </span></h2>
+<p>Step functions provide very little information about the environment, also it is difficult to navigate the call stack and inspect variables. The raw debugger functions are very useful when you want to quickly determine the cause of some exception, when you want to understand some complicated piece of code you may try to use debug.html.
+</p><p>debug.html provides the complete WEB interface to debug.q with many useful features. It uses AJAX requests to retrieve data so it looks like a WEB App.
+</p><p>To use it you need to put the following files in the .h.HOME directory (or point this variable to this directory):
+</p>
+<pre>
+debug.html - the main file
+jquery-1.5.1.min.js - JQuery
+jquery.blockUI.js - JQuery lib
+qparse.q - optional, it is used to colorize Q-html.
+</pre>
+<p>Then of course debug.q should be loaded.
+</p><p>Important: debug.html relies on the default .z.ph behavior. It should be possible to do 3 things: 1) load html and js files 2) execute the init function .d.html via a web request 3) execute ping calls "1" on each debug request. Ping calls allow you to refuse the service if you have some access rights management functions.
+</p><p>Debug.html will substitute .z.ph with its own function and call the old .z.ph on all debugger unrelated requests so it will not disrupt the ordinary requests from other users.
+</p><p>Debug.html should work in the latest IE and Firefox, other browsers were not tested. It is unlikely though that there will be major problems as JQuery is used for most tasks.
+</p><p>Suppose we are already in the directory with debug.html files then:
+</p>
+<pre>
+q)\l debug.q
+q).h.HOME:&quot;./&quot;
+q)\p 5566
+</pre>
+<p>It is not necessary to set the port if it is already set. Now in the browser:
+</p>
+<pre>
+http:/localhost:5566/debug.html
+</pre>
+<p>You should see the following picture:
+<a href="../File_Deb1.html" class="image"><img alt="Deb1.png" src="../../mediawiki/images/7/79/Deb1.png" width="896" height="689" /></a>
+</p><p>To start the debugging enter an expression into the text field and press Run or Prepare. This buttons correspond to .d.r and .d.i functions. Note that the text field supports selection. You may apply run or prepare only to the selected expression. Also you may use Exec button to execute arbitrary piece of code natively. The result will be printed into Output window.
+</p><p>As an example enter this function and press run:
+</p>
+<pre>
+{{{[arg] if[arg=50; '&quot;break&quot;]; x*x}[x]+1} each til 100} 1
+</pre>
+<p>The debugger will stop on the exception and you'll see this:
+<a href="../File_Deb2.html" class="image"><img alt="Deb2.png" src="../../mediawiki/images/0/0c/Deb2.png" width="1089" height="759" /></a>
+</p><p>There are 4 windows. The top-left is Stack window. The cause of the break is printed there, the name of the current function and the top stack entries. You can check any function in the stack by double clicking on it. The function will be printed in Code window and its arguments will be printed in Variables window.
+</p><p>Try to double click on .d.each function entry. You'll see the func body and all current parameters and local variables.
+</p><p>Variables window is on top-right. It contains all local variables and arguments of the current function. If you use step buttons changed variables will be highlighted.
+</p><p>Code window is bottom-left. It is very interactive. You may click on anything in it and it will be printed in Output window. If you are still in .d.each function try to click on "r", its content will be printed. Try to click on .d.each itself, the function's body also will be printed.
+</p><p>If you double click some line in Code window you will set or remove a breakpoint. Try to double click on some "if" in .d.each function.
+</p><p>As you can see there are two colored lines now. The green one is the current line, the red one is the breakpoint.
+</p><p>Now press Refresh button and the state of all windows (except Output) will be restored. You may press Refresh anytime to refresh the state.
+</p><p>Press Show Bps to see all breakpoints. You will see the breakpoint in .d.each function. Now you may click on it and the function will be printed in Code window. You may delete this breakpoint if you want. But better press Run again. This time you will be stopped on the breakpoint in .d.each. Double click on the green line to remove the breakpoint (red has lower priority than green) and press Continue. You'll stop on the exception again.
+</p><p>You may click on anything in Output window as well. Click on "arg" in Code window, it will be printed in Output window (50). Click on 50 and it will be evaluated and printed back.
+</p><p>Finally press Help button. You'll see the short help on all buttons and windows.
+</p><p>Note that the debug screen will be blocked during the execution of the debug functions.
+</p><p>Note that sometimes large tables are abbreviated and a short notice is printed below. If you click on this notice you'll see the table in a bigger window.
+</p>
+<h2> <span class="mw-headline" id="Files_.26_contacts"> Files &amp; contacts </span></h2>
+<p>All files can be loaded from here: <a href="http://code.kx.com/wsvn/code/contrib/akozyrev/debug/" class="extiw" title="source:contrib/akozyrev/debug/">Q Debugger</a>
+</p><p>Please send bugs and suggestions to quintanar401 at gmail.com
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 148/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:505-0!*!0!!en!2!edit=0 and timestamp 20131013192920 -->
+<div class="printfooter">
+Retrieved from "<a href="debugQ.html">http://code.kx.com/wiki/Contrib/debugQ</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Contrib/debugQ" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="debugQ.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Contrib/debugQ&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="debugQ.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/debugQ&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/debugQ&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Contrib/debugQ" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Contrib/debugQ" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/debugQ&amp;oldid=2839" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Contrib%2FdebugQ" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Contrib%2FdebugQ&amp;oldid=2839&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/debugQ&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 12 April 2013, at 21:18.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Contrib/debugQ", "wgTitle": "Contrib/debugQ", "wgAction": "view", "wgArticleId": 505, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2839, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.113 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Contrib/debugQ by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

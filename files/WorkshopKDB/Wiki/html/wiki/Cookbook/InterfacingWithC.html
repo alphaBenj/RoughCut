@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/InterfacingWithC by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/InterfacingWithC - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_InterfacingWithC skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/InterfacingWithC</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Interfacing_with_Kdb.2B_from_C"><span class="tocnumber">1</span> <span class="toctext">Interfacing with Kdb+ from C</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Introduction"><span class="tocnumber">1.1</span> <span class="toctext">Introduction</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#The_K_object_structure"><span class="tocnumber">1.2</span> <span class="toctext">The K object structure</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Examining_K_Objects"><span class="tocnumber">1.3</span> <span class="toctext">Examining K Objects</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Nulls_and_Infinities"><span class="tocnumber">1.4</span> <span class="toctext">Nulls and Infinities</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Connecting_to_a_Kdb.2B_server"><span class="tocnumber">1.5</span> <span class="toctext">Connecting to a Kdb+ server</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Managing_memory_and_Reference_Counting"><span class="tocnumber">1.6</span> <span class="toctext">Managing memory and Reference Counting</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Creating_scalar_values"><span class="tocnumber">1.7</span> <span class="toctext">Creating scalar values</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Creating_lists"><span class="tocnumber">1.8</span> <span class="toctext">Creating lists</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Strings_and_datetimes"><span class="tocnumber">1.9</span> <span class="toctext">Strings and datetimes</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#What.27s_the_difference_between_a_symbol_and_a_char_vector.3F"><span class="tocnumber">1.10</span> <span class="toctext">What's the difference between a symbol and a char vector?</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Creating_dictionaries_and_tables"><span class="tocnumber">1.11</span> <span class="toctext">Creating dictionaries and tables</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Bulk_transfers"><span class="tocnumber">1.12</span> <span class="toctext">Bulk transfers</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Error_Signaling_and_Catching"><span class="tocnumber">1.13</span> <span class="toctext">Error Signaling and Catching</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Return_Values"><span class="tocnumber">1.14</span> <span class="toctext">Return Values</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Callbacks"><span class="tocnumber">1.15</span> <span class="toctext">Callbacks</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Serialization.2FDeserialization"><span class="tocnumber">1.16</span> <span class="toctext">Serialization/Deserialization</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Miscellaneous"><span class="tocnumber">1.17</span> <span class="toctext">Miscellaneous</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Windows_and_the_loadlibrary_api"><span class="tocnumber">1.18</span> <span class="toctext">Windows and the loadlibrary api</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Example"><span class="tocnumber">1.19</span> <span class="toctext">Example</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Interfacing_with_Kdb.2B_from_C"> Interfacing with Kdb+ from C </span></h1>
+<h2> <span class="mw-headline" id="Introduction"> Introduction </span></h2>
+<p>The best way to understand the underpinnings of KDB+, and to interact with it from C is to start with the header file available from <a href="http://code.kx.com/wsvn/code/kx/kdb+/c/c/k.h" class="extiw" title="source:kx/kdb+/c/c/k.h">here</a>.
+</p><p>This is the  file you will need to include in your C or C++ code in order to interact with Kdb+ from a low-level.
+</p><p>Note that the k struct changed with the release of v3.0, and if you are compiling using the c library (c.o/c.dll) stamped on or after 2012.06.25 you should ensure you use the correct k struct by defining KXVER accordingly. e.g. gcc -D KXVER=3 ... If you need to link against earlier releases of the c library, you can obtain those files from the svn repository <a href="http://code.kx.com/wsvn/code/kx/kdb+/l32/c.o?op=revision&amp;rev=1442" class="external autonumber" rel="nofollow">[1]</a>, revision 1442. 
+</p><p>Lets explore the basic types and their synonyms that you'll commonly encounter when programming at this level. First though, it is worth noting the size of data types in 32 versus 64 bit operating systems to avoid common mistake.
+</p><p>64 bit Linux is an "LP64" operating system. This means that an int is 32 bits, while long, long long and pointers are 64 bits. The same is true for Solaris, AIX, HP-UX, and Mac OS X. Microsoft Windows on the EM64T and AMD64 architectures use a different model, LLP64. This is an attempt to maintain better compatibility with existing 32 bit source code which assumes long will be exactly 32 bits. In the LLP64 model, int and long are 32 bit while long long and pointers are 64 bit. Single precision floating point and double precision are always 32 and 64
+bits respectively in all the data type models (ignoring extended or non-standard floating point formats on certain architectures).
+</p><p>To provide succinct composable names, the Kdb+ header defines synonyms for the common types as in the following table:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Type</td>
+<td>Synonym
+</td></tr>
+<tr>
+<td>16 bit int</td>
+<td>H
+</td></tr>
+<tr>
+<td>32 bit int</td>
+<td>I
+</td></tr>
+<tr>
+<td>64 bit int</td>
+<td>J
+</td></tr>
+<tr>
+<td>char*</td>
+<td>S
+</td></tr>
+<tr>
+<td>unsigned char</td>
+<td>G
+</td></tr>
+<tr>
+<td>char</td>
+<td>C
+</td></tr>
+<tr>
+<td>32 bit float</td>
+<td>E
+</td></tr>
+<tr>
+<td>64 bit double</td>
+<td>F
+</td></tr>
+<tr>
+<td>void</td>
+<td>V
+</td></tr></table>
+<p>With this basic knowledge we can now tackle the types available in Kdb+ and their matching C types and accessor functions provided in the C interface. We will see shortly how the accessor functions are used in practice.
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Kdb+ type name</td>
+<td>Kdb+ type number</td>
+<td>Encoded type name</td>
+<td>C type</td>
+<td>Size in bytes</td>
+<td>Interface list accessor function
+</td></tr>
+<tr>
+<td>mixed list</td>
+<td>0</td>
+<td>-</td>
+<td>K</td>
+<td>-</td>
+<td>kK
+</td></tr>
+<tr>
+<td>boolean</td>
+<td>1</td>
+<td>KB</td>
+<td>char</td>
+<td>1</td>
+<td>kG
+</td></tr>
+<tr>
+<td>guid</td>
+<td>2</td>
+<td>UU</td>
+<td>U</td>
+<td>16</td>
+<td>kU
+</td></tr>
+<tr>
+<td>byte</td>
+<td>4</td>
+<td>KG</td>
+<td>char</td>
+<td>1</td>
+<td>kG
+</td></tr>
+<tr>
+<td>short</td>
+<td>5</td>
+<td>KH</td>
+<td>short</td>
+<td>2</td>
+<td>kH
+</td></tr>
+<tr>
+<td>int</td>
+<td>6</td>
+<td>KI</td>
+<td>int</td>
+<td>4</td>
+<td>kI
+</td></tr>
+<tr>
+<td>long</td>
+<td>7</td>
+<td>KJ</td>
+<td>int64_t</td>
+<td>8</td>
+<td>kJ
+</td></tr>
+<tr>
+<td>real</td>
+<td>8</td>
+<td>KE</td>
+<td>float</td>
+<td>4</td>
+<td>kE
+</td></tr>
+<tr>
+<td>float</td>
+<td>9</td>
+<td>KF</td>
+<td>double</td>
+<td>8</td>
+<td>kF
+</td></tr>
+<tr>
+<td>char</td>
+<td>10</td>
+<td>KC</td>
+<td>char</td>
+<td>1</td>
+<td>kC
+</td></tr>
+<tr>
+<td>symbol</td>
+<td>11</td>
+<td>KS</td>
+<td>char*</td>
+<td>4 or 8</td>
+<td>kS
+</td></tr>
+<tr>
+<td>timestamp</td>
+<td>12</td>
+<td>KP</td>
+<td>int64_t</td>
+<td>8</td>
+<td>kJ
+</td></tr>
+<tr>
+<td>month</td>
+<td>13</td>
+<td>KM</td>
+<td>int</td>
+<td>4</td>
+<td>kI
+</td></tr>
+<tr>
+<td>date</td>
+<td>14</td>
+<td>KD</td>
+<td>int</td>
+<td>4</td>
+<td>kI (days from 2000.01.01)
+</td></tr>
+<tr>
+<td>datetime</td>
+<td>15</td>
+<td>KZ</td>
+<td>double</td>
+<td>8</td>
+<td>kF (days from 2000.01.01)
+</td></tr>
+<tr>
+<td>timespan</td>
+<td>16</td>
+<td>KN</td>
+<td>int64_t</td>
+<td>8</td>
+<td>kJ
+</td></tr>
+<tr>
+<td>minute</td>
+<td>17</td>
+<td>KU</td>
+<td>int</td>
+<td>4</td>
+<td>kI
+</td></tr>
+<tr>
+<td>second</td>
+<td>18</td>
+<td>KV</td>
+<td>int</td>
+<td>4</td>
+<td>kI
+</td></tr>
+<tr>
+<td>time</td>
+<td>19</td>
+<td>KT</td>
+<td>int</td>
+<td>4</td>
+<td>kI (milliseconds)
+</td></tr>
+<tr>
+<td>table/flip</td>
+<td>98</td>
+<td>XT</td>
+<td>-</td>
+<td>-</td>
+<td>x-&gt;k
+</td></tr>
+<tr>
+<td>dict/table with primary keys</td>
+<td>99</td>
+<td>XD</td>
+<td>-</td>
+<td>-</td>
+<td>kK(x)[0] for keys and kK(x)[1] for values
+</td></tr>
+<tr>
+<td>error</td>
+<td>-128</td>
+<td>-</td>
+<td>char*</td>
+<td>4 or 8</td>
+<td>kS
+</td></tr></table>
+<p>Note that the type numbers given are for vectors of that type. For example, 9 for vectors
+of the Kdb+ type float. By convention, the negative value is a scalar: -9 is the type of a scalar float value.
+</p>
+<h2> <span class="mw-headline" id="The_K_object_structure"> The K object structure </span></h2>
+<p>The Kdb+ types are all encapsulated at the C level as "K objects". Recall that k is the low-level language underlying the q language in Kdb+. K objects are all instances of the
+following structure (note this is technically defining K objects as pointers to the the k0 structure but we'll conflate the terms and refer to K objects as the actual instance).
+</p>
+<pre>
+typedef struct k0 {
+  I r;                   // The object's reference count
+  H t, u;                // The object's type and attribute flags
+  union {                // The data payload is contained within this union.
+     // The scalars are held in the following members:
+     G g;
+     H h;
+     I i;
+     J j;
+     E e;
+     F f;
+     S s;
+     // The following members are used for more complex data.
+     struct k0*k;
+     struct {
+       I n;
+       G G0[1];
+     };
+  };
+}*K;
+</pre>
+<p>This struct has been modified for v3.0, the new members (m and a) are for kdb+ internal use.
+</p><p>As an exercise, it is instructive to count the minimum and maximum number of bytes a K object can use on your system taking into account any padding or alignment constraints.
+</p><p>So, given a K object x, we can use the accessors noted in the table above to access elements of the object. For example, given a K object containing a vector of floats, we can can access kF(x)[42] to get the 42nd element of the vector. For accessing scalars, use the following accessors:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>byte</td>
+<td>x-&gt;g
+</td></tr>
+<tr>
+<td>short</td>
+<td>x-&gt;h
+</td></tr>
+<tr>
+<td>int</td>
+<td>x-&gt;i
+</td></tr>
+<tr>
+<td>long</td>
+<td>x-&gt;j
+</td></tr>
+<tr>
+<td>real</td>
+<td>x-&gt;e
+</td></tr>
+<tr>
+<td>float</td>
+<td>x-&gt;f
+</td></tr>
+<tr>
+<td>symbol</td>
+<td>x-&gt;s
+</td></tr></table>
+<h2> <span class="mw-headline" id="Examining_K_Objects"> Examining K Objects </span></h2>
+<p>If you are in a situation where you do know beforehand the type of the K objects, or you use to write a function that works over numerous types, it is useful to dispatch based on the type flag x-&gt;t for some K object x.
+</p><p>If x-&gt;t is negative then the object is a scalar and we should use the scalar accessors noted above. If x-&gt;t is greater than zero then we use the vector accessors as all the elements are of the same type (eg. x-&gt;t == 9 for a vector of Kdb+ floats).
+</p><p>A more interesting case is where x-&gt;t is exactly zero. This means that the K object contains a mixed list of other K objects. Each element in the list is a pointer to another K object. To access each element of the object x we use the kK object accessor. For example: kK(x)[42] to access the 42nd element of the mixed list.
+</p>
+<h2> <span class="mw-headline" id="Nulls_and_Infinities"> Nulls and Infinities </span></h2>
+<p>The next table provides the null and infinite immediate values for the Kdb+ types.
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Type</td>
+<td>Null</td>
+<td>Infinity
+</td></tr>
+<tr>
+<td>short</td>
+<td>0xFFFF8000</td>
+<td>0x7FFF
+</td></tr>
+<tr>
+<td>int</td>
+<td>0x80000000</td>
+<td>0x7FFFFFFF
+</td></tr>
+<tr>
+<td>long</td>
+<td>0x8000000000000000</td>
+<td>0x7FFFFFFFFFFFFFFF
+</td></tr>
+<tr>
+<td>float</td>
+<td>log(-1.0) on Windows or (0/0.0) on Linux</td>
+<td>-log(0.0) in Windows or (1/0.0) on Linux
+</td></tr></table>
+<p>Null objects can be created using ks(""),kh(nh),ki(ni),kj(nj),kp(" "), etc. The constants nh,ni,nj are defined in k.h.
+A null guid can be created with U g={0};ku(g);
+</p>
+<h2> <span class="mw-headline" id="Connecting_to_a_Kdb.2B_server"> Connecting to a Kdb+ server </span></h2>
+<p>We use the int khpu(host, port,username); function to connect to a Kdb+ server. Note you must call khpu before generating any K data, and the very first call to khpu must not be concurrent to other khpu calls. To initialise memory without making a connection, use khp("",-1);
+</p><p>It is highly recommended to use khpu and supply a meaningful username as this will help server administrators identify a user's connection.
+</p><p>The khp,khpu and khpun functions are for use in stand-alone applications only; they are not for use within a kdb+ server via a shared library. Hence, to avoid potential confusion, these functions have been removed from more recent releases of kdb+.
+</p><p>A timeout can be specified with function khpun, e.g.
+</p>
+<pre>
+ int c=khpun(&quot;localhost&quot;,1234,&quot;myname:mypassword&quot;,1000); // timeout in mS
+</pre>
+<p>Note that with the release of c.o with kdb+2.6, c.o now tracks whether the connection type (pre2.6, or 2.6+), and hence to close the connection you must call kclose (instead of close/closeSocket) - this will clean up the connection tracking and close the socket.
+</p><p>The k function is used to send messages over the connection. If a positive handle is used then the call is synchronous otherwise it is an asynchronous call.
+</p><p>For example:
+</p>
+<pre>
+int c = khpu(&quot;localhost&quot;, 1234,&quot;myusername:mypassword&quot;); // Connect to a Kdb+ server on the localhost port 1234 .
+k(-c,&quot;a:2+2&quot;,(K)0);             // Asynchronously set a to be 4 on the server.
+r = k(c,&quot;b:til 1000000&quot;,(K)0);  // Synchronously set b to be a list up to 1000000.
+r = k(c,(S)0); // read incoming asynch
+</pre>
+<p>Note that the object returned from an async set call must not be passed to r0.
+</p>
+<h2> <span class="mw-headline" id="Managing_memory_and_Reference_Counting"> Managing memory and Reference Counting </span></h2>
+<p>Although in Kdb+ memory is automatically managed for the programmer, when interfacing from C or C++ we must (as is traditional in those languages) manually manage memory. The following functions are provided to interface with the Kdb+ memory manager:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Increment the object's reference count</td>
+<td>r1(x)
+</td></tr>
+<tr>
+<td>Decrement the object's reference count</td>
+<td>r0(x)
+</td></tr></table>
+<p>A reference count indicates the usage of an object, allowing the same object to be used by more than one piece of code.
+</p><p>If you create a k object through one of the 'generator' functions (ki,kj,knk,etc), you automatically have a reference to that object.
+Once you have finished using that object, you should call r0(x).
+</p><p>e.g.
+</p>
+<pre>
+r0(ki(5));
+</pre>
+<p>creates and immediately destroys an integer object.
+</p><p>In the case of a function being called from Q
+</p>
+<pre>
+K myfunc(K x)
+{
+    return ki(5);
+}
+</pre>
+<p>the object is returned to Q, and Q will eventually decrement the reference count.
+</p><p>In this scenario, a function being called from Q, the arg x from Q is passed to the c function. If it is to be returned to Q, the reference count must be incremented.
+</p>
+<pre>
+K myfunc(K x)
+{
+    return r1(x);
+}
+</pre>
+<p>The function k, as in
+</p>
+<pre>
+K r=k(handle,&quot;functionname&quot;,params,(K)0);
+</pre>
+<p>requires a little more explanation.
+</p><p>If the handle is &gt;=0, it is a generator function, and can return 0 (indicating a network error) or a pointer to a k object. If that object has type -128, it indicates an error, accessible as a null terminated string in r-&gt;s. When finished using this object, it should be freed through calling r0(r).
+</p><p>If the handle is &lt;0, this is for async messaging, and the return value can be either 0 (network error) or non-zero (ok). This result should NOT be passed to r0(r).
+</p><p>K objects as parameters to the k function call will have their reference counts automatically decremented during the return from that call. To continue to use the object later in that c function, after the k call, increment the reference count before call, e.g.
+</p>
+<pre>
+K r=k(handle,&quot;functionname&quot;,r1(param),(K)0);
+</pre>
+<p>It is absolutely vital to increment and decrement when adding or removing references to values that should be managed by the Kdb+ runtime in order to avoid memory leaks or access faults due to double frees.
+</p><p>Note that k objects must be freed from the thread they are allocated within, and m9() should be called when the thread is about to complete, freeing up memory allocated for that thread's pool.
+</p><p>When a k object is created, it usually has a reference count of 0 - exceptions are common constants such as (::) which may vary in their current reference count, as they may be used by other areas of the c-api library or kdb+. If r0 happens to be passed a k object with a reference count of 0, that object's memory is freed (returned to an internal pool). Be aware that if a reference count is &gt;0, you should very likely NOT change the data stored in that object as it is being referenced by another piece of code which may not expect the object to change - in this case, create a new copy of the object, and change that.
+</p><p>If in doubt, the current reference count can be seen in c with
+</p>
+<pre>
+printf(&quot;Reference count for x is&#160;%d\n&quot;,x-&gt;r);
+</pre>
+<p>and in q with
+</p>
+<pre>
+    -16!x
+</pre>
+<h2> <span class="mw-headline" id="Creating_scalar_values"> Creating scalar values </span></h2>
+<p>To create scalar values the following functions are available. Function ka creates an atom of the given type, and the rest create an atom with the given value:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Create an atom</td>
+<td>K ka(I);
+</td></tr>
+<tr>
+<td>Create a boolean</td>
+<td>K kb(I);
+</td></tr>
+<tr>
+<td>Create a guid</td>
+<td>K ku(U);
+</td></tr>
+<tr>
+<td>Create a byte</td>
+<td>K kg(I);
+</td></tr>
+<tr>
+<td>Create a short</td>
+<td>K kh(I);
+</td></tr>
+<tr>
+<td>Create an int</td>
+<td>K ki(I);
+</td></tr>
+<tr>
+<td>Create a long</td>
+<td>K kj(J);
+</td></tr>
+<tr>
+<td>Create a real</td>
+<td>K ke(F);
+</td></tr>
+<tr>
+<td>Create a float</td>
+<td>K kf(F);
+</td></tr>
+<tr>
+<td>Create a char</td>
+<td>K kc(I);
+</td></tr>
+<tr>
+<td>Create a symbol</td>
+<td>K ks(S);
+</td></tr>
+<tr>
+<td>Create a timestamp</td>
+<td>K ktj(-KP,J);
+</td></tr>
+<tr>
+<td>Create a time</td>
+<td>K kt(I);
+</td></tr>
+<tr>
+<td>Create a date</td>
+<td>K kd(I);
+</td></tr>
+<tr>
+<td>Create a timespan</td>
+<td>K ktj(-KN,J);
+</td></tr>
+<tr>
+<td>Create a datetime</td>
+<td>K kz(F);
+</td></tr></table>
+<p>An example of creating an atom:
+</p>
+<pre>
+K z = ka(-KI);
+z-&gt;i = 42;
+</pre>
+<p>Equivalently:
+</p>
+<pre>
+K z = ki(42);
+</pre>
+<h2> <span class="mw-headline" id="Creating_lists"> Creating lists </span></h2>
+<p>To create lists use the following functions:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Create a simple list</td>
+<td>K ktn(type,length);
+</td></tr>
+<tr>
+<td>Create a mixed list</td>
+<td>K knk(n,x,y,z);
+</td></tr></table>
+<p>Length must be in the range 0..2 billion. It may NOT be 0N (ni, null int).
+</p><p>For example to create an integer list of 5 we say ktn(KI,5). A mixed list of 5 elements can be created with ktn(0,5) but note that each element MUST be initialized before further usage; A convenient shortcut to creating a mixed list when all elements already exist upon creation of the list is to use knk, e.g. knk(2,kf(2.3),ktn(KI,10)). As we've noted, the type of a mixed list is 0, and the elements are pointers to other K objects - hence it is mandatory to initialize those n elements either via knk params, or explicitly setting each element when created with ktn(0,n) .
+</p><p>To append to ("join") lists we use the following:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Join an atom to a list</td>
+<td>K ja(K*,V*);
+</td></tr>
+<tr>
+<td>Join a string to a list</td>
+<td>K js(K*,S);
+</td></tr>
+<tr>
+<td>Join another K object to a list</td>
+<td>K jk(K*,K);
+</td></tr></table>
+<p>the join functions assume there are no other references to the list, as the list may need to be reallocated during the call.
+</p>
+<h2> <span class="mw-headline" id="Strings_and_datetimes"> Strings and datetimes </span></h2>
+<p>Strings and datetimes are special cases and extra utility functions are provided:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Create a string</td>
+<td>K kp(string);
+</td></tr>
+<tr>
+<td>Create a string of length n</td>
+<td>K kpn(string, n);
+</td></tr>
+<tr>
+<td>Intern a string</td>
+<td>S ss(string);
+</td></tr>
+<tr>
+<td>Intern n chars from a string</td>
+<td>S sn(string, n);
+</td></tr>
+<tr>
+<td>Create a Kdb+ date from an integer</td>
+<td>int dj(int n);
+</td></tr>
+<tr>
+<td>Encode a year/month/day as an int</td>
+<td>I ymd(year,month,day);
+</td></tr></table>
+<p>Recall that unix time is the number of seconds since 1970.01.01T00:00:00 while kdb+ time types have an epoch of 2000.01.01T00:00:00 - as can be seen with the following q code
+</p>
+<pre>
+q)`long$`timestamp$2000.01.01
+0j
+q)`int$2000.01.01
+0
+</pre>
+<p>Utilities to convert between unix and Kdb+ time types may be defined as below. 
+</p>
+<pre>
+F zu(I u){return u/8.64e4-10957;}   // kdb+ datetime from unix
+I uz(F f){return 86400*(f+10957);}  // unix from kdb+ datetime
+J pu(I u){return 8.64e13*(u/8.64e4-10957);} // kdb+ timestamp from unix, use ktj(Kj,n) to create timestamp from n
+I up(J f){return (f/8.64e13+10957)*8.64e4;}  // unix from kdb+ timestamp
+struct tm* lt(int kd) { time_t t = uz(kd); return localtime(&amp;t); }
+struct tm* lt_r(int kd, struct tm* res) { time_t t = uz(kd); return localtime_r(&amp;t, res); } 
+struct tm* gt(int kd) { time_t t = uz(kd); return gmtime(&amp;t); }
+struct tm* gt_r(int kd, struct tm* res) { time_t t = uz(kd); return gmtime_r(&amp;t, res); }
+char* fdt(struct tm* ptm, char* d) { strftime(d, 10, &quot;%Y.%m.%d&quot;, ptm); return d; }
+void tsms(unsigned ts,char*h,char*m,char*s,short*mmm) {*h=ts/3600000;ts-=3600000*(*h);*m=ts/60000;ts-=60000*(*m);*s=ts/1000;ts-=1000*(*s);*mmm=ts;}
+char* ftsms(unsigned ts, char* d){char h, m, s; short mmm; tsms(ts, &amp;h, &amp;m, &amp;s, &amp;mmm); sprintf(d, &quot;%02d:%02d:%02d.%03d&quot;, h, m, s, mmm); return d;}
+</pre>
+<h2> <span class="mw-headline" id="What.27s_the_difference_between_a_symbol_and_a_char_vector.3F"> What's the difference between a symbol and a char vector? </span></h2>
+<p>A symbol is a pointer to a location in an internal map of strings; that is symbols are interned zero terminated strings. On the other hand, a char vector is similar to an int vector and is instead a counted K vector as usual.
+</p><p>In order to create a symbol we must intern a string and then use the resulting pointer in further expressions.
+</p>
+<pre>
+K someSymbol = ks(ss(&quot;some symbol&quot;));
+K nullSymbol = ks(&quot;&quot;);
+</pre>
+<p>(As of version 2.4, <tt>ks</tt> will call <tt>ss</tt> internally.  It is still necessary to intern strings before storing them in a symbol vector, e.g. <tt>kS(v)[i] = ss("some symbol");</tt>.)
+</p>
+<h2> <span class="mw-headline" id="Creating_dictionaries_and_tables"> Creating dictionaries and tables </span></h2>
+<p>We can create dictionaries and tables from C using the following functions:
+</p>
+<table class="wikitable">
+
+<tr>
+<td>Create a dict</td>
+<td>K xD(K,K);
+</td></tr>
+<tr>
+<td>Create a table from a dict</td>
+<td>K xT(K);
+</td></tr>
+<tr>
+<td>Create a simple table from a keyed table</td>
+<td>K ktd(K);
+</td></tr></table>
+<p>Recall that a dictionary is a K object of type 99. It contains a list of two K objects; the keys and the values. We can use kK(x)[0] and kK(x)[1] to get these contained data. Also recall that a simple table (a "flip") is a K object of type 98. In terms of the K object, this is an atom that points to a dictionary. This means that to access the columns we can use the kK(x-&gt;k)[0] accessor and the kK(x-&gt;k)[1] for the values.
+</p><p>A table with primary keys is a dictionary which maps a simple table to another simple table. The following example shows the steps to create a table with primary keys:
+</p>
+<pre>
+K maketable(){
+  K c,d,e,v,key,val;
+/* table of primary keys */
+  c=ktn(KS,1);kS(c)[0]=ss(&quot;pid&quot;);
+  d=ktn(KS,3);kS(d)[0]=ss(&quot;ibm&quot;);kS(d)[1]=ss(&quot;gte&quot;);kS(d)[2]=ss(&quot;kvm&quot;);
+  v=knk(1,d);
+  key=xT(xD(c,v));
+/* table of values */
+  c=ktn(KS,2);kS(c)[0]=ss(&quot;amt&quot;);kS(c)[1]=ss(&quot;date&quot;);
+  d=ktn(KI,3);kI(d)[0]=100;kI(d)[1]=300;kI(d)[2]=200;
+  e=ktn(KD,3);kI(e)[0]=2;kI(e)[1]=3;kI(e)[2]=5;
+  v=knk(2,d,e);
+  val=xT(xD(c,v));
+  return xD(key,val);
+}
+</pre>
+<p>Although we can thus access the data using the already introduced accessors, you many find it easier to first convert it to a simple table before manipulating it in C.
+</p>
+<pre>
+/*
+   Get a keyed table by executing a query.
+*/
+K x = k(h, &quot;select sum size by sym&quot;, (K)0);
+
+/*
+   Convert the result to a simple table.
+   NB. x is no longer valid and has been deallocated.
+*/
+K y=ktd(x);
+
+/*
+   Note that if the ktd conversion fails for any reason,
+   it returns 0 and x is not freed.
+   since 2011-01-27, ktd always decrements ref count of input.
+*/
+if (0 == y)
+    (void) puts (&quot;x is still a keyed table because the conversion failed.&quot;);
+else
+    (void) puts (&quot;y is a simple table and x has been deallocated.&quot;);
+</pre>
+<h2> <span class="mw-headline" id="Bulk_transfers"> Bulk transfers </span></h2>
+<p>A kdb+tick feed handler can send one record at a time, like this
+</p>
+<pre>
+I kdbSocketHandle = khpu(&quot;localhost&quot;, 5010, &quot;username&quot;);
+if (kdbSocketHandle&#160;!= 0)
+{
+    K row = knk(3, ks((S)&quot;ibm&quot;), kf (93.5), ki(300));
+    k(-kdbSocketHandle, &quot;.u.upd&quot;, ks((S)&quot;trade&quot;), row, (K)0);
+    closesocket(kdbSocketHandle);
+}
+</pre>
+<p>or send many record at a time:
+</p>
+<pre>
+int n = 100;
+K x = knk(3, ktn(KS, n), ktn(KF, n), ktn(KI, n));
+for(int i=0; i&lt;n&#160;; i++) {
+    kS(xK[0])[i] = ss((S)...);
+    kF(xK[1])[i] = ...;
+    kI(xK[2])[i] = ...;
+}
+k(-kdbSocketHandle, &quot;.u.upd&quot;, ks((S)&quot;trade&quot;), x, (K)0);
+</pre>
+<p>This example assumes rows with three fields, symbol, price and size.
+</p>
+<h2> <span class="mw-headline" id="Error_Signaling_and_Catching"> Error Signaling and Catching </span></h2>
+<p>To signal an error from your C code use the function <tt>krr(S);</tt>. A convenience function <tt>orr(S)</tt> can be used to signal system errors. It is similar to <tt>krr(S)</tt>, but it appends a system error message to the user provided string before passing it to <tt>krr</tt>.
+</p><p>To catch an error code from the results of a call to <tt>r=k(h, ..)</tt>, check the return type. If it is 0 (null), then a network error has occurred. If it has type -128, then the <tt>r-&gt;s</tt> will point to the error string.
+</p>
+<pre>
+K r=k(0, &quot;f&quot;, arg1, arg2, NULL);
+if(-128==r-&gt;t)
+  printf(&quot;error string:&#160;%s\n&quot;, r-&gt;s);
+</pre>
+<p>under some network error scenarios, errno can be used to obtain the details of the error.
+</p><p>e.g. perror("network");
+</p>
+<h2> <span class="mw-headline" id="Return_Values"> Return Values </span></h2>
+<p>If your own c function being called from q has nothing to return to q, it can return (K)0, e.g.
+</p>
+<pre>
+K doSomething(K x)
+{
+    // do something with x;
+    return (K)0;
+}
+</pre>
+<p>From a standalone c app, it can sometimes be convenient to return the idendity function (::). This atom can be created with
+</p>
+<pre>
+K identity(){
+  K id=ka(101);
+  id-&gt;g=0;
+  return id;
+}
+</pre>
+<h2> <span class="mw-headline" id="Callbacks"> Callbacks </span></h2>
+<p>The void sd0(I); and K sd1(I, K(*)(I)); functions are for use with callbacks and are available only within kdb+ itself, i.e. used from a shared library loaded into kdb+. The value of the file descriptor passed to sd1 must be 0&gt;fd&lt;1024.
+</p>
+<pre>
+sd1(d,f);
+</pre>
+<p>Puts the function  K f(I d){..} on the q mainloop given a socket d (or -d for nonblocking). The function f should return (K)0 or a pointer to a kobject and its reference count will be decremented.
+</p>
+<pre>
+sd0(d);
+</pre>
+<p>Removes the callback on that socket.
+</p><p>With linux, eventfds can be used with sd0. e.g. given a file efd.c
+</p>
+<pre>
+// compile with
+// gcc -shared -m64 -DKXVER=3 efd.c -o efd.so -fPIC
+#include&quot;k.h&quot;
+#include&lt;stdio.h&gt;
+#include&lt;sys/eventfd.h&gt;
+K callback(I d){K r;J a;R -1!=read(d,&amp;a,8)?r=k(0,&quot;onCallback&quot;,ki(d),kj(a),(K)0),r-&gt;t==-128?krr(r-&gt;s),r0(r),(K)0:r:(sd0(d),orr(&quot;read&quot;));}
+K newFd(K x){I d;R x-&gt;t!=-KJ?krr(&quot;type&quot;):(d=eventfd(x-&gt;j,0))==-1?orr(&quot;eventfd&quot;):sd1(d,callback);}
+K writeFd(K x,K y){R x-&gt;t!=-KI||y-&gt;t!=-KJ?krr(&quot;type&quot;):-1!=write(x-&gt;i,&amp;y-&gt;j,8)?0:(sd0(x-&gt;i),orr(&quot;write&quot;));}
+</pre>
+<p>and combined with appropriate q code, e.g.
+</p>
+<pre>
+q)newFd:(`$&quot;./efd&quot;)2:(`newFd;1)
+q)writeFd:(`$&quot;./efd&quot;)2:(`writeFd;2)
+q)fd:newFd 0 / arg is start value of eventfd counter
+q)onCallback:{0N!(x;y)}
+q)writeFd[fd;3] / increments the eventfd counter by 3, triggering the callback later
+</pre>
+<p>this demonstrates the deferred invocation of onCallback until kdb+ has at least finished processing the current handle/script.
+In situations where you can't hook a feedhandler's callbacks directly into sd1, on linux eventfd may be a viable option for you.
+Callbacks from sd1 are executed on the main thread of kdb+.
+</p><p>New in kdb+ 3.0 2013.04.04: K sd0x(I d,I f) same functionality as sd0(I d) but f specifies whether to close d. sd0 closes d.
+</p>
+<h2> <span class="mw-headline" id="Serialization.2FDeserialization"> Serialization/Deserialization </span></h2>
+<p>The K b9(I,K) and K d9(K) functions serialize and deserialize K objects.
+</p>
+<pre>
+b9(preserveEnumerations,kObject);
+</pre>
+<p>will generate a K byte vector which contains the serialized data for kObject. Since kdb+ v3.0, for shared libraries loaded into kdb+ the value for preserveEnumerations must be -1. For standalone applications binding with c.o/c.dll or shared libraries prior to v3.0 the values for preserveEnumerations can be
+</p>
+<pre>
+0 - unenumerate, block serialization of timespan and timestamp (For working with kdb+ versions prior to 2.6).
+1 - retain enumerations, allow serialization of timespan and timestamp. (Useful for passing data between threads).
+2 - unenumerate, allow serialization of timespan and timestamp
+3 - unenumerate, compress, allow serialization of timespan and timestamp
+</pre>
+<pre>
+d9(kObject);
+</pre>
+<p>will deserialize the byte stream in kObject returning a new kObject. If you are concerned that the byte vector that you wish to deserialize may be corrupted, call okx to verify it is well formed first.
+</p>
+<pre>
+  unsigned char bytes[]={0x01,0x00,0x00,0x00,0x0f,0x00,0x00,0x00,0xf5,0x68,0x65,0x6c,0x6c,0x6f,0x00}; // -8!`hello
+  K r,x=ktn(KG,sizeof(bytes));
+  memcpy(kG(x),bytes,sizeof(bytes));
+  int ok=okx(byteVector);
+  if(ok)
+    r=d9(byteVector);
+  else
+    error(&quot;bad data&quot;);
+</pre>
+<h2> <span class="mw-headline" id="Miscellaneous"> Miscellaneous </span></h2>
+<p>The <tt>K dot (K x, K y)</tt> function is the same as the q function .[x;y].
+</p>
+<pre>
+q).[{x+y};((1;2);(3;4))]
+4 6
+</pre>
+<p>The dynamic link, <tt>K dl(V* f, I n)</tt>, function takes a C function that would take n K objects as arguments and return a new K object and returns a q function.  It is useful, for example, to expose more than one function from an extension module:
+</p>
+<pre>
+#include &quot;k.h&quot;
+Z K1(f1){R r1(x);}
+Z K2(f2){R r1(y);}
+K1(lib){K y=ktn(0,2);x=ktn(KS,2);xS[0]=ss(&quot;f1&quot;);xS[1]=ss(&quot;f2&quot;);
+  kK(y)[0]=dl(f1,1);kK(y)[1]=dl(f2,2);R xD(x,y);}
+</pre>
+<p>With the above compiled into lib.so:
+</p>
+<pre>
+q).lib:(`:lib 2:(`lib;1))`
+q).lib.f1 42
+42
+q).lib.f2 . 42 43
+43
+</pre>
+<h2> <span class="mw-headline" id="Windows_and_the_loadlibrary_api"> Windows and the loadlibrary api </span></h2>
+<p>The kdb+ multithreaded c library (c.dll) uses static thread local storage, and is incompatible with the loadlibrary win32 api
+</p><p><a href="http://support.microsoft.com/kb/118816" class="external free" rel="nofollow">http://support.microsoft.com/kb/118816</a>
+</p><p>for details. Hence Kx also provides a single threaded version of this library as cst.dll.
+</p>
+<h2> <span class="mw-headline" id="Example"> Example </span></h2>
+<ul><li> <a href="http://code.kx.com/wsvn/code/contrib/wiki/csv.c" class="external text" rel="nofollow">csv.c</a> - csv export example in c
+</li></ul>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 375/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:29-0!*!0!!en!*!edit=0 and timestamp 20131013192906 -->
+<div class="printfooter">
+Retrieved from "<a href="InterfacingWithC.html">http://code.kx.com/wiki/Cookbook/InterfacingWithC</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../Category_Interfaces.html" title="Category:Interfaces">Interfaces</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/InterfacingWithC" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="InterfacingWithC.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/InterfacingWithC&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="InterfacingWithC.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/InterfacingWithC&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/InterfacingWithC&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/InterfacingWithC" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/InterfacingWithC" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/InterfacingWithC&amp;oldid=2930" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FInterfacingWithC" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FInterfacingWithC&amp;oldid=2930&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/InterfacingWithC&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 4 October 2013, at 16:10.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/InterfacingWithC", "wgTitle": "Cookbook/InterfacingWithC", "wgAction": "view", "wgArticleId": 29, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2930, "wgCategories": ["Interfaces"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.225 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/InterfacingWithC by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

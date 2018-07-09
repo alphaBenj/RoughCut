@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/ODBC/qclient by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/ODBC/qclient - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_ODBC_qclient skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/ODBC/qclient</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#q_as_odbc_client"><span class="tocnumber">1</span> <span class="toctext">q as odbc client</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Installation"><span class="tocnumber">1.1</span> <span class="toctext">Installation</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Method"><span class="tocnumber">1.2</span> <span class="toctext">Method</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#ODBC_Functions"><span class="tocnumber">1.3</span> <span class="toctext">ODBC Functions</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#close"><span class="tocnumber">1.4</span> <span class="toctext">close</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#eval"><span class="tocnumber">1.5</span> <span class="toctext">eval</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#load"><span class="tocnumber">1.6</span> <span class="toctext">load</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#open"><span class="tocnumber">1.7</span> <span class="toctext">open</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#tables"><span class="tocnumber">1.8</span> <span class="toctext">tables</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#views"><span class="tocnumber">1.9</span> <span class="toctext">views</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Tracing"><span class="tocnumber">1.10</span> <span class="toctext">Tracing</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#See_also"><span class="tocnumber">1.11</span> <span class="toctext">See also</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="q_as_odbc_client"> q as odbc client </span></h1>
+<p>In Windows and Linux, you can use odbc to connect to a non-q database from q.
+</p>
+<h2> <span class="mw-headline" id="Installation"> Installation </span></h2>
+<p>To install, download <a href="http://code.kx.com/wsvn/code/kx/kdb+/c/odbc.k" class="external text" rel="nofollow">odbc.k</a> into the q directory, and the appropriate odbc.so:
+</p><p>For kdb+3.0 and later:
+</p>
+<ul><li><a href="http://code.kx.com/wsvn/code/kx/kdb+/l32/odbc.so" class="external text" rel="nofollow">odbc.so</a> for l32 into q/l32
+</li><li><a href="http://code.kx.com/wsvn/code/kx/kdb+/l64/odbc.so" class="external text" rel="nofollow">odbc.so</a> for l64 into q/l64
+</li><li><a href="http://code.kx.com/wsvn/code/kx/kdb+/w32/odbc.dll" class="external text" rel="nofollow">odbc.dll</a> for w32 into q/w32
+</li><li><a href="http://code.kx.com/wsvn/code/kx/kdb+/w64/odbc.dll" class="external text" rel="nofollow">odbc.dll</a> for w64 into q/w64
+</li></ul>
+<p>For kdb+2.8 and earlier (from subversion revision 1442):
+</p>
+<ul><li><a href="http://code.kx.com/wsvn/code/kx/kdb+/l32/odbc.so?rev=1442" class="external text" rel="nofollow">odbc.so</a> for l32 into q/l32
+</li><li><a href="http://code.kx.com/wsvn/code/kx/kdb+/l64/odbc.so?rev=1442" class="external text" rel="nofollow">odbc.so</a> for l64 into q/l64
+</li><li><a href="http://code.kx.com/wsvn/code/kx/kdb+/w32/odbc.dll?rev=1442" class="external text" rel="nofollow">odbc.dll</a> for w32 into q/w32
+</li><li><a href="http://code.kx.com/wsvn/code/kx/kdb+/w64/odbc.dll?rev=1442" class="external text" rel="nofollow">odbc.dll</a> for w64 into q/w64
+</li></ul>
+<p>Note that if you have a mixup of the library versions, you'll likely observe a 'type error when opening the connection.
+</p><p>Start q and load odbc.k - this populates the <tt>.odbc</tt> context.
+</p><p>For <b>unix</b> systems, please ensure you have <a href="http://www.unixodbc.com/" class="external text" rel="nofollow">odbc for unix</a> already installed, and that LD_LIBRARY_PATH includes the path to the odbc.so.
+</p>
+<pre>
+e.g. for 64bit linux
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$QHOME/l64
+</pre>
+<h2> <span class="mw-headline" id="Method"> Method </span></h2>
+<p>First open an odbc connection to a database. To do so, define a <a href="http://en.wikipedia.org/wiki/Database_Source_Name" class="external text" rel="nofollow">DSN</a> (database source name), and then connect to the DSN using <tt>.odbc.open</tt>. This returns a connection handle, which is used for subsequent odbc calls:
+</p>
+<pre>
+q)\l odbc.k
+q)h:.odbc.open `northwind               / open northwind database
+q).odbc.tables h                        / list tables
+`Categories`Customers`Employees`Order Details`Orders`Products..
+q).odbc.eval[h;&quot;select * from Orders&quot;]  / run a select statement
+OrderID CustomerID EmployeeID OrderDate  RequiredDate..
+-----------------------------------------------------..
+10248   WILMK      5          1996.07.04 1996.08.01  ..
+10249   TRADH      6          1996.07.05 1996.08.16  ..
+10250   HANAR      4          1996.07.08 1996.08.05  ..
+..
+</pre>
+<p>Alternatively, use <tt>.odbc.load</tt> to load the entire database into q:
+</p>
+<pre>
+q)\l odbc.k
+q).odbc.load `northwind                 / load northwind database
+q)Orders
+OrderID| CustomerID EmployeeID OrderDate  RequiredDate ..
+-------| ----------------------------------------------..
+10248  | WILMK      5          1996.07.04 1996.08.01   ..
+10249  | TRADH      6          1996.07.05 1996.08.16   ..
+10250  | HANAR      4          1996.07.08 1996.08.05   ..
+..
+</pre>
+<h2> <span class="mw-headline" id="ODBC_Functions"> ODBC Functions </span></h2>
+<pre>
+#!comment
+[#fkey fkey], [#fkeys fkeys], [#keys keys], [[#skey skey], [#xfkey xfkey]
+</pre>
+<p>Functions defined in the <tt>.odbc</tt> context are:
+</p><p><a href="#close">close</a>, <a href="#eval">eval</a>, <a href="#load">load</a>, <a href="#open">open</a>, <a href="#tables">tables</a>, <a href="#views">views</a>
+</p>
+<h2> <span class="mw-headline" id="close"> close </span></h2>
+<p>Closes an odbc connection handle:
+</p>
+<pre>
+q).odbc.close h
+</pre>
+<h2> <span class="mw-headline" id="eval"> eval </span></h2>
+<p>Evaluate a SQL expression:
+</p>
+<pre>
+q)sel:&quot;select CompanyName,Phone from Customers where City='London'&quot;
+q)b:.odbc.eval[h;sel]
+q)b
+CompanyName             Phone
+----------------------------------------
+&quot;Around the Horn&quot;       &quot;(171) 555-7788&quot;
+&quot;B's Beverages&quot;         &quot;(171) 555-1212&quot;
+&quot;Consolidated Holdings&quot; &quot;(171) 555-2282&quot;
+&quot;Eastern Connection&quot;    &quot;(171) 555-0297&quot;
+&quot;North/South&quot;           &quot;(171) 555-7733&quot;
+&quot;Seven Seas Imports&quot;    &quot;(171) 555-1717&quot;
+q)select from b where Phone like &quot;*1?1?&quot;
+CompanyName          Phone
+-------------------------------------
+&quot;B's Beverages&quot;      &quot;(171) 555-1212&quot;
+&quot;Seven Seas Imports&quot; &quot;(171) 555-1717&quot;
+</pre>
+<h2> <span class="mw-headline" id="load"> load </span></h2>
+<p>Loads an entire database into the session:
+</p>
+<pre>
+q).odbc.load `northwind
+q)\a
+`Categories`Customers`Employees`OrderDetails`Orders`Products`Shippers`Supplie..
+q)Shippers
+ShipperID| CompanyName        Phone
+---------| -----------------------------------
+1        | &quot;Speedy Express&quot;   &quot;(503) 555-9831&quot;
+2        | &quot;United Package&quot;   &quot;(503) 555-3199&quot;
+3        | &quot;Federal Shipping&quot; &quot;(503) 555-9931&quot;
+</pre>
+<h2> <span class="mw-headline" id="open"> open </span></h2>
+<p>Open a connection to a database, returning an odbc connection handle. For example:
+</p>
+<pre>
+q)h:.odbc.open `northwind
+q)h
+77932560j
+</pre>
+<h2> <span class="mw-headline" id="tables"> tables </span></h2>
+<p>List tables in database:
+</p>
+<pre>
+q).odbc.tables h
+`Categories`Customers`Employees`Order Details`Orders`Products...
+</pre>
+<h2> <span class="mw-headline" id="views"> views </span></h2>
+<p>List views in database:
+</p>
+<pre>
+q).odbc.views h
+`Alphabetical List of Products`Category Sales for 1997`Current...
+</pre>
+<h2> <span class="mw-headline" id="Tracing"> Tracing </span></h2>
+<p>ODBC has the capability to trace the ODBC api calls to a log file; sometimes this can be helpful in resolving unusual or erroneous behaviour. On unix, you can activate the tracing by adding 
+</p>
+<pre>
+[ODBC]
+Trace         = 1
+TraceFile     =/tmp/odbc.log
+</pre>
+<p>to the odbcinst.ini file which can typically be found in /etc or /usr/local/etc.
+</p><p>For tracing on windows, please see <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms711034(v=vs.85).aspx" class="external free" rel="nofollow">http://msdn.microsoft.com/en-us/library/windows/desktop/ms711034(v=vs.85).aspx</a>
+</p>
+<h2> <span class="mw-headline" id="See_also"> See also </span></h2>
+<ul><li><a href="qserver.html" title="Cookbook/ODBC/qserver">q as odbc server</a>
+</li></ul>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 145/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:373-0!*!0!!en!*!edit=0 and timestamp 20131013192942 -->
+<div class="printfooter">
+Retrieved from "<a href="qclient.html">http://code.kx.com/wiki/Cookbook/ODBC/qclient</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../../Category_Interfaces.html" title="Category:Interfaces">Interfaces</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/ODBC/qclient" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="qclient.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/ODBC/qclient&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="qclient.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ODBC/qclient&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ODBC/qclient&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../../mediawiki/skins/common/images/kxmedia.png);" href="../../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/ODBC/qclient" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/ODBC/qclient" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ODBC/qclient&amp;oldid=2756" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FODBC%2Fqclient" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FODBC%2Fqclient&amp;oldid=2756&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ODBC/qclient&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 31 January 2013, at 17:10.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/ODBC/qclient", "wgTitle": "Cookbook/ODBC/qclient", "wgAction": "view", "wgArticleId": 373, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2756, "wgCategories": ["Interfaces"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.089 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/ODBC/qclient by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

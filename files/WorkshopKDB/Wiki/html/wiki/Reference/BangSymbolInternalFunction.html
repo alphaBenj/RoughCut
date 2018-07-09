@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Reference/BangSymbolInternalFunction by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Reference/BangSymbolInternalFunction - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Reference_BangSymbolInternalFunction skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Reference/BangSymbolInternalFunction</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#.21_internal_function"><span class="tocnumber">1</span> <span class="toctext">! internal function</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#.E2.88.921.21x"><span class="tocnumber">1.1</span> <span class="toctext">−1!x</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#-2.21x"><span class="tocnumber">1.2</span> <span class="toctext">-2!x</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#.E2.88.923.21x"><span class="tocnumber">1.3</span> <span class="toctext">−3!x</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#.E2.88.924.21x"><span class="tocnumber">1.4</span> <span class="toctext">−4!x</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#.E2.88.925.21x"><span class="tocnumber">1.5</span> <span class="toctext">−5!x</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#-6.21x"><span class="tocnumber">1.6</span> <span class="toctext">-6!x</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#.E2.88.927.21x"><span class="tocnumber">1.7</span> <span class="toctext">−7!x</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#-8.21x"><span class="tocnumber">1.8</span> <span class="toctext">-8!x</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#-9.21x"><span class="tocnumber">1.9</span> <span class="toctext">-9!x</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#.E2.88.9210.21x"><span class="tocnumber">1.10</span> <span class="toctext">−10!x</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#.E2.88.9211.21x"><span class="tocnumber">1.11</span> <span class="toctext">−11!x</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#.E2.88.9211.21.28-1.3Bx.29"><span class="tocnumber">1.12</span> <span class="toctext">−11!(-1;x)</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#.E2.88.9211.21.28n.3Bx.29"><span class="tocnumber">1.13</span> <span class="toctext">−11!(n;x)</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#-11.21.28-2.3Bx.29"><span class="tocnumber">1.14</span> <span class="toctext">-11!(-2;x)</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#-12.21x"><span class="tocnumber">1.15</span> <span class="toctext">-12!x</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#.E2.88.9213.21x"><span class="tocnumber">1.16</span> <span class="toctext">−13!x</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#.E2.88.9214.21x"><span class="tocnumber">1.17</span> <span class="toctext">−14!x</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#.E2.88.9215.21x"><span class="tocnumber">1.18</span> <span class="toctext">−15!x</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#.E2.88.9216.21x"><span class="tocnumber">1.19</span> <span class="toctext">−16!x</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#.E2.88.9217.21x"><span class="tocnumber">1.20</span> <span class="toctext">−17!x</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#-18.21x"><span class="tocnumber">1.21</span> <span class="toctext">-18!x</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#.E2.88.9219.21x"><span class="tocnumber">1.22</span> <span class="toctext">−19!x</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#.E2.88.9220.210"><span class="tocnumber">1.23</span> <span class="toctext">−20!0</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#.E2.88.9221.21x"><span class="tocnumber">1.24</span> <span class="toctext">−21!x</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#.E2.88.9222.21x"><span class="tocnumber">1.25</span> <span class="toctext">−22!x</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#.E2.88.9223.21x"><span class="tocnumber">1.26</span> <span class="toctext">−23!x</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id=".21_internal_function">&#160;! internal function </span></h1>
+<p>! with a negative integer on the left hand side, calls a k internal function.
+</p>
+<blockquote><a href="../File_Warning.html" class="image"><img alt="Warning.png" src="../../mediawiki/images/c/cb/Warning.png" width="32" height="28" /></a> 
+-n! bindings are subject to change, if a cover function is provided in the .q or .Q locales use that instead!</blockquote>
+<div class="center"><div class="floatnone"><a href="../File_Goto.html" class="image" title="Neal Stephenson thinks it&#39;s cute to name his labels &#39;dengo&#39;"><img alt="Neal Stephenson thinks it&#39;s cute to name his labels &#39;dengo&#39;" src="../../mediawiki/images/4/4c/Goto.png" width="740" height="201" /></a></div></div>
+<p>these should rarely, if ever, be used, but since it is useful to be able to recognise them when seen in the wild, here is a partial list:
+</p>
+<h2> <span class="mw-headline" id=".E2.88.921.21x"> −1!x  </span></h2>
+<p>see/use <a href="hsym.html" title="Reference/hsym">hsym</a>
+</p>
+<h2> <span class="mw-headline" id="-2.21x">  -2!x  </span></h2>
+<p>see/use <a href="attr.html" title="Reference/attr">attr</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.923.21x"> −3!x  </span></h2>
+<p>returns the string representation of x.
+</p><p>strictly this is .Q.s1, but it's better to use <a href="../DotQ/DotQDots.html" title="DotQ/DotQDots">.Q.s</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.924.21x"> −4!x </span></h2>
+<p>returns the list of q tokens found in string x (note the q parsing of names with embedded underscores)
+</p>
+<pre>
+q)-4!&quot;select this from that&quot;
+&quot;select&quot;
+,&quot; &quot;
+&quot;this&quot;
+,&quot; &quot;
+&quot;from&quot;
+,&quot; &quot;
+&quot;that&quot;
+
+q)-5!&quot;select this from that&quot; / compare with −5!
+?
+`that
+()
+0b
+(,`this)!,`this
+
+q)-4!&quot;a variable named aa_bb&quot;
+,&quot;a&quot;
+,&quot; &quot;
+&quot;variable&quot;
+,&quot; &quot;
+&quot;named&quot;
+,&quot; &quot;
+&quot;aa_bb&quot;
+q)
+</pre>
+<h2> <span class="mw-headline" id=".E2.88.925.21x"> −5!x  </span></h2>
+<p>see/use <a href="parse.html" title="Reference/parse">parse</a>
+</p>
+<h2> <span class="mw-headline" id="-6.21x"> -6!x </span></h2>
+<p>see/use <a href="eval.html" title="Reference/eval">eval</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.927.21x"> −7!x  </span></h2>
+<p>see/use <a href="hcount.html" title="Reference/hcount">hcount</a>
+</p>
+<h2> <span class="mw-headline" id="-8.21x"> -8!x  </span></h2>
+<p>return the IPC byte representation of x
+</p>
+<pre>
+q)-8!1 2 3
+0x010000001a000000060003000000010000000200000003000000
+</pre>
+<h2> <span class="mw-headline" id="-9.21x"> -9!x  </span></h2>
+<p>create data from  IPC byte representation x
+</p>
+<pre>
+q)-9!-8!1 2 3
+1 2 3
+</pre>
+<blockquote><a href="../File_Warning.html" class="image"><img alt="Warning.png" src="../../mediawiki/images/c/cb/Warning.png" width="32" height="28" /></a> 
+don't</blockquote>
+<h2> <span class="mw-headline" id=".E2.88.9210.21x"> −10!x </span></h2>
+<p>resolve a type number to an enum vector and check if it's available
+</p>
+<pre>
+q)-10!20h
+1b
+q)ee:`a`b`c
+q)vv:`ee$`a`a`b
+q)type vv
+20h
+q)-10!20h
+0b
+</pre>
+<h2> <span class="mw-headline" id=".E2.88.9211.21x"> −11!x  </span></h2>
+<p>streaming execute over file x, used for example in kdb+tick to replay logfiles.
+</p><p>each chunk is read in turn and executed (see <a href="value.html" title="Reference/value">value</a>)
+</p><p>if successful the number of chunks executed is returned. If the end of the file is corrupt a 'badtail error is signalled.
+</p><p>see the utilities in <a href="http://code.kx.com/wsvn/code/contrib/simon/tickrecover/rescuelog.q" class="external text" rel="nofollow">rescuelog.q</a> for examples of usage.
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9211.21.28-1.3Bx.29"> −11!(-1;x) </span></h2>
+<p>same as −11!x
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9211.21.28n.3Bx.29"> −11!(n;x) </span></h2>
+<p>streaming execute the first n chunks of logfile x, return the number of chunks if successful.
+</p>
+<h2> <span class="mw-headline" id="-11.21.28-2.3Bx.29"> -11!(-2;x) </span></h2>
+<p>given a valid logfile, return the number of chunks.
+</p><p>given an invalid logfile, return the number of valid chunks and length of the valid part.
+</p>
+<pre>
+q)logfile:`:good.log / a non-corrupted logfile
+q)-11!(-2;logfile)
+26
+q)logfile:`:broken.log / a manually corrupted logfile
+q)upd:{[x;y]} / define a dummy upd file as components are of the form (`upd;data)
+q)-11!logfile
+'badtail
+q)-11!(-1;logfile)
+'badtail
+q)hcount logfile
+39623j
+q)-11!(-2;logfile)
+26
+35634j
+q)/ 26 valid chunks until position 35634 (out of 39623)
+q)-11!(26;logfile)
+26
+</pre>
+<h2> <span class="mw-headline" id="-12.21x"> -12!x </span></h2>
+<p>see/use <a href="../DotQ/DotQDothost.html" title="DotQ/DotQDothost">.Q.host</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9213.21x"> −13!x </span></h2>
+<p>see/use <a href="../DotQ/DotQDotaddr.html" title="DotQ/DotQDotaddr">.Q.addr</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9214.21x"> −14!x </span></h2>
+<p>handle " escaping in strings (used to prepare data for csv export)
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9215.21x"> −15!x   </span></h2>
+<p>see/use <a href="md5.html" title="Reference/md5">md5</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9216.21x"> −16!x </span></h2>
+<p>return the reference count for a variable
+</p>
+<pre>
+q)-16!a
+1
+q)a:b:c:d:e:1 2 3
+q)-16!a
+5
+</pre>
+<h2> <span class="mw-headline" id=".E2.88.9217.21x"> −17!x  </span></h2>
+<p>flip endian-ness of kdb+ data file x, see notes in <a href="../Releases/ChangesIn2-4.html" title="Releases/ChangesIn2.6">Changes in kdb+ v2.6</a>
+</p>
+<h2> <span class="mw-headline" id="-18.21x"> -18!x </span></h2>
+<p>returns compressed IPC byte representation of x, see notes about network compression in <a href="../Releases/ChangesIn2-4.html" title="Releases/ChangesIn2.6">Changes in kdb+ v2.6</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9219.21x"> −19!x </span></h2>
+<p>compress a file, see <a href="../Cookbook/FileCompression.html" title="Cookbook/FileCompression">File Compression</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9220.210"> −20!0  </span></h2>
+<p>see/use <a href="../DotQ/DotQDotgc.html" title="DotQ/DotQDotgc">.Q.gc</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9221.21x"> −21!x </span></h2>
+<p>compression statistics for file x, see <a href="../Cookbook/FileCompression.html" title="Cookbook/FileCompression">File Compression</a>
+</p>
+<h2> <span class="mw-headline" id=".E2.88.9222.21x"> −22!x </span></h2>
+<p>An optimized shortcut to obtain the length of uncompressed serialized x, i.e. count -8!x
+</p>
+<pre>
+q)v:til 100000
+q)\t do[5000;-22!v]
+1
+q)\t do[5000;count -8!v]
+226
+q)(-22!v)=count -8!v
+1b
+</pre>
+<h2> <span class="mw-headline" id=".E2.88.9223.21x"> −23!x </span></h2>
+<p>since kdb+ 3.1T 2013.03.04
+</p><p>Maps data into memory without copying.
+</p>
+<pre>
+q)-23!t:select from get`:t/; / previous tricks to force load included .. where i&gt;=0
+</pre>
+<hr />
+<p>For a complete list of functions, see the <a href="../Reference.html" title="Reference">kdb+ Function Reference</a>.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 184/1000000
+Post-expand include size: 224/2097152 bytes
+Template argument size: 116/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:401-0!*!0!!en!2!edit=0 and timestamp 20131013192856 -->
+<div class="printfooter">
+Retrieved from "<a href="BangSymbolInternalFunction.html">http://code.kx.com/wiki/Reference/BangSymbolInternalFunction</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Reference/BangSymbolInternalFunction" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="BangSymbolInternalFunction.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Reference/BangSymbolInternalFunction&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="BangSymbolInternalFunction.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/BangSymbolInternalFunction&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/BangSymbolInternalFunction&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Reference/BangSymbolInternalFunction" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Reference/BangSymbolInternalFunction" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/BangSymbolInternalFunction&amp;oldid=2819" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Reference%2FBangSymbolInternalFunction" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Reference%2FBangSymbolInternalFunction&amp;oldid=2819&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/BangSymbolInternalFunction&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 21 March 2013, at 16:56.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Reference/BangSymbolInternalFunction", "wgTitle": "Reference/BangSymbolInternalFunction", "wgAction": "view", "wgArticleId": 401, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2819, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.111 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Reference/BangSymbolInternalFunction by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

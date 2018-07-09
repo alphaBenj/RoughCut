@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Reference/QuestionSymbol by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Reference/QuestionSymbol - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Reference_QuestionSymbol skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Reference/QuestionSymbol</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#.3F_.28find.2Frand.29"><span class="tocnumber">1</span> <span class="toctext">? (find/rand)</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#find"><span class="tocnumber">1.1</span> <span class="toctext">find</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#rand"><span class="tocnumber">1.2</span> <span class="toctext">rand</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#vector_conditional"><span class="tocnumber">1.3</span> <span class="toctext">vector conditional</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#.60:sym.3F"><span class="tocnumber">1.4</span> <span class="toctext">`:sym?</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#functional_select_.26_exec"><span class="tocnumber">1.5</span> <span class="toctext">functional select &amp; exec</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#three-argument_functional_exec"><span class="tocnumber">1.6</span> <span class="toctext">three-argument functional exec</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#See_also"><span class="tocnumber">1.7</span> <span class="toctext">See also</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id=".3F_.28find.2Frand.29">&#160;? (find/rand) </span></h1>
+<h2> <span class="mw-headline" id="find"> find </span></h2>
+<p>The dyadic find function takes a list as its first argument and any data object as its second. The result is the lowest index for which the right argument matches an item of the left argument (the so-called "first occurrence"). If there is no match the result is the count of the left argument. Comparisons are exact, and so do not use comparison tolerance.
+For example:
+</p>
+<pre>
+q)w:10 -8 3 5 -1 2 3
+q)w?-8
+1
+q)w[1]
+-8
+q)w?3 / the first occurrence of 3
+2
+q)w?17 / not found
+7
+q)w[7]
+0N
+q)&quot;abcde&quot;?&quot;d&quot;
+3
+</pre>
+<p>Find is type-specific relative to the left argument. In the case of a simple list left argument, the right argument can also be a list whose atoms are all the same type as the left argument. The result corresponds to the left argument item-by-item. For example,
+</p>
+<pre>
+q)rt:(10 5 -1;-8;3 17)
+q)i:w?rt
+q)i
+(0 3 4;1;2 7)
+q)w[i]
+(10 5 -1;-8;3 0N)
+</pre>
+<p>If the left argument is a list of lists and the right argument is simple list, then items of the left argument are matched with the entire right argument. For example,
+</p>
+<pre>
+q)u:(&quot;abcde&quot;;10 2 -6;(2 3;`ab))
+q)u?10 2 -6
+1
+q)u?&quot;abcde&quot;
+0
+</pre>
+<p>However, if the right argument is a general list then items of the left argument are matched with items of the right argument. For example,
+</p>
+<pre>
+q)u?(2 3;`ab)
+3 3
+</pre>
+<p>In this case Find matches items of the left argument with <tt>2 3</tt> and <tt>`ab</tt> , not <tt>(2 3;`ab)</tt>.
+</p><p>? is rank sensitive; x?y can't deal with mixed rank x. If rank x is n then x?y looks for objects of rank n-1.
+e.g.
+</p>
+<pre>
+2 3?2 3#til 6  / looks for rank 0 objects
+(0 1 2;4 5)?2 3#til 6 / looks for rank 1 objects
+</pre>
+<p>A solution to find <tt>(2 3;`ab)</tt> is
+</p>
+<pre>
+q)f:{where x~\:y}
+q)f[u;(2 3;`ab)]
+,2
+</pre>
+<p>If the left argument is a table then right argument must be a compatible record (dictionary or list) or table. That is, each column of the left argument, paired with the corresponding item of the right argument, must be valid arguments of Find. For example,
+</p>
+<pre>
+q)\l sp.q
+q)sp?(`s1;`p4;200)
+3
+q)sp?`s`p`qty!(`s2;`p5;450)
+12
+</pre>
+<h2> <span class="mw-headline" id="rand"> rand </span></h2>
+<p>rand produces random sequences of ints and floats. For example, the expression <tt>20?5</tt> produces an int vector of length 20 whose items are random ints between 0 and 4, as follows
+</p>
+<pre>
+q)20?5
+4 3 3 4 1 2 2 0 1 3 1 4 0 2 2 1 4 4 2 4
+</pre>
+<p>If the right argument is a float, say 4.5, then the result is a simple float list whose items are random floats between 0.0 and 4.5. For example,
+</p>
+<pre>
+q)10?4.5
+3.13239 1.699364 2.898484 1.334554 3.085937 2.437705 2.540967 3.445748 1.838425 0.6240313
+</pre>
+<p>If the right argument is a list, then values will be selected at random from that list. For example,
+</p>
+<pre>
+q)10?`Arthur`Steve`Dennis
+`Arthur`Arthur`Steve`Dennis`Arthur`Arthur`Arthur`Dennis`Arthur`Dennis
+</pre>
+<p>If the left hand argument is negative, the random values generated are unique, <b>on condition that the right hand argument has unique values</b>. The left hand argument must have a smaller or equal magnitude than the length of the right hand argument.  For example,
+</p>
+<pre>
+q)-20?20
+10 18 4 6 0 5 1 11 3 16 13 17 15 14 19 8 9 2 7 12
+q)-3?`Arthur`Steve`Dennis
+`Steve`Arthur`Dennis
+q)-4?`Arthur`Steve`Dennis
+'length
+</pre>
+<p>There is a shorthand special case for generating short symbols (length between 1 and 8).
+</p>
+<pre>
+q)10?`3
+`bon`dec`nei`jem`pgm`kei`lpn`bjh`flj`npo
+</pre>
+<p>Please note that rand function uses a constant seed on q invocation. You can see and change the value of the seed by using system command <a href="SystemCommands.html#.5CS_.5Bn.5D_-_random_seed" title="Reference/SystemCommands">"\S"</a>.
+</p><p><tt>?</tt> deals out <a href="Datatypes.html#Guid_.28from_kdb.v3.0.29" title="Reference/Datatypes">GUIDs</a>:
+</p>
+<pre>q)-1?0Ng
+,fd2db048-decb-0008-0176-01714e5eeced
+
+</pre>
+<p>To use GUIDs as identifiers, give a negative left hand side.  If you use a positive value, you will get duplicates, given the same seed:
+</p>
+<pre>$ q
+q)1?0Ng
+,8c6b8b64-6815-6084-0a3e-178401251b68
+q)\\
+
+$ q 
+q)1?0Ng
+,8c6b8b64-6815-6084-0a3e-178401251b68
+</pre>
+<h2> <span class="mw-headline" id="vector_conditional"> vector conditional </span></h2>
+<p>Triadic question forms a new list by replacing elements of y with the elements of z when x is false. X must be a boolean list, Y and Z must be of the same type and all lists must have the same count. All arguments -- x, y, and z -- are evaluated.
+</p>
+<pre>
+q)?[11001b;1 2 3 4 5;10 20 30 40 50]
+1 2 30 40 5
+</pre>
+<p>If y or z are atomic, they repeated.
+</p>
+<pre>
+q)?[11001b;1;10 20 30 40 50]
+1 1 30 40 1
+q)?[11001b;1 2 3 4 5;99]
+1 2 99 99 5
+</pre>
+<p>NB: In kdb+ 2.4t 2006.10.30 there is  a bug that allows y and z to be non-conforming. This is broken behavior and will be fixed in a future release. Since kdb+2.7 2010.10.07,&#160;?[x;y;z] works for atoms too.
+</p><p>It can be useful to have more than just a true/false selection, e.g. match1/match2/match3/others mapping to result1/result2/result3/default.
+This can be achieved with find, e.g.
+</p>
+<pre>
+q)input:10?`m1`m2`m3`other`yetanother
+q)input
+`yetanother`m1`m3`m2`m3`m2`m3`other`m3`yetanother
+q)`r1`r2`r3`default `m1`m2`m3?input
+`default`r1`r3`r2`r3`r2`r3`default`r3`default
+</pre>
+<p>This avoids nesting vector conditional and hence scales better.
+</p>
+<h2> <span class="mw-headline" id=".60:sym.3F"> <tt>`:sym?</tt> </span></h2>
+<p>using <tt>`:sym?</tt> tells kdb+ to base sym on the file <tt>`:sym</tt> - so you can share it and simultaneously update with other tasks.  After using the&#160;? operator, the file that is updated will be reloaded into the workspace as the variable based on the filename.
+</p>
+<h2> <span class="mw-headline" id="functional_select_.26_exec"> functional select &amp; exec </span></h2>
+<p>See <a href="http://code.kx.com/wiki/JB:QforMortals2/queries_q_sql#Functional_select" title="JB:QforMortals2/queries q sql">Functional select</a> and <a href="http://code.kx.com/wiki/JB:QforMortals2/queries_q_sql#Functional_exec" title="JB:QforMortals2/queries q sql">Functional exec</a>.
+</p>
+<h2> <span class="mw-headline" id="three-argument_functional_exec"> three-argument functional exec </span></h2>
+<p><tt>?[t;i;x]</tt>, where <tt>t</tt> is a (non-partitioned) table, <tt>i</tt> is a list of indices, and <tt>x</tt> is a <a href="parse_tree.html" title="Reference/parse tree">parse tree</a>, is another form of <a href="exec.html" title="Reference/exec">exec</a>:
+</p>
+<pre>
+q)t:([]a:1 2 3;b:4 5 6;c:7 9 0)
+q)t
+a b c
+-----
+1 4 7
+2 5 9
+3 6 0
+q)?[t;0 1 2;`a]
+1 2 3
+q)?[t;0 1 2;`b]
+4 5 6
+q)?[t;0 1 2;(last;`a)]
+3
+q)?[t;0 1;(last;`a)]
+2
+q)?[t;0 1 2;(plist;`a;`b)]
+1 2 3
+4 5 6
+q)?[t;0 1 2;(*;(min;`a);(avg;`c))]
+5.333333
+</pre>
+<h2> <span class="mw-headline" id="See_also"> See also </span></h2>
+<ul><li><a href="rand.html" title="Reference/rand">rand</a>
+</li><li><a href="http://www.q-ist.com/2012/10/functional-query-functions.html" class="external text" rel="nofollow">q-ist: functional Query Functions</a>
+</li></ul>
+<hr />
+<p>For a complete list of functions, see the <a href="../Reference.html" title="Reference">kdb+ Function Reference</a>.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 174/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:33-0!*!0!!en!*!edit=0 and timestamp 20131013133616 -->
+<div class="printfooter">
+Retrieved from "<a href="QuestionSymbol.html">http://code.kx.com/wiki/Reference/QuestionSymbol</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Reference/QuestionSymbol" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="QuestionSymbol.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Reference/QuestionSymbol&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="QuestionSymbol.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/QuestionSymbol&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/QuestionSymbol&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Reference/QuestionSymbol" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Reference/QuestionSymbol" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/QuestionSymbol&amp;oldid=2784" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Reference%2FQuestionSymbol" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Reference%2FQuestionSymbol&amp;oldid=2784&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/QuestionSymbol&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 8 February 2013, at 06:48.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Reference/QuestionSymbol", "wgTitle": "Reference/QuestionSymbol", "wgAction": "view", "wgArticleId": 33, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2784, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.029 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Reference/QuestionSymbol by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

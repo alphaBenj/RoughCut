@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Startingkdbplus/hdb by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Startingkdbplus/hdb - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Startingkdbplus_hdb skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Startingkdbplus/hdb</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#5._Historical_database"><span class="tocnumber">1</span> <span class="toctext">5. Historical database</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#5.1_Overview"><span class="tocnumber">2</span> <span class="toctext">5.1 Overview</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#5.2_Sample_Database"><span class="tocnumber">3</span> <span class="toctext">5.2 Sample Database</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#5.3_Sample_Segmented_Database"><span class="tocnumber">4</span> <span class="toctext">5.3 Sample Segmented Database</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="5._Historical_database"> 5. Historical database </span></h2>
+<h2> <span class="mw-headline" id="5.1_Overview"> 5.1 Overview </span></h2>
+<p>A historical database (hdb) holds data before today, and its tables would
+be stored on disk as being much too large to fit in memory.
+Each new day's records would be added to the hdb at the end of day.
+</p><p>Typically, large tables in the hdb (such as daily tick data) are stored splayed,
+i.e. each column is stored in its own file, see
+<a href="../Cookbook/SplayedTables.html" title="Cookbook/SplayedTables">cookbook/splayed tables</a> and
+<a href="http://code.kx.com/wiki/JB:KdbplusForMortals/splayed_tables" title="JB:KdbplusForMortals/splayed tables">kdb+formortals/splayed</a>.
+Typically also, large tables are stored
+<a href="http://code.kx.com/wiki/JB:KdbplusForMortals/partitioned_tables" title="JB:KdbplusForMortals/partitioned tables">partitioned</a> by date.
+Very large databases may be further partitioned into
+segments, using <a href="../Reference/pardottxt.html" title="Reference/pardottxt">par.txt</a>.
+</p><p>These storage strategies give best efficiency for searching and
+retrieval. For example, the database can be written over several
+drives. Also, partitions can be allocated to slave threads so
+that queries over a range of dates can be run in parallel.
+The exact set up would be customized for each installation.
+</p><p>For example, a simple partitioning scheme on a single disk might
+be as follows. Here, the daily and master tables are small enough
+to be written to single files, while the trade and quote tables
+are splayed and partitioned by date:
+</p><p><a href="../File_Tree.html" class="image"><img alt="Tree.png" src="../../mediawiki/images/thumb/a/ac/Tree.png/135px-Tree.png" width="135" height="438" /></a>
+</p>
+<h2> <span class="mw-headline" id="5.2_Sample_Database"> 5.2 Sample Database </span></h2>
+<p>The script buildhdb.q in the <a href="http://code.kx.com/wsvn/code/contrib/cburke/start" class="external text" rel="nofollow">start</a> directory will build a sample hdb. This builds a month's random data in
+directory start/db, and takes a few seconds to run. To do so, load q then:
+</p>
+<pre>
+q)\l start/buildhdb.q
+</pre>
+<p>To load the database, either start q with an argument of the database directory:
+</p>
+<pre>
+..$ q start/db
+</pre>
+<p>or load the database within a q session:
+</p>
+<pre>
+q)\l start/db
+</pre>
+<p>In q (actual values may vary):
+</p>
+<pre>
+q)count trade
+342102j
+
+q)count quote
+1709919j
+
+q)t:select from trade where date=last date, sym=`IBM
+q)count t
+1041
+
+q)5#t
+date       time         sym price size stop cond ex
+---------------------------------------------------
+2010.12.31 09:30:00.055 IBM 55.65 74   0    N    N
+2010.12.31 09:30:00.114 IBM 55.66 72   1    W    N
+2010.12.31 09:30:01.970 IBM 55.56 37   0    T    N
+2010.12.31 09:30:03.091 IBM 55.56 41   1    R    N
+2010.12.31 09:30:06.930 IBM 55.57 89   0    B    N
+</pre>
+<pre>
+q)select count i by date from trade
+date      | x
+----------| -----
+2010.12.01| 14991
+2010.12.02| 14705
+2010.12.03| 14817
+2010.12.06| 14877
+...
+</pre>
+<pre>
+q)select[5] cnt:count i,sum size,last price,
+    wprice:size wavg price by 5 xbar time.minute from t
+minute| cnt size price wprice
+------| -----------------------
+09:30 | 42  2138 55.24 55.37768
+09:35 | 22  1329 55.32 55.35988
+09:40 | 23  1279 55.2  55.25091
+09:45 | 16  716  54.99 55.13633
+09:50 | 24  1187 54.82 54.83702
+</pre>
+<pre>
+q)select[-5] open:first price,lo:min price,hi:max price,
+    close:last price by 10 xbar time.minute from t
+minute| open  lo    hi    close
+------| -----------------------
+15:10 | 55.64 55.43 55.64 55.56
+15:20 | 55.56 55.54 55.95 55.95
+15:30 | 55.88 55.61 55.99 55.74
+15:40 | 55.81 55.8  56.18 55.86
+15:50 | 55.84 55.84 56.5  56.38
+</pre>
+<h2> <span class="mw-headline" id="5.3_Sample_Segmented_Database"> 5.3 Sample Segmented Database </span></h2>
+<p>The buildhdb.q script can be customized to build a segmented database.
+In practice, database segments should be on separate drives, but for illustration,
+the segments are here written to a single drive. Both the database root, and the location of the database segments need to be specified.
+</p><p>For example, edit the first few lines of the script as follows:
+</p>
+<pre>
+dst:`:start/dbs      / new database root
+dsp:`:/dbss          / database segments directory
+dsx:5                / number of segments
+bgn:2007.01.01       / set 4 years data
+end:2010.12.31
+</pre>
+<p>Ensure that the directory given in dsp is created, writable and empty, then load the modified script, which
+should now take a minute or so. This should write the partioned data to subdirectories of dsp, and create a
+par.txt file like:
+</p>
+<pre>
+/dbss/d0
+/dbss/d1
+/dbss/d2
+/dbss/d3
+/dbss/d4
+</pre>
+<p>Restart q, and load the segmented database:
+</p>
+<pre>
+q)\l start/dbs
+
+q)(count quote), count trade
+81258538 16248124j
+
+q)select cnt:count i,sum size,size wavg price from trade
+   where date in 2007.11.19+til 5, sym=`IBM
+cnt  size   price
+--------------------
+4213 227283 47.12981
+</pre>
+<hr />
+<p>Prev: <a href="tables.html" title="Startingkdbplus/tables">4. Kdb+ Tables</a>
+Next: <a href="rdb.html" title="Startingkdbplus/rdb">6. Realtime Database</a>
+</p><p><a href="contents.html" title="Startingkdbplus/contents">Table of Contents</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 86/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:430-0!*!0!!en!2!edit=0 and timestamp 20131013144034 -->
+<div class="printfooter">
+Retrieved from "<a href="hdb.html">http://code.kx.com/wiki/Startingkdbplus/hdb</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../Category_Tutorials.html" title="Category:Tutorials">Tutorials</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Startingkdbplus/hdb" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="hdb.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Startingkdbplus/hdb&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="hdb.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/hdb&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/hdb&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Startingkdbplus/hdb" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Startingkdbplus/hdb" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/hdb&amp;oldid=2274" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Startingkdbplus%2Fhdb" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Startingkdbplus%2Fhdb&amp;oldid=2274&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/hdb&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 27 June 2011, at 05:12.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Startingkdbplus/hdb", "wgTitle": "Startingkdbplus/hdb", "wgAction": "view", "wgArticleId": 430, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2274, "wgCategories": ["Tutorials"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.033 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Startingkdbplus/hdb by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

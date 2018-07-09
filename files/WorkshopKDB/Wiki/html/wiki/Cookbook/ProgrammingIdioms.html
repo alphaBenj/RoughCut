@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/ProgrammingIdioms by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/ProgrammingIdioms - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_ProgrammingIdioms skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/ProgrammingIdioms</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#kdb.2B_Programming_Idioms"><span class="tocnumber">1</span> <span class="toctext">kdb+ Programming Idioms</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#How_do_I_select_all_the_columns_of_a_table_except_one.3F"><span class="tocnumber">1.1</span> <span class="toctext">How do I select all the columns of a table except one?</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#How_do_I_select_a_range_of_rows_in_a_table_by_position.3F"><span class="tocnumber">1.2</span> <span class="toctext">How do I select a range of rows in a table by position?</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#How_do_I_extract_the_milliseconds_from_a_time.3F"><span class="tocnumber">1.3</span> <span class="toctext">How do I extract the milliseconds from a time?</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#How_do_I_populate_a_table_with_random_data.3F"><span class="tocnumber">1.4</span> <span class="toctext">How do I populate a table with random data?</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#How_do_I_get_the_hourly_lowest_and_highest_price.3F"><span class="tocnumber">1.5</span> <span class="toctext">How do I get the hourly lowest and highest price?</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Grouping_over_non-primary_keys"><span class="tocnumber">1.6</span> <span class="toctext">Grouping over non-primary keys</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Getting_the_contents_of_the_columns_of_a_table"><span class="tocnumber">1.7</span> <span class="toctext">Getting the contents of the columns of a table</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Column_names_as_parameters_to_functions"><span class="tocnumber">1.8</span> <span class="toctext">Column names as parameters to functions</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="kdb.2B_Programming_Idioms"> kdb+ Programming Idioms </span></h1>
+<h2> <span class="mw-headline" id="How_do_I_select_all_the_columns_of_a_table_except_one.3F"> How do I select all the columns of a table except one? </span></h2>
+<p>If the table has many columns, it is tedious and error prone to write
+</p>
+<pre>
+q)select c1,c2,... from t
+</pre>
+<p>In q we can write
+</p>
+<pre>
+q)delete somecolumn from t
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> Here, <tt>delete</tt> does not modify the table t in place.</blockquote>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> <tt>delete</tt> is not working on historical databases.</blockquote>
+<h2> <span class="mw-headline" id="How_do_I_select_a_range_of_rows_in_a_table_by_position.3F"> How do I select a range of rows in a table by position? </span></h2>
+<p>You can use the row index <tt>i</tt>.
+</p>
+<pre>
+q)select from tab where i within 42 57
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_extract_the_milliseconds_from_a_time.3F"> How do I extract the milliseconds from a time? </span></h2>
+<p>Given
+</p>
+<pre>
+q)time: 09:10:52.139
+</pre>
+<p>we can extract hour, minute and second like this
+</p>
+<pre>
+q)(time.hh; time.mm; time.ss)
+9 10 52
+</pre>
+<p>To query the milliseconds
+</p>
+<pre>
+q)time mod 1000
+139
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_populate_a_table_with_random_data.3F"> How do I populate a table with random data? </span></h2>
+<p>This is useful for testing. The <tt>?</tt> operator can be used to generate random values of a given type.
+</p>
+<pre>
+q)n:1000
+q)stocks:`goog`amzn`msft`intel`amd`ibm
+q)trade:([]stock:n?stocks; price:n?100.0;amount:100*10+n?20;time:n?24:00:00.000)
+q)trade
+stock price     amount time
+-----------------------------------
+ibm   94.1497   2800   10:45:14.943
+amzn  96.1774   2800   03:17:33.371
+ibm   3.95321   2200   04:53:09.818
+goog  11.10307  1000   19:27:15.894
+msft  64.73216  1900   17:32:42.558
+intel 19.51964  2600   05:05:58.680
+ibm   10.18318  1000   05:47:46.437
+...
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_get_the_hourly_lowest_and_highest_price.3F"> How do I get the hourly lowest and highest price? </span></h2>
+<p>This query
+</p>
+<pre>
+q)select price by stock,time.hh from trade
+</pre>
+<p>groups the prices hourly by stock
+</p>
+<pre>
+stock hh| price                                                              ..
+--------| -------------------------------------------------------------------..
+amd   0 | 76.03805 3.632539 16.6526 77.27191 79.27451 7.501845               ..
+amd   1 | 16.35361 85.9618 27.60804 61.91134 6.921016 84.99082 50.05533 81.10..
+amd   2 | 47.61621 15.33209 23.64018 88.34472                                ..
+...
+</pre>
+<p>The <tt>price</tt> column is a list. To get the low and high prices, we need to apply list functions that produce that result:
+</p>
+<pre>
+q)select low: min price,high: max price by stock,time.hh from trade
+stock hh| low       high
+--------| ------------------
+amd   0 | 3.632539  79.27451
+amd   1 | 6.921016  85.9618
+amd   2 | 15.33209  88.34472
+...
+</pre>
+<h2> <span class="mw-headline" id="Grouping_over_non-primary_keys"> Grouping over non-primary keys </span></h2>
+<p>Consider a table with multiple entries for the same value of the stock column.
+</p>
+<pre>
+q)table:([]stock:(); price:())
+q)insert[`table; (`ibm`ibm`ibm`ibm`intel`intel`intel`intel; 1 2 3 4 1 2 3 4)]
+0 1 2 3 4 5 6 7
+q)table
+stock price
+-----------
+ibm   1
+ibm   2
+ibm   3
+ibm   4
+intel 1
+intel 2
+intel 3
+intel 4
+</pre>
+<p>If we <tt>select</tt> and group by stock ...
+</p>
+<pre>
+q)select by stock from table
+stock| price
+-----| -----
+ibm  | 4
+intel| 4
+</pre>
+<p>... only the last price is in the result.
+</p><p>What if we want the first price? We reverse the table.
+</p>
+<pre>
+q)select by stock from reverse table
+stock| price
+-----| -----
+ibm  | 1
+intel| 1
+</pre>
+<p>What if we want all the prices as a list? We use <tt>xgroup</tt>.
+</p>
+<pre>
+q)`stock xgroup table
+stock| price
+-----| -------
+ibm  | 1 2 3 4
+intel| 1 2 3 4
+</pre>
+<h2> <span class="mw-headline" id="Getting_the_contents_of_the_columns_of_a_table"> Getting the contents of the columns of a table </span></h2>
+<p>Imagine that we want to save a CSV file without the first row that
+contains the names of the table columns. This can be done by
+extracting the columns from a table, without the row name, and then saving in CSV format.
+</p><p>Here, we assume that tables are not keyed. We'll use this table as our example:
+</p>
+<pre>
+q)trade
+date       open  high  low   close volume   sym
+------------------------------------------------
+2006.10.03 24.5  24.51 23.79 24.13 19087300 AMD
+2006.10.03 27.37 27.48 27.21 27.37 39386200 MSFT
+2006.10.04 24.1  25.1  23.95 25.03 17869600 AMD
+2006.10.04 27.39 27.96 27.37 27.94 82191200 MSFT
+2006.10.05 24.8  25.24 24.6  25.11 17304500 AMD
+2006.10.05 27.92 28.11 27.78 27.92 81967200 MSFT
+2006.10.06 24.66 24.8  23.96 24.01 17299800 AMD
+2006.10.06 27.76 28    27.65 27.87 36452200 MSFT
+</pre>
+<p>There are two ways of extracting columns from a table. The first one uses indexing using the colum names:
+</p>
+<pre>
+q)cols trade
+`date`open`high`low`close`volume`sym
+q)trade (cols trade)
+2006.10.03 2006.10.03 2006.10.04 2006.10.04 2006.10.05 2006.10.05 2006.10.06 ..
+24.5       27.37      24.1       27.39      24.8       27.92      24.66      ..
+24.51      27.48      25.1       27.96      25.24      28.11      24.8       ..
+23.79      27.21      23.95      27.37      24.6       27.78      23.96      ..
+24.13      27.37      25.03      27.94      25.11      27.92      24.01      ..
+19087300   39386200   17869600   82191200   17304500   81967200   17299800   ..
+AMD        MSFT       AMD        MSFT       AMD        MSFT       AMD        ..
+</pre>
+<p>The second one turns the table into a dictionary and then gets the values
+</p>
+<pre>
+q)value flip trade
+2006.10.03 2006.10.03 2006.10.04 2006.10.04 2006.10.05 2006.10.05 2006.10.06 ..
+24.5       27.37      24.1       27.39      24.8       27.92      24.66      ..
+24.51      27.48      25.1       27.96      25.24      28.11      24.8       ..
+23.79      27.21      23.95      27.37      24.6       27.78      23.96      ..
+24.13      27.37      25.03      27.94      25.11      27.92      24.01      ..
+19087300   39386200   17869600   82191200   17304500   81967200   17299800   ..
+AMD        MSFT       AMD        MSFT       AMD        MSFT       AMD        ..
+</pre>
+<p>Now we can save in CSV format without the column names:
+</p>
+<pre>
+q)t: trade (cols trade)
+q)save `:t.csv
+`:t.csv
+q)\cat t.csv
+&quot;2006-10-03,24.5,24.51,23.79,24.13,19087300,AMD&quot;
+&quot;2006-10-03,27.37,27.48,27.21,27.37,39386200,MSFT&quot;
+&quot;2006-10-04,24.1,25.1,23.95,25.03,17869600,AMD&quot;
+...
+</pre>
+<p>Using <tt>flip</tt> is more efficient (constant time):
+</p>
+<pre>
+q)\t do[1000000; value flip trade]
+453
+q)\t do[1000000; trade (cols trade)]
+2984
+</pre>
+<p>However, for splayed tables, only indexing works:
+</p>
+<pre>
+./q.exe dir
+KDB+ 2.4t 2006.07.27 Copyright (C) 1993-2006 Kx Systems
+w32/ 1cpu 384MB ...
+
+q)\v
+`s#`sym`trade
+q)trade (cols trade)
+2006.10.03 2006.10.03 2006.10.04 2006.10.04 2006.10.05 2006.10.05 2006.10.06 ..
+24.5       27.37      24.1       27.39      24.8       27.92      24.66      ..
+24.51      27.48      25.1       27.96      25.24      28.11      24.8       ..
+23.79      27.21      23.95      27.37      24.6       27.78      23.96      ..
+24.13      27.37      25.03      27.94      25.11      27.92      24.01      ..
+19087300   39386200   17869600   82191200   17304500   81967200   17299800   ..
+AMD        MSFT       AMD        MSFT       AMD        MSFT       AMD        ..
+q)value flip trade
+`:trade/
+</pre>
+<h2> <span class="mw-headline" id="Column_names_as_parameters_to_functions"> Column names as parameters to functions </span></h2>
+<p>Elsewhere in this Cookbook we state that column names cannot be arguments to parameterized queries. A type error is signalled when a query like that is applied:
+</p>
+<pre>
+q)f:{[tbl; col; amt] select from tbl where col &gt; amt}
+q)f[trade][`volume][10000]
+{[tbl; col; amt] select from tbl where col &gt; amt}
+'type
+</pre>
+<p>However, a query can also be built from a string. This allows to use column names as query parameters. The above parameterized query can be written using strings as follows:
+</p>
+<pre>
+q)f:{[tbl; col; amt] value &quot;select from &quot;, (string tbl), &quot; where &quot;, (string col), &quot; &gt; &quot;, string amt}
+q)f[`trade][`volume][10000]
+date       open  high  low   close volume   sym
+------------------------------------------------
+2006.10.03 24.5  24.51 23.79 24.13 19087300 AMD
+2006.10.03 27.37 27.48 27.21 27.37 39386200 MSFT
+...
+</pre>
+<p>Executing queries built from strings has a performance penalty.
+</p>
+<pre>
+q)\t do[100000; select from table where volume &gt; 10000]
+234
+q)\t do[100000; value &quot;select from &quot;, (string `trade), &quot; where &quot;, (string `volume), &quot; &gt; &quot;, string 10000]
+1250
+</pre>
+<p>An alternative to building queries by concatenating strings is to use Q's syntax trees. Our example is defined like this:
+</p>
+<pre>
+q)f:{[tbl;col;amt]&#160;?[tbl; enlist (&gt;;col;amt); 0b; ()]}
+q)f[trade; `volume; 10000]
+date       open  high  low   close volume   sym
+------------------------------------------------
+2006.10.03 24.5  24.51 23.79 24.13 19087300 AMD
+2006.10.03 27.37 27.48 27.21 27.37 39386200 MSFT
+</pre>
+<p>This is more efficient than using strings:
+</p>
+<pre>
+q)\t do[100000;&#160;?[trade; enlist (&gt;;`volume;10000); 0b; ()]]
+312
+</pre>
+<p>Notice that, when building the query from strings, we pass as a query
+argument the symbol <tt>`trade</tt>. When using syntax trees, the call
+takes the table name without a backtick.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 241/1000000
+Post-expand include size: 230/2097152 bytes
+Template argument size: 114/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:28-0!*!0!!en!2!edit=0 and timestamp 20131013144102 -->
+<div class="printfooter">
+Retrieved from "<a href="ProgrammingIdioms.html">http://code.kx.com/wiki/Cookbook/ProgrammingIdioms</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/ProgrammingIdioms" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="ProgrammingIdioms.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/ProgrammingIdioms&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="ProgrammingIdioms.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ProgrammingIdioms&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ProgrammingIdioms&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/ProgrammingIdioms" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/ProgrammingIdioms" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ProgrammingIdioms&amp;oldid=364" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FProgrammingIdioms" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FProgrammingIdioms&amp;oldid=364&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ProgrammingIdioms&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 25 October 2006, at 00:40.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/ProgrammingIdioms", "wgTitle": "Cookbook/ProgrammingIdioms", "wgAction": "view", "wgArticleId": 28, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 364, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.029 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/ProgrammingIdioms by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

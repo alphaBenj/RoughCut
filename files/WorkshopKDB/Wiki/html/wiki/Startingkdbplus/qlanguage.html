@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Startingkdbplus/qlanguage by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Startingkdbplus/qlanguage - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Startingkdbplus_qlanguage skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Startingkdbplus/qlanguage</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#2_Q_Language"><span class="tocnumber">1</span> <span class="toctext">2 Q Language</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#2.1_Overview"><span class="tocnumber">2</span> <span class="toctext">2.1 Overview</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#2.2_Loading_q"><span class="tocnumber">3</span> <span class="toctext">2.2 Loading q</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#2.3_First_Steps"><span class="tocnumber">4</span> <span class="toctext">2.3 First Steps</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#2.4_Console_Modes"><span class="tocnumber">5</span> <span class="toctext">2.4 Console Modes</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#2.5_Error_Messages"><span class="tocnumber">6</span> <span class="toctext">2.5 Error Messages</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#2.6_Introductory_Examples"><span class="tocnumber">7</span> <span class="toctext">2.6 Introductory Examples</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#2.7_Data_Structures"><span class="tocnumber">8</span> <span class="toctext">2.7 Data Structures</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#2.8_Functions.2C_Verbs.2C_Adverbs"><span class="tocnumber">9</span> <span class="toctext">2.8 Functions, Verbs, Adverbs</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#2.9_Scripts"><span class="tocnumber">10</span> <span class="toctext">2.9 Scripts</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#2.10_Q_Queries"><span class="tocnumber">11</span> <span class="toctext">2.10 Q Queries</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="2_Q_Language"> 2 Q Language </span></h2>
+<h2> <span class="mw-headline" id="2.1_Overview"> 2.1 Overview </span></h2>
+<p>Q is the programming system for working with kdb+. This corresponds to SQL for traditional databases, but unlike SQL, q is a powerful programming language in its own right.
+</p><p>Q is an interpreted language. Q expressions can be entered and executed in the q console, or loaded from a q script, which is a text file with extension <tt>.q</tt>.
+</p><p>You need at least some familiarity with q to use kdb+. Try following the examples here in the q console interface. Also, ensure that you have the <a href="introduction.html#example_files" title="Startingkdbplus/introduction">example files</a> installed.
+</p><p>The following wiki pages will also be useful:
+</p>
+<ul><li><a href="../Reference.html" title="Reference">Function Reference</a>
+</li><li><a href="../Reference/Datatypes.html" title="Reference/Datatypes">Data Types</a>
+</li><li><a href="../Reference/SystemCommands.html" title="Reference/SystemCommands">System Commands</a>
+</li><li><a href="../Reference/Cmdline.html" title="Reference/Cmdline">Command Line Parameters</a>
+</li></ul>
+<h2> <span class="mw-headline" id="2.2_Loading_q"> 2.2 Loading q </span></h2>
+<p>You load q by changing to the main q directory, then running the q executable.
+You should not just click the q executable from the explorer - 
+this will load q but in the wrong directory. 
+</p><p>It is best to create a startup script
+which might do other preprocessing such as setting environment variables, 
+see examples q.sh and q.bat in the 
+<a href="http://code.kx.com/wsvn/code/contrib/cburke/start" class="external text" rel="nofollow">start</a> directory.
+</p>
+<ul><li> in Windows, enter in a command window:
+</li></ul>
+<pre>
+c:
+cd \q
+w32\q.exe
+</pre>
+<p>or create a batch file with contents below that allows parameters to be passed to q:
+</p>
+<pre>
+c:
+cd \q
+w32\q.exe&#160;%*
+</pre>
+<ul><li> in Linux/Mac, it is usual to call the q executable under <a href="../FAQ.html#How_do_I_recall_and_edit_keyboard_input.3F" title="FAQ">rlwrap</a> to support line recall and edit.
+</li></ul>
+<p>In the console:
+</p>
+<pre>
+..$ cd ~/q
+~/q$ rlwrap l32/q
+</pre>
+<p>The following Linux shell script changes to the q directory, sets the
+appropriate directory for 32 or 64 bit, then loads q under rlwrap:
+</p>
+<pre>
+#!/bin/bash
+cd ~/q
+if [ &quot;x86_64&quot; == uname -m ]; then p=l64; else p=l32; fi
+rlwrap $p/q &quot;$@&quot;
+</pre>
+<h2> <span class="mw-headline" id="2.3_First_Steps"> 2.3 First Steps </span></h2>
+<p>Once q is loaded, you can enter expressions for execution:
+</p>
+<pre>
+q)2 + 3
+5
+q)2 + 3 4 7
+5 6 9
+</pre>
+<p>You can confirm that you are in the main q
+directory by calling a directory list command, e.g.
+</p>
+<ul><li> in Windows:
+</li></ul>
+<pre>
+q)\dir *.q
+&quot;sp.q&quot;
+&quot;trade.q&quot;
+...
+</pre>
+<ul><li> in Linux/Mac:
+</li></ul>
+<pre>
+q)\ls *.q
+&quot;sp.q&quot;
+&quot;trade.q&quot;
+...
+</pre>
+<p>Command line parameters are given <a href="../Reference/Cmdline.html" title="Reference/Cmdline">here</a>. For
+example:
+</p>
+<pre>
+... q profile.q -p 5001
+</pre>
+<ul><li>loads script profile.q at startup. This can in turn load other scripts.
+</li><li>sets listening port to 5001
+</li></ul>
+<p>At any prompt, enter \\ to exit q.
+</p>
+<h2> <span class="mw-headline" id="2.4_Console_Modes"> 2.4 Console Modes </span></h2>
+<p>The usual prompt is <tt>q)</tt>. Sometimes a different prompt is given; you need to understand why this is, and how to return to the standard prompt.
+</p><p>1. If a function is suspended, then the prompt has two or more ")". In this case, enter a single \ to reduce one level of suspension, and repeat until the prompt becomes <tt>q)</tt>. For example:
+</p>
+<pre>
+q)f:{2+x}        / define function f
+q)f `sym         / function call fails with symbol argument
+{2+x}            / and is left suspended
+'type
++
+2
+`sym
+q))\             / prompt becomes q)). Enter \ to return to usual prompt
+q)
+</pre>
+<p>2. If there is no suspension, then a single \ will toggle q and k modes:
+</p>
+<pre>
+q)count each (1 2;&quot;abc&quot;)    / q expression for length of each list item
+2 3
+q)\                         / toggle to k mode
+  #:'(1 2;&quot;abc&quot;)            / equivalent k expression
+2 3
+  \                         / toggle back to q mode
+q)
+</pre>
+<p>3. If you change namespace, then the prompt includes the namespace, see <a href="../Reference/SystemCommands.html#namespace-directory" title="Reference/SystemCommands">namespace directory</a>. For example:
+</p>
+<pre>
+q)\d .h                     / change to h namespace
+q.h)\d .                    / change back to root namespace
+q)
+</pre>
+<h2> <span class="mw-headline" id="2.5_Error_Messages"> 2.5 Error Messages </span></h2>
+<p>Error messages are terse. The format is a single quote, followed
+by error text:
+</p>
+<pre>
+q)1 2 + 10 20 30             / cannot add 2 numbers to 3 numbers
+'length
+</pre>
+<pre>
+q)2 + &quot;hello&quot;                / cannot add number to character
+'type
+</pre>
+<h2> <span class="mw-headline" id="2.6_Introductory_Examples"> 2.6 Introductory Examples </span></h2>
+<p>To gain experience with the language, enter the following examples and explain the results. Also experiment with similar expressions. The / marks a comment, which should not be entered.
+</p>
+<pre>
+q)x:2 5 4 7 5
+q)x
+2 5 4 7 5
+q)count x
+5
+q)8 # x
+2 5 4 7 5 2 5 4
+q)2 3 # x
+2 5 4
+7 5 2
+q)sum x
+23
+q)sums x
+2 7 11 18 23
+q)distinct x
+2 5 4 7
+q)reverse x
+5 7 4 5 2
+q)x within 4 10
+01111b
+q)x where x within 4 10
+5 4 7 5
+q)y:(x;&quot;abc&quot;)             / list of lists
+q)y
+2 5 4 7 5
+&quot;abc&quot;
+q)count y
+2
+q)count each y
+5 3
+</pre>
+<p>The following has a function definition, where x represents the argument:
+</p>
+<pre>
+q)f:{2 + 3 * x}
+q)f 5
+17
+q)f til 5
+2 5 8 11 14
+</pre>
+<p>Q makes essential use of a symbol datatype:
+</p>
+<pre>
+q)a:`toronto        / symbol
+q)b:&quot;toronto&quot;       / character string
+q)count a
+1
+q)count b
+7
+q)a=&quot;o&quot;
+`type
+q)b=&quot;o&quot;
+0101001b
+q)a~b               / a is not the same as b
+0b
+q)a~`$b             / `$b converts b to symbol
+1b
+</pre>
+<h2> <span class="mw-headline" id="2.7_Data_Structures"> 2.7 Data Structures </span></h2>
+<p>Q basic data structures are atoms (singletons) and lists. Other data structures like dictionaries and tables are built from lists. For example, a simple table is just a list of column names associated with a list of corresponding column values, each of which is a list.
+</p>
+<pre>
+q)item:`nut                 / atom (singleton)
+
+q)items:`nut`bolt`cam`cog   / list
+q)sales: 6 8 0 3            / list
+q)prices: 10 20 15 20       / list
+
+q)(items;sales;prices)      / list of lists
+nut bolt cam cog
+6   8    0   3
+10  20   15  20
+
+q)dict:`items`sales`prices!(items;sales;prices) / dictionary
+q)dict
+items | nut bolt cam cog
+sales | 6   8    0   3
+prices| 10  20   15  20
+
+q)tab:flip dict                                 / table
+q)tab
+items sales prices
+------------------
+nut   6     10
+bolt  8     20
+cam   0     15
+cog   3     20
+
+q)1!tab                                         / keyed table
+items| sales prices
+-----| ------------
+nut  | 6     10
+bolt | 8     20
+cam  | 0     15
+cog  | 3     20
+</pre>
+<p>The table created above is an ordinary variable in the q workspace, and could be written to disk. In general, you create kdb+ tables in memory and then write to disk.
+</p><p>Since it is a table, you can use SQL-like query expressions on it:
+</p>
+<pre>
+q)select from tab where prices &lt; 20
+items sales prices
+------------------
+nut   6     10
+cam   0     15
+</pre>
+<h2> <span class="mw-headline" id="2.8_Functions.2C_Verbs.2C_Adverbs"> 2.8 Functions, Verbs, Adverbs </span></h2>
+<p>Functions take arguments on their right. Verbs take arguments
+on left and right, as in * (multiplication). Adverbs take
+function or verb arguments (on their left) and produce derived
+functions or verbs. In practice, the term function is used for
+both functions and verbs, except where the distinction is
+relevant. For example:
+</p>
+<pre>
+q)sales * prices                 / verb: *
+60 160 0 60
+q)sum sales * prices             / function: sum
+280
+q)sumamt:{sum x*y}               / define function: sumamt
+q)sumamt[sales;prices]
+280
+
+q)(sum sales*prices)&#160;% sum sales / calculate weighted average
+16.47059
+q)sales wavg prices              / built-in verb: wavg
+16.47059
+
+q)sales , prices                 / verb: , join lists
+6 8 0 3 10 20 15 20
+q)sales ,' prices                / adverb: ' join lists in pairs
+6 10
+8 20
+0 15
+3 20
+</pre>
+<p>Functions can apply to dictionaries and tables:
+</p>
+<pre>
+q)-2 # tab
+items sales prices
+------------------
+cam   0     15
+cog   3     20
+</pre>
+<p>Functions can be used within queries:
+</p>
+<pre>
+q)select items,sales,prices,amount:sales*prices from tab
+items sales prices amount
+-------------------------
+nut   6     10     60
+bolt  8     20     160
+cam   0     15     0
+cog   3     20     60
+</pre>
+<h2> <span class="mw-headline" id="2.9_Scripts"> 2.9 Scripts </span></h2>
+<p>A q script is a plain text file with extension .q, which contains q expressions that are executed when loaded.
+</p><p>For example, load the script sp.q and display the "s" table that it defines:
+</p>
+<pre>
+q)\l sp.q                                / load script
+
+q)s                                      / display table s
+s | name  status city
+--| -------------------
+s1| smith 20     london
+s2| jones 10     paris
+s3| blake 30     paris
+s4| clark 20     london
+s5| adams 30     athens
+</pre>
+<p>Within a script, a line that contains a single / starts a comment block. A line with a single \ ends the comment block, or if none, exits the script.
+</p><p>A script can contain multi-line definitions. Any line that is indented is assumed to be a continuation of the previous line. Blank lines, superfluous blanks, and lines that are comments (begin with /) are ignored in determining this. For example, if a script has contents:
+</p>
+<pre>
+a:1 2
+
+/ this is a comment line
+
+ 3
+    + 4
+
+b:&quot;abc&quot;
+</pre>
+<p>Then loading this script would define a and b as:
+</p>
+<pre>
+q)a
+5 6 7                / i.e. 1 2 3 + 4
+q)b
+&quot;abc&quot;
+</pre>
+<h2> <span class="mw-headline" id="2.10_Q_Queries"> 2.10 Q Queries </span></h2>
+<p>Q queries are similar to SQL, though often much simpler:
+</p>
+<pre>
+\l sp.q
+
+q)select from p where weight=17
+p | name color weight city
+--| ------------------------
+p2| bolt green 17 paris
+p3| screw blue 17 rome
+</pre>
+<p>SQL statements can be entered, if prefixed with s)
+</p>
+<pre>
+q)s)select * from p where color in (red,green)  / SQL query
+p | name  color weight city
+--| -------------------------
+p1| nut   red   12     london
+p2| bolt  green 17     paris
+p4| screw red   14     london
+p6| cog   red   19     london
+</pre>
+<p>The Q equivalent would be:
+</p>
+<pre>
+q)select from p where color in `red`green
+</pre>
+<p>Similarly, compare:
+</p>
+<pre>
+q)select distinct p,s.city from sp
+s)select distinct sp.p,s.city from sp,s where sp.s=s.s
+</pre>
+<p>and
+</p>
+<pre>
+q)select from sp where s.city=p.city
+s)select sp.s,sp.p,sp.qty from s,p,sp where sp.s=s.s
+    and sp.p=p.p and p.city=s.city
+</pre>
+<p>Note that the dot notation in q automatically references the appropriate table.
+</p><p>Q results can have lists in the rows:
+</p>
+<pre>
+q)select qty by s from sp
+s | qty
+--| -----------------------
+s1| 300 200 400 200 100 400
+s2| 300 400
+s3| ,200
+s4| 100 200 300
+</pre>
+<p>ungroup will flatten the result:
+</p>
+<pre>
+q)ungroup select qty by s from sp
+s qty
+------
+s1 300
+s1 200
+s1 400
+s1 200
+...
+</pre>
+<p>Calculations can be performed on the intermediate results:
+</p>
+<pre>
+q)select countqty:count qty,sumqty:sum qty by p from sp
+p | countqty sumqty
+--| ---------------
+p1| 2        600
+p2| 4        1000
+p3| 1        400
+p4| 2        500
+p5| 2        500
+p6| 1        100
+</pre>
+<hr />
+<p>Prev: <a href="introduction.html" title="Startingkdbplus/introduction">1. Introduction</a>
+Next: <a href="ipc.html" title="Startingkdbplus/ipc">3. Q IPC</a>
+</p><p><a href="contents.html" title="Startingkdbplus/contents">Table of Contents</a>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 282/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:431-0!*!0!!en!*!edit=0 and timestamp 20131013142333 -->
+<div class="printfooter">
+Retrieved from "<a href="qlanguage.html">http://code.kx.com/wiki/Startingkdbplus/qlanguage</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../Category_Tutorials.html" title="Category:Tutorials">Tutorials</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Startingkdbplus/qlanguage" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="qlanguage.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Startingkdbplus/qlanguage&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="qlanguage.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/qlanguage&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/qlanguage&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Startingkdbplus/qlanguage" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Startingkdbplus/qlanguage" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/qlanguage&amp;oldid=2530" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Startingkdbplus%2Fqlanguage" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Startingkdbplus%2Fqlanguage&amp;oldid=2530&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Startingkdbplus/qlanguage&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 23 February 2012, at 03:11.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Startingkdbplus/qlanguage", "wgTitle": "Startingkdbplus/qlanguage", "wgAction": "view", "wgArticleId": 431, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2530, "wgCategories": ["Tutorials"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.041 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Startingkdbplus/qlanguage by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

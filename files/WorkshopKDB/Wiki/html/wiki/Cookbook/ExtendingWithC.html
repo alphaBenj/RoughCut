@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/ExtendingWithC by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/ExtendingWithC - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_ExtendingWithC skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/ExtendingWithC</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Extending_Kdb.2B_with_C.2FC.2B.2B"><span class="tocnumber">1</span> <span class="toctext">Extending Kdb+ with C/C++</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Introduction"><span class="tocnumber">1.1</span> <span class="toctext">Introduction</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Compiling_extension_modules"><span class="tocnumber">1.2</span> <span class="toctext">Compiling extension modules</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#Windows"><span class="tocnumber">1.2.1</span> <span class="toctext">Windows</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#Linux"><span class="tocnumber">1.2.2</span> <span class="toctext">Linux</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#Solaris"><span class="tocnumber">1.2.3</span> <span class="toctext">Solaris</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#Mac_OS_X"><span class="tocnumber">1.2.4</span> <span class="toctext">Mac OS X</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Recipes"><span class="tocnumber">2</span> <span class="toctext">Recipes</span></a>
+<ul>
+<li class="toclevel-2 tocsection-9"><a href="#Portable_Example"><span class="tocnumber">2.1</span> <span class="toctext">Portable Example</span></a>
+<ul>
+<li class="toclevel-3 tocsection-10"><a href="#Building_on_Windows_with_32bit_Microsoft_Compiler"><span class="tocnumber">2.1.1</span> <span class="toctext">Building on Windows with 32bit Microsoft Compiler</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#Linux_2"><span class="tocnumber">2.1.2</span> <span class="toctext">Linux</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#Solaris_2"><span class="tocnumber">2.1.3</span> <span class="toctext">Solaris</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#Mac_OS_X_2"><span class="tocnumber">2.1.4</span> <span class="toctext">Mac OS X</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-14"><a href="#High_Resolution_Timing"><span class="tocnumber">2.2</span> <span class="toctext">High Resolution Timing</span></a>
+<ul>
+<li class="toclevel-3 tocsection-15"><a href="#Accessing_the_TSC"><span class="tocnumber">2.2.1</span> <span class="toctext">Accessing the TSC</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#Reading_CPU_Frequency_on_Linux"><span class="tocnumber">2.2.2</span> <span class="toctext">Reading CPU Frequency on Linux</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#Reading_CPU_Frequency_on_Mac_OS_X"><span class="tocnumber">2.2.3</span> <span class="toctext">Reading CPU Frequency on Mac OS X</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-18"><a href="#Fun.2FHobby_Stuff"><span class="tocnumber">3</span> <span class="toctext">Fun/Hobby Stuff</span></a>
+<ul>
+<li class="toclevel-2 tocsection-19"><a href="#Blinking_OK_LED_on_Raspberry_Pi"><span class="tocnumber">3.1</span> <span class="toctext">Blinking OK LED on Raspberry Pi</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Extending_Kdb.2B_with_C.2FC.2B.2B"> Extending Kdb+ with C/C++ </span></h1>
+<h2> <span class="mw-headline" id="Introduction"> Introduction </span></h2>
+<p>Kdb+ functionality can be extended using dynamically loaded modules.  To make a function <tt>foo</tt> defined in a shared object <tt>bar.so</tt> available in a kdb+ session, we use <a href="../Reference/TwoColon.html" title="Reference/TwoColon">2:</a> to dynamically load the function as follows:
+</p>
+<pre>
+q)foo:`bar 2:(`foo;n)
+</pre>
+<p>where <tt>n</tt> is the number of arguments that <tt>foo</tt> accepts.
+</p><p>Note that if no path to bar is specified, kdb+ will attempt to load bar.[so|dll] from the current working directory and then the default directory $QHOME/[l|w|s|v|m][32|64] where l=linux,w=windows,m=macosx,s=solaris(sparc),v=solaris(x86) and 32=32bit, 64=64bit.
+e.g. $QHOME/l32).
+</p><p>If a path to bar is specified, kdb+ will attempt to load bar from that directory, and then the default directory.
+</p><p>If the shared library is NOT to be loaded from the default directory, then (on unix) LD_LIBRARY_PATH should include the directory containing the shared library.
+</p><p>A common error is that, during development, the shared library might exist in BOTH the current working directory and the default directory, in which case kdb+ attempts to load the shared library from the current working directory but fails if LD_LIBRARY_PATH does not include the current working directory.
+</p><p>In this cookbook we explain how to write functions in C that can be used in this manner.
+</p>
+<h2> <span class="mw-headline" id="Compiling_extension_modules"> Compiling extension modules </span></h2>
+<h3> <span class="mw-headline" id="Windows"> Windows </span></h3>
+<pre>
+cl /LD bar.c bar.def q.lib
+</pre>
+<h3> <span class="mw-headline" id="Linux"> Linux </span></h3>
+<pre>
+gcc -shared -fPIC bar.c -o bar.so
+</pre>
+<h3> <span class="mw-headline" id="Solaris"> Solaris </span></h3>
+<pre>
+gcc -G -fPIC  bar.c -o bar.so
+</pre>
+<h3> <span class="mw-headline" id="Mac_OS_X"> Mac OS X </span></h3>
+<pre>
+gcc -bundle -undefined dynamic_lookup bar.c -o bar.so
+</pre>
+<p>The resulting binary should be placed in the same directory as the q executable.
+Solaris x86_64 may require -nostdlib as that lib may not have been pic compiled.
+Mac osx seems to require explicit -m64 flag for 64bit builds.
+</p>
+<h1> <span class="mw-headline" id="Recipes"> Recipes </span></h1>
+<h2> <span class="mw-headline" id="Portable_Example"> Portable Example </span></h2>
+<p>This recipe shows how to build an extension on multiple platforms with portable <tt><a href="http://code.kx.com/wsvn/code/cookbook_code/c/" class="external text" rel="nofollow">source</a></tt>.
+</p><p>You will need <tt><a href="http://code.kx.com/wsvn/code/kx/kdb+/c/c/k.h" class="external text" rel="nofollow">k.h</a></tt> and familiarity with the <a href="InterfacingWithC.html" title="Cookbook/InterfacingWithC">Cookbook/InterfacingWithC</a> section.  
+</p><p><tt>add()</tt> in <tt><a href="http://code.kx.com/wsvn/code/cookbook_code/c/add.c" class="external text" rel="nofollow">add.c</a></tt> 
+adds two kdb+ integers and returns the result.  The code is portable across all kdb+ supported platforms. 
+</p><p><b>add.c</b>
+</p>
+<pre>
+#define KXVER 3
+#include&quot;k.h&quot;
+K add(K x,K y)
+{
+  return ki(x-&gt;i+y-&gt;i);
+}
+</pre>
+<p>Note that if using c++, since c++ uses name mangling for function overloading, you must declare the function using extern "C", otherwise the function name will not be resolved at loadtime.
+</p><p><b>add.cpp</b>
+</p>
+<pre>
+#define KXVER 3
+#include&quot;k.h&quot;
+extern &quot;C&quot; K add(K x,K y)
+{
+  return ki(x-&gt;i+y-&gt;i);
+}
+</pre>
+<h3> <span class="mw-headline" id="Building_on_Windows_with_32bit_Microsoft_Compiler"> Building on Windows with 32bit Microsoft Compiler </span></h3>
+<p>You might expect <tt>add()</tt> to look like:
+</p>
+<pre>
+__declspec(dllexport) K __cdecl add(K x,K y)
+...
+</pre>
+<p>but we can avoid polluting our portable code by writing an
+<tt><a href="http://code.kx.com/wsvn/code/cookbook_code/c/add.def" class="external text" rel="nofollow">add.def</a></tt> file
+</p><p><b>add.def</b>
+</p>
+<pre>
+EXPORTS
+add
+</pre>
+<p>To ensure that the linker can find <tt>ki()</tt>, we link with
+<a href="http://code.kx.com/wsvn/code/kx/kdb+/w32/q.lib" class="external text" rel="nofollow">q.lib</a>
+The .lib contains stub code that links to the 
+<tt>ki()</tt> function in q.exe
+</p><p>Now, with k.h, add.c, add.def, q.lib we can build a c extension:
+</p>
+<pre>
+cl /LD add.c add.def q.lib
+</pre>
+<p>Now, with q in your path and in the current directory containing <tt>add.dll</tt>:
+</p>
+<pre>
+q)(`add 2:(`add;2))[3i;4i]
+7i
+</pre>
+<p>TODO: Windows with MinGW
+</p>
+<h3> <span class="mw-headline" id="Linux_2"> Linux </span></h3>
+<pre>
+gcc -shared -fPIC add.c -o add.so
+</pre>
+<h3> <span class="mw-headline" id="Solaris_2"> Solaris </span></h3>
+<pre>
+gcc -G -fPIC  add.c -o add.so
+</pre>
+<h3> <span class="mw-headline" id="Mac_OS_X_2"> Mac OS X </span></h3>
+<pre>
+gcc -bundle -undefined dynamic_lookup add.c -o add.so
+</pre>
+<p><br />
+The resulting binary should be placed in the same directory as the q executable.
+Solaris x86_64 may require -nostdlib as that lib may not have been pic compiled.
+Mac osx seems to require explicit -m64 flag for 64bit builds.
+</p><p><br />
+</p>
+<h2> <span class="mw-headline" id="High_Resolution_Timing"> High Resolution Timing </span></h2>
+<p>The purpose of this recipes is to explain how to access a low-level feature of an operating system
+and processor from Kdb+. This is illustrative of the type of operation
+that cannot be performed directly in Kdb+ and for which it makes sense to write a C function for
+use within Kdb+.
+</p><p>The source code for this example can be downloaded from <a href="http://code.kx.com/wsvn/code/cookbook_code/cpu_extension" class="external text" rel="nofollow">subversion</a>.
+</p>
+<h3> <span class="mw-headline" id="Accessing_the_TSC"> Accessing the TSC </span></h3>
+<p>Recent IA-32 processors, since the Intel Pentium Pro implementation, contain a high-resolution time
+stamp counter register. This register originally was increased at a fixed rapid rate, subject to
+64 bit overflow. This made is useful as a high-resolution timer with a known relationship to wall
+clock time. In IA-32 assembly language the RDTSC instruction (a mnemonic for "Read Time Stamp Counter")
+with opcode 0f 32 is used to read the register.
+</p><p>This has been brought forward in the AMD64/EM64T version of the IA-32 instruction set. However, several
+of the recent implementatons broke the never guaranteed but often assumed idea that the register would
+be incremented at a constant rate. With the introduction of performance and frequency scaling for
+power usage adjustment and thermal control, the TSC register, though still monotonically increasing,
+began to behave in non-intuitive ways.
+</p><p>Some implementations tied the rate of increase of the register to the operating frequency of the core.
+As this varied, for example due to&#160;!SpeedStep, the rate of increase of the register varied. Even more
+bizarrely, some processors exhibited changes in the register ("drift") due to changes in the operating
+temperature of the core. Furthermore, multi-processor and multi-core machines have more than one TSC register. Depending on the
+processor the instruction is executed on, different values could be returned. Most modern operating systems
+are aware of this and attempt to properly account for TSC drift between cores, as well as frequency modulations.
+Recent processor implementations have removed the more obvious changes, making life easier for the programmers again.
+</p><p>Applications should rarely depend directly on the TSC for timekeeping, and instead use the applicable operating system calls.
+However, the extreme granularity (around a third of a nanosecond on a 3GHz processor) of the count is useful in certain
+situations where small instruction sequences need to be timed, or events logged with a very fine-grained timestamp.
+Note that in the latter case the TSC value cannot be used by itself as a timestamp due to multiple TSC registers being
+in the system, TSC drift, and 64 bit rollover.
+</p><p>The value of the register is read in the following C code segment using a GCC compatible inline assembly directive to
+execute the RDTSC instruction. The value is then wrapped as a "J" value in a K object, with potential loss of accuracy
+(the J type is the largest integral type wrappable in a K object).
+</p>
+<pre>
+#include &lt;k.h&gt;
+
+/**
+  * Read the cycle counter. AMD64 only in this version (note the non-portable
+  * use of unsigned long long).
+  *
+  * @param x Ignored; required to allow us to bind to this from q.
+  *
+  * @return A long long wrapped in a K object.
+  */
+K q_read_cycles_of_this_cpu(K x)
+{
+           unsigned long a, d, reading;
+           asm volatile(&quot;rdtsc&quot;&#160;: &quot;=a&quot; (a), &quot;=d&quot; (d));
+           reading = ((unsigned long long)a) | (((unsigned long long)d) &lt;&lt; 32);
+           return kj((J)reading);
+}
+</pre>
+<p>Note that the function takes and returns a K object. At least one K argument is required for integration into
+Kdb+. We compile as follows:
+</p>
+<pre>
+cc -I. -fPIC -shared -o ~/q/l64/cpu.so cpu.c
+</pre>
+<p>and the function may be loaded into Kdb+ like so:
+</p>
+<pre>
+read_cycles:`cpu 2:(`q_read_cycles_of_this_cpu;1)
+</pre>
+<p>A sample execution which counts the cycles taken between two executions of function:
+</p>
+<pre>
+q)read_cycles[]-read_cycles[]
+1377j
+</pre>
+<h3> <span class="mw-headline" id="Reading_CPU_Frequency_on_Linux"> Reading CPU Frequency on Linux </span></h3>
+<p>Under the Linux operating system, the file /proc/cpuinfo contains many useful pieces of information on the
+processor cores in the system. Here we illustrate reading the current operating frequency of the first core
+found in this file. Note that the operating frequency may change on recent IA-32 implementations so this
+reading is valid only at the instant it was taken. The following function:
+</p>
+<pre>
+/**
+  * Get the current cpu frequency by reading /proc/cpuinfo, or -1
+  * if there is a problem.
+  *
+  * @param x Ignored; required to allow us to bind to this from q.
+  *
+  * @return A double wrapped in a K object.
+  */
+K q_get_first_cpu_frequency(K x)
+{
+           static double frequency = -1.0;
+           const char searchString[] = &quot;cpu MHz                            &#160;: &quot;;
+           char line[MAX_PROCFILE_SIZE];
+           int fd = open (&quot;/proc/cpuinfo&quot;, O_RDONLY);
+           read (fd, line, MAX_PROCFILE_SIZE);
+           char* position = strstr (line, searchString);
+           if (NULL&#160;!= position) {
+                       position += strlen (searchString);
+                       float f;
+                       sscanf (position, &quot;%f&quot;, &amp;f);
+                       frequency = (double) f;
+           }
+         return kf(frequency);
+}
+</pre>
+<p>opens and parses the processor information file and extracts the first frequency reading. This is then
+wrapped as a double precison floating point number in a K object and returned.
+</p><p>Compile as follows, and placed in the l64 directory (which is searched for extensions by default):
+</p>
+<pre>
+cc -I. -fPIC -shared -o ~/q/l64/cpu.so cpu.c
+</pre>
+<p>Then at a Kdb+ prompt, we can load the function and use it to find the current processor frequency:
+</p>
+<pre>
+q)cpu_frequency:`cpu 2:(`q_get_first_cpu_frequency;1)
+q)cpu_frequency[]
+800.128
+</pre>
+<h3> <span class="mw-headline" id="Reading_CPU_Frequency_on_Mac_OS_X"> Reading CPU Frequency on Mac OS X </span></h3>
+<p>Mac OS X does not have /proc interface. One create one in user space using <a href="http://osxbook.com/book/bonus/chapter11/procfs" class="external text" rel="nofollow">MacFUSE</a>, but it is easier to use <tt>sysctl</tt>:
+</p>
+<pre>
+#include &lt;sys/types.h&gt;
+#include &lt;sys/sysctl.h&gt;
+#include &quot;k.h&quot;
+
+K1(cpuf){J f;size_t l=sizeof(f);
+ P(sysctlbyname(&quot;hw.cpufrequency&quot;,&amp;f,&amp;l,0,0),
+   orr(&quot;sysctl&quot;))R kj(f);}
+</pre>
+<pre>
+q)cpuf:`cpu 2:(`cpuf;1)
+q)cpuf[]
+2330000000j
+</pre>
+<h1> <span class="mw-headline" id="Fun.2FHobby_Stuff"> Fun/Hobby Stuff </span></h1>
+<h2> <span class="mw-headline" id="Blinking_OK_LED_on_Raspberry_Pi"> Blinking OK LED on Raspberry Pi </span></h2>
+<p>A little bit of fun - usually the OK LED on the raspberry pi flashes whenever there is disk i/o. You can also control it through mapping the gpio memory, and writing directly to it as below.
+</p>
+<pre>
+q){x set`:./a 2:x,1}each`init`led  / here it expects shared lib name is a.so
+</pre>
+<pre>
+// btw, the following c libs are useful for accessing gpio 
+// http://www.open.com.au/mikem/bcm2835
+// https://projects.drogon.net/raspberry-pi/wiringpi
+
+#include&lt;fcntl.h&gt;
+#include&lt;sys/mman.h&gt;
+#include&lt;sys/types.h&gt;
+#include&lt;sys/stat.h&gt;
+#include&lt;unistd.h&gt;
+#include&quot;k.h&quot;
+
+static volatile unsigned *gpio;
+
+#define BCM2708_PERI_BASE 0x20000000
+#define GPIO_BASE         (BCM2708_PERI_BASE+0x200000)
+//#define INP_GPIO(x) *(gpio+((x)/10))&amp;=~(7&lt;&lt;(((x)%10)*3))
+#define OUT_GPIO(x) *(gpio+((x)/10))|=(1&lt;&lt;(((x)%10)*3))
+#define GPIO_SET *(gpio+7)  // sets   bits which are 1 ignores bits which are 0
+#define GPIO_CLR *(gpio+10) // clears bits which are 1 ignores bits which are 0
+#define OKLED 16
+
+K init(K x){
+  int fd;
+  void *p;
+  if(gpio)R krr(&quot;Already initialized!&quot;);
+  if((fd=open(&quot;/dev/mem&quot;,O_RDWR|O_SYNC))&lt;0)
+    R krr(&quot;can't open /dev/mem\n&quot;);
+  p=mmap(NULL,4096,PROT_READ|PROT_WRITE,MAP_SHARED,fd,GPIO_BASE);
+  close(fd);
+  if(p==MAP_FAILED)R krr(&quot;mmap error&quot;);
+  gpio=(volatile unsigned*)p;
+//  INP_GPIO(OKLED);
+  OUT_GPIO(OKLED);
+  R(K)0;
+}
+K led(K x){
+  if(xj)GPIO_CLR=1&lt;&lt;OKLED;else GPIO_SET=1&lt;&lt;OKLED;
+  R(K)0;
+}
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 287/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:31-0!*!0!!en!*!edit=0 and timestamp 20131013192906 -->
+<div class="printfooter">
+Retrieved from "<a href="ExtendingWithC.html">http://code.kx.com/wiki/Cookbook/ExtendingWithC</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="http://code.kx.com/wiki/Special:Categories" title="Special:Categories">Category</a>: <span dir='ltr'><a href="../Category_Interfaces.html" title="Category:Interfaces">Interfaces</a></span></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/ExtendingWithC" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="ExtendingWithC.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/ExtendingWithC&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="ExtendingWithC.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ExtendingWithC&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ExtendingWithC&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/ExtendingWithC" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/ExtendingWithC" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ExtendingWithC&amp;oldid=2935" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FExtendingWithC" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FExtendingWithC&amp;oldid=2935&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ExtendingWithC&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 7 October 2013, at 12:25.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/ExtendingWithC", "wgTitle": "Cookbook/ExtendingWithC", "wgAction": "view", "wgArticleId": 31, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2935, "wgCategories": ["Interfaces"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.132 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/ExtendingWithC by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

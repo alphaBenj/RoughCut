@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/FileCompression by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/FileCompression - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_FileCompression skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/FileCompression</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<h2> <span class="mw-headline" id="File_Compression"> File Compression </span></h2>
+<p>kdb+ has built-in optional file compression as of version 2.7.
+</p>
+<h2> <span class="mw-headline" id="FAQ"> FAQ </span></h2>
+<p><b>Q) How do I compress a file?</b><br />
+A) Use the -19! operator. e.g.<br />
+</p>
+<pre>
+-19!(`:sourceFile;`:targetFile;logicalBlockSize;compressionAlgorithm;compressionLevel)
+</pre>
+<p>where
+</p>
+<ul><li>logicalBlockSize is a power of 2 between 12 and 20 (pageSize or allocation granularity to 1MB - pageSize for AMD64 is 4kB, sparc is 8kB. Windows seems to have a default allocation granularity of 64kB). Note that this argument affects both compression speed and compression ratio (larger blocks can be slower and better compressed)<br />
+</li><li>compressionAlgorithm is one of the following, 0 - none, 1 - kdb+ ipc, 2 - gzip<br />
+</li><li>compressionLevel is between 0 and 9 (valid only for gzip, use 0 for other algorithms)
+</li></ul>
+<p>Return value - the compression level achieved, as a&#160;%.<br />
+</p>
+<pre>
+q)`:test set asc 10000000?100; / create a test data file
+q) / compress input file test, to output file ztest, using a block size of 128kB (2 xexp 17), gzip level 6
+q)-19!(`:test;`:ztest;17;2;6)
+99.87667
+q)get[`:test]~get`:ztest / check the compressed data is the same as the uncompressed data
+1b
+</pre>
+<p><b>Q) How do I save directly to a compressed file?</b><br />
+A) Since v2.8 2011.11.21, kdb+ supports streaming file compression, i.e. the data is compressed as it is written to disk.
+</p><p>This is achieved through the overriding of "set", in that the lhs target of set can be a list describing the file or splay target, with the compression parameters. For example
+</p>
+<pre>(`:ztest;17;2;6) set asc 10000?`3
+(`:zsplay/;17;2;6) set .Q.en[`:.;([]sym:asc 10000?`3;time:.z.p+til 10000;price:10000?1000.;size:10000?100)]
+</pre>
+<p>kdb+ compressed files/splays can also be appended to.
+e.g.
+</p>
+<pre>q)(`:zippedTest;17;2;6) set 100000?10;`:zippedTest upsert 100000?10;-21!`:zippedTest
+</pre>
+<p>Appending to files with an attribute (e.g. `p# on sym) causes the whole file to be read and rewritten. Currently, unless .z.zd is set accordingly, this would be rewritten in a non-compressed format regardless of its original format.
+</p><p>'compress new files' mode - active if .z.zd (zip defaults) present and valid.
+.z.zd can be set to an int vector of (blockSize;algo;zipLevel) to apply to all new files which do not have a file extension.
+.e.g
+</p>
+<pre>q).z.zd:(17;2;6);`:zfile set asc 10000?`3
+-19!x and (`:file;size;algo;level) set x take precedence over .z.zd
+</pre>
+<p>To reset to not compress new files, use \x, e.g.
+</p>
+<pre>q)\x .z.zd
+</pre>
+<p>Since kdb+v2.8 2011.11.28, the zip params can be a dictionary of filenames!zipParams. The null ` entry in the dict is the default zipParams, or if no ` specified then default will be do not compress. e.g.
+</p>
+<pre>q)(`:splay/;``a`b!((17;2;9);(17;2;6);(17;2;6)))set([]a:asc 1000000?10;b:asc 1000000?10;c:asc 1000000?10)
+</pre>
+<p><b>N.B.</b>
+</p><p>Do not use streaming compression with log files, as in the event of a crash, the log file will be unusable as it will be missing meta information from the end of the file. Streaming compression maintains the last block in memory and compresses/purges it as needed or latest on close of file handle.
+</p><p><b>Q) How do I decompress a file?</b><br />
+A) just read the file, e.g.
+</p>
+<pre>
+get`:compressedFile
+</pre>
+<p>If you want to store it again decompressed, then use
+</p>
+<pre>
+`:uncompressedFile set get `:compressedFile
+</pre>
+<p><br />
+</p><p><b>Q) I want to use algorithm #2 (gzip). Do I need additional libraries??</b><br />
+A) Yes, but these may already be installed on your system. It binds dynamically to zlib (more info at <a href="http://zlib.net/" class="external free" rel="nofollow">http://zlib.net</a>). For windows we chose to be compatible with the dlls from <a href="http://www.winimage.com/zLibDll/zlib125dll.zip" class="external free" rel="nofollow">http://www.winimage.com/zLibDll/zlib125dll.zip</a>. For linux and solaris you may find it convenient to install zlib using your package manager software, or consult your system administrator for assistance. Note that your will require the matching 32 or 64bit libs for kdb+, i.e. 32bit libs for 32bit kdb+, 64bit libs for 64bit kdb+.
+</p><p><b>Q) When compressing data, if the source file and the target file are on the same drive, it might run slowly. Why?</b><br />
+A) The compression routine is reading from the source file, compressing the data and writing to the target file. The disk is likely being given many seek requests. Try to locate the targetFile to a different physical disk, this will reduce the number of seeks needed.<br />
+</p><p><b>Q) How can I tell if a file is compressed?</b><br />
+A)execute -21!<tt>`:filename</tt>
+</p>
+<pre>
+q)-21!`:testfile
+compressedLength  | 2100716
+uncompressedLength| 8000300
+algorithm         | 2
+logicalBlockSize  | 17
+</pre>
+<p><b>Q) Does the compression format support random access to the data?</b><br />
+A) Yes.<br />
+</p><p><b>Q) Does the compression require column data to be compressed using the -19! operation, or will running gzip on column data also work?</b><br />
+A) Yes, you have to use the -19! operation as the file format is different to gzip.<br />
+</p><p><b>Q) Is it be possible to compress only some partitions, or even only some columns for a table within a partition? (For instance, for a database partitioned by date.)</b><br />
+A) Yes, you can choose which files to compress, and which algorithm/level to use per file; the same kdb+ process can read compressed and uncompressed files. So for files that don't compress well, or have an access pattern that does not perform well with compression, you could leave those uncompressed.<br />
+</p><p><b>Q) How fast is the decompression?</b><br />
+A) A single thread with full use of a core can decompress approx 300MB/s, depending on data/algorithm and level.<br />
+</p><p><b>Q) Is there a performance impact?</b><br />
+A) People are often concerned about the cpu overhead associated with compression, but the actual cost is difficult to calculate. On the one hand, compression does trade cpu utilization for disk space savings. And up to a point, if you're willing to trade more CPU time, you can get more space savings. But by reducing the space used, you end up doing less disk I/O, which can improve overall performance if your workload is bandwidth-limited. The only way to really know the impact of compression on your disk utilization and system performance is to run your workload with different levels of compression and observe the results.<br />
+</p><p><b>Q) When is decompression done and how long is decompressed data cached?</b><br />
+A) Files are mapped/unmapped on demand during a query, only the areas of the file that are touched are decompressed, i.e. it supports random access. Decompressed data is cached for the lifetime that a file is mapped. Since v2.7 2011.04.30 columns are mapped for the duration of the select.<br />
+</p><p><b>Q) Say you're querying by date and sum over a date partitioned table, with each partition parted by sym - will the query just decompress parts of the column data for the syms in the query predicate?</b><br />
+A) Yes.<br />
+</p><p><b>Q) Can I append to a compressed file?</b><br />
+A) Yes, since kdb+ v2.8 2011.11.21. Appending to compressed enum files was blocked in v3.0 2012.05.17 due to potential concurrency issues, hence these files should not be compressed.<br />
+</p><p><b>Q) Which is better, ZFS compression or built-in kdb+ compression?</b><br />
+A) Currently, ZFS compression probably has an edge due to keeping more decompressed data in cache which is available to all processes.<br />
+</p><p><b>Q) Is the compression or decompression multithreaded?</b><br />
+A) The reading or writing of a compressed file must NOT be performed concurrently from multiple threads. However, multiple files can be read or written from their own threads concurrently (one file per thread). For example, a par.txt'd historical database with slave threads will be using the decompression in a multithreaded mode.<br />
+</p><p><b>Q) What's the difference among different logicalBlockSize (pageSize to 1MB) and compressionLevel (1 to 9 for gzip)?  What's a standard recommendation?</b><br />
+A) The logicalBlockSize represents how much data is taken as a compression unit, and consequently the minimum size of a block to decompress. e.g. using a logicalBlockSize of 128kB, a file of size 128000kB would be cut into 100 blocks, and each block compressed independently of the others. Later, if a single byte is requested from that compressed file, a minimum of 128kB would be decompressed to access that byte. Fortunately those types of access patterns are rare, and typically you would be extracting clumps of data that make a logical block size of 128kB quite reasonable. Ultimately, you should experiment with what suits your data, hardware and access patterns best. A good balance for taq data and typical taq queries is to use algorithm 1 (the same algorithm as used for ipc compression) with 128kB blockSizes. For those who can accept slower performance but better compression, they can choose gzip with compression level 6.
+</p><p><b>Q) hcount<tt>`:compressedFile</tt> returns the uncompressed file length. Is this intentional?</b><br />
+A) Yes. In our defense, ZFS has similar issues - <a href="http://blog.buttermountain.co.uk/2008/05/10/zfs-compression-when-du-and-ls-appear-to-disagree" class="external free" rel="nofollow">http://blog.buttermountain.co.uk/2008/05/10/zfs-compression-when-du-and-ls-appear-to-disagree</a><br />Compressed file size can be obtained from -21!<tt>`:compressedFile<br /></tt>
+</p><p><b>Q) Is there a limit on the number of compressed files that can be open simultaneously?</b><br />
+A) Yes, currently the limit is 4096 files. There is no practical internal limit on the number of uncompressed files.
+</p><p><b>Q) Does kdb+ file compression use more memory than working with non-compressed files?</b><br />
+A) Due to the nature of working with vectors, kdb+ allocates enough space to decompress the whole vector, regardless of how much it finally uses. This reservation of memory is required as there is no backing store for the decompressed data, unlike with mapped files of non-compressed data which can always read the pages from file again should they have been dropped. However, this is reservation of memory only, and can be accommodated by increasing the swap space available - even though the swap should never actually be written to, the OS has to be kept happy that in the worst case scenario of decompressing the data in full, it could swap it out if needed. If you experience wsfull even when sufficient swap space is configured, check whether you have any soft/hard limits imposed with ulimit -v. Also be aware of your memory overcommit settings on linux, /proc/sys/vm/overcommit_memory
+and /proc/sys/vm/overcommit_ratio - these control how careful linux is when allocating address space wrt available physical memory plus swap.
+</p><p><b>Q) What compression ratios should I expect?</b><br />
+A) Using real nyse trade data, we observed the gzip algorithm at level 9 compressing to 15% of original size, and the ipc compression algorithm compressing to 33% of original size.
+</p><p><b>Q) Do you have any benchmarking tips?</b><br />
+A) Perform your benchmarks on the same hardware setup as you would use for production and be aware of the disk cache - flush the cache before each test. The disk cache can be flushed on linux using
+</p>
+<pre>
+sync&#160;; sudo echo 3 | sudo tee /proc/sys/vm/drop_caches
+</pre>
+<p>and on osx, the OS command 'purge' can be used.
+</p><p><b>Q) Can I use a hardware accelerator card to improve compression performance?</b><br />
+A) Yes. For example, the AHA367-PCIe 10.0 Gbits/sec GZIP Compression/Decompression Accelerator Card.<br />
+<br />kdb+ v2.7 can use this card via the zlib shared library api. The card may be obtained directly from aha.com -<br />
+see <a href="http://aha.com/show_prod.php?id=38" class="external free" rel="nofollow">http://aha.com/show_prod.php?id=38</a><br />
+<br />
+This card was observed to be compatible with kdb+ 2.7 2010.08.24 on Linux 2.6.32-22-generic SMP Intel i5 750 @ 2.67GHz 8GB RAM.<br />
+<br />
+Using sample NYSE quote data from 2010.08.05, 482 million rows, compression ratios and timings were observed as below.<br />
+<br />
+The uncompressed size of the data was 12GB, which compressed to 1.7GB, yielding a compression ratio 7:1 (the card currently has a fixed compression level).<br />
+<br />
+The time taken to compress the data was 65077mS with the AHA card enabled versus 552506mS using zlib compression in pure software. i.e. using the AHA card took 12% of the time to compress the same amount of data to the same level, achieving approx. a 10x speed up, using just one channel only. For those wishing to execute file compression in parallel using the peach command, all 4 channels on the card can be used.<br />
+<br />
+The AHA zlib shared lib can be run in 3 modes - compression+decompression, compression only or decompression only. With kdb+ using just a single channel of the card, the decompression performance of the card was slightly slower than as in software, although when kdb+ was used in a multithreaded mode, increased overall performance was observed due to all 4 channels being used thereby freeing up the main cpu.<br />
+<br />
+AHA also offer other cards, the AHA360PCIe (1 channel) and the AHA363PCIe (2 channel), however these have not yet been tested for compatibility.<br />
+<br />
+Installation is very straightforward - unpack and plug-in the card, compile and load the driver, compile and install the zlib shared library. As a reference, it took less than 30 minutes from opening the box to having kdb+ use it for compression. A very smooth installation.<br />
+<br />
+Runtime troubleshooting for the AHA 367 card<br />
+<br />
+If you see the error message<br />
+aha367 - ahagz_api.c: open() call failed with error: 2 on device /dev/aha367_board<br />
+<br />
+this likely means the kernel module has not been loaded. Remedy - go to the &lt;aha install dir&gt;/bin and execute sudo ./load_module and select the 367 card option.<br />
+</p><p>Another accelerator card vendor (untested) - <a href="http://www.indranetworks.com/SCMX3.html" class="external free" rel="nofollow">http://www.indranetworks.com/SCMX3.html</a><br />
+</p><p><span id="max_map_count"><b>Q) Do I need to tweak the kernel settings in order to work with compressed files?</b><br />
+A) On linux, perhaps - it really depends on the size and number of compressed files you have open at any time, and the access patterns used. For example, random access to a compressed file will use many more kernel resources than sequential access.<br />
+</p><p>If you find that kdb+ is seg faulting (crashing) when accessing compressed files, try increasing the linux kernel parameter vm.max_map_count<br />
+</p>
+<pre>
+as root
+$ sysctl vm.max_map_count=16777216
+</pre>
+<p>and/or make a suitable change for this parameter more permanent through /etc/sysctl.conf<br />
+</p>
+<pre>
+as root
+$ echo &quot;vm.max_map_count = 16777216&quot; | tee -a /etc/sysctl.conf
+$ sysctl -p
+</pre>
+<p>You can check current settings with<br />
+</p>
+<pre>
+$ more /proc/sys/vm/max_map_count
+</pre>
+<p>Assuming you are using 128kB logical size blocks for your compressed files, a general guide is, at a minimum, set max_map_count to 1 map per 128kB of memory, or 65530, whichever is higher.<br />
+</p><p><b>Q) Can I run kdb+ under gdb (the gnu debugger), and use compressed files?</b><br />
+A) You should only ever need to run gdb if you are debugging your own custom shared libs loaded into kdb+.<br />
+gdb will intercept SIGSEGV which should be passed to kdb+; to tell it to do so, issue the following command at the gdb prompt
+</p>
+<pre>
+(gdb) handle SIGSEGV nostop noprint
+</pre>
+<p><b>Q) I use kdb+ with R Server for Q, i.e. R as shared library loaded into kdb+. Does this work with compressed files?</b><br />
+A) R uses signal handling to detect stack overflows. This conflicts with kdb+'s use of signals for handling compressed files, causing kdb+ to crash. R's use of signals can be suppressed by setting the variable R_SignalHandlers (declared in Rinterface.h) to 0 when compiling the relevant R library.
+</p><p><b>Q) I'd like to use Transparent Huge Pages (THP) on Linux. Is this compatible with the kdb+ file compression?</b><br />
+A) No. We have had reports of systems stalling due to THP fragmentation. Disable THP either with the shell command<br />
+</p>
+<pre>
+echo never &gt;/sys/kernel/mm/redhat_transparent_hugepage/enabled
+</pre>
+<p>or more permanently via grub at boot time
+</p>
+<pre>
+transparent_hugepage=never
+</pre>
+<p>n.b. kdb+ must be restarted to pick up the new setting.</span>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 43/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:391-0!*!0!!*!*!edit=0 and timestamp 20131013143921 -->
+<div class="printfooter">
+Retrieved from "<a href="FileCompression.html">http://code.kx.com/wiki/Cookbook/FileCompression</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/FileCompression" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="FileCompression.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/FileCompression&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="FileCompression.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/FileCompression&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/FileCompression&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/FileCompression" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/FileCompression" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/FileCompression&amp;oldid=2931" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FFileCompression" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FFileCompression&amp;oldid=2931&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/FileCompression&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 5 October 2013, at 16:07.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/FileCompression", "wgTitle": "Cookbook/FileCompression", "wgAction": "view", "wgArticleId": 391, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2931, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.031 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/FileCompression by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

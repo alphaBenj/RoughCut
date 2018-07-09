@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/LinkingColumns by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/LinkingColumns - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_LinkingColumns skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/LinkingColumns</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<p>(contributed by Morgan Stanley)
+</p>
+<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Linking_Columns"><span class="tocnumber">1</span> <span class="toctext">Linking Columns</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Introduction"><span class="tocnumber">1.1</span> <span class="toctext">Introduction</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Memory_Tables"><span class="tocnumber">1.2</span> <span class="toctext">Memory Tables</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Splayed_Tables"><span class="tocnumber">1.3</span> <span class="toctext">Splayed Tables</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Partitioned_Tables"><span class="tocnumber">1.4</span> <span class="toctext">Partitioned Tables</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Linking_Columns"> Linking Columns </span></h2>
+<h3> <span class="mw-headline" id="Introduction"> Introduction </span></h3>
+<p>The concept of a link column is closely related to a <a href="http://code.kx.com/wiki/JB:QforMortals2/tables#Foreign_Keys_and_Virtual_Columns" title="JB:QforMortals2/tables">foreign key</a> column, in that it provides linkage between the values of a column in a table to the values in a column in a second table.   The difference is that whereas a foreign key column is an enumeration over the key column of a keyed table, a link column comprises indices into an arbitrary column of an arbitrary table.
+</p><p>A link column is useful in situations where a key column is not available.  For example, a table can contain a link to itself in order to create a parent-child relationship.  You can also use links to create 'foreign key' relationships between splayed tables, where foreign keys are not possible since a keyed table cannot be splayed.
+</p>
+<h3> <span class="mw-headline" id="Memory_Tables"> Memory Tables </span></h3>
+<p>We begin with the situation in which both tables reside in memory.  In our first example, we use a link column from a table to itself to create a parent-child relationship.  Starting with <b>t</b>,
+</p>
+<pre>
+q)t:([] id:101 102 103 104; v:1.1 2.2 3.3 4.4)
+</pre>
+<p>To create the column <b>parent</b>, we look up the values in the <i>key</i> column using <a href="http://code.kx.com/wiki/JB:QforMortals2/lists#.3F" title="JB:QforMortals2/lists">?</a> and then declare the link using&#160;! instead of <a href="http://code.kx.com/wiki/JB:QforMortals2/casting_and_enumerations#.24" title="JB:QforMortals2/casting and enumerations">$</a> as we would for a <a href="http://code.kx.com/wiki/JB:QforMortals2/tables#Example_of_Simple_Foreign_Key" title="JB:QforMortals2/tables">foreign key enumeration</a>.
+</p>
+<pre>
+q)update parent:`t!id?101 101 102 102 from `t
+`t
+q)t
+id  v   parent
+--------------
+101 1.1 0
+102 2.2 0
+103 3.3 1
+104 4.4 1
+</pre>
+<p>Observe that meta displays the target table of the link in the <b>f</b> column, just as it does for a foreign key.
+</p>
+<pre>
+q)meta t
+c     | t f a
+------| -----
+id    | i
+v     | f
+parent| i t
+</pre>
+<p>And just as with a foreign key, we can use dot notation on the link column to follow the link and access any column in the linked table.
+</p>
+<pre>
+q)select id, parentid:parent.id from t
+id  parentid
+------------
+101 101
+102 101
+103 102
+104 102
+</pre>
+<p>Next, we create a link between two columns of enumerated symbols, since this occurs frequently in practice.  The table <b>t1</b> has a column <b>c1</b> enumerated over <b>sym</b>.
+</p>
+<pre>
+q)sym:()
+q)show t1:([] c1:`sym?`c`b`a; c2: 10 20 30)
+c1 c2
+-----
+c  10
+b  20
+a  30
+</pre>
+<p>The table <b>t2</b> has a column <b>c3</b> also enumerated over <b>sym</b>, and whose values are drawn from those of column <b>c1</b> in <b>t1</b>.
+</p>
+<pre>
+q)show t2:([] c3:`sym?`a`b`a`c; c4: 1. 2. 3. 4.)
+c3 c4
+-----
+a  1
+b  2
+a  3
+c  4
+</pre>
+<p>As before, we use <b>?</b> to create a vector of indices and we use&#160;! in place of <b>$</b> to create the link.
+</p>
+<pre>
+q)update t1link:`t1!t1.c1?c3 from `t2
+</pre>
+<p>Again the <b>f</b> column of <b>meta</b> indicates the table over which the link is created.
+</p>
+<pre>
+q)meta t2
+c     | t f  a
+------| ------
+c3    | s
+c4    | f
+t1link| i t1
+</pre>
+<p>Now we can issue queries that traverse the link using dot notation.
+</p>
+<pre>
+q)select c3, t1link.c2 from t2
+c3 c2
+-----
+a  30
+b  20
+a  30
+c  10
+</pre>
+<h3> <span class="mw-headline" id="Splayed_Tables"> Splayed Tables </span></h3>
+<p>We consider the case in which the table <b>t1</b> has already been splayed on disk and mapped into the q session. Note that dot notation does not work for splayed tables when creating the link.
+</p>
+<pre>
+q)`:c:/Data/db/t1/ set .Q.en[`:c:/Data/db/; ([] c1:`c`b`a; c2: 10 20 30)]
+`:c:/Data/db/t1/
+
+q)\l c:/Data/db
+q)meta t1
+c | t f a
+--| -----
+c1| s
+c2| i
+</pre>
+<p>We shall create a link column in table <b>t2</b> as it is splayed.  (This should be done on each append if you are creating <b>t2</b> incrementally on disk.)
+</p>
+<pre>
+q)temp:.Q.en[`:c:/Data/db/; ([] c3:`a`b`a`c; c4: 1. 2. 3. 4.)]
+
+q)`:c:/Data/db/t2/ set update t1link:`t1!t1[`c1]?c3 from temp
+`:c:/Data/db/t2/
+</pre>
+<p>We remap and check meta,
+</p>
+<pre>
+q)\l c:/Data/db
+q)meta t2
+c     | t f  a
+------| ------
+c3    | s
+c4    | f
+t1link| i t1
+</pre>
+<p>Now we can issue a query across the link,
+</p>
+<pre>
+q)select t1link.c2, c3 from t2
+c2 c3
+-----
+30 a
+20 b
+30 a
+10 c
+</pre>
+<p>Next, we consider the case when <b>t1</b> and <b>t2</b> have both been splayed.
+</p>
+<pre>
+q)`:c:/Data/db/t1/ set .Q.en[`:c:/Data/db/; ([] c1:`c`b`a; c2: 10 20 30)]
+`:c:/Data/db/t1/
+
+q)`:c:/Data/db/t2/ set .Q.en[`:c:/Data/db/; ([] c3:`a`b`a`c; c4: 1. 2. 3. 4.)]
+`:c:/Data/db/t2/
+</pre>
+<p>First we create the link when both tables have been mapped into memory.
+</p>
+<pre>
+q)\l c:/Data/db
+</pre>
+<p>The link column can be created as before, but we must update the splayed files of <b>t2</b> manually.
+</p>
+<pre>
+q)`:c:/Data/db/t2/t1link set `t1!t1[`c1]?t2`c3
+`:c:/Data/db/t2/t1link
+
+q)`:c:/Data/db/t2/.d set (cols t2),`t1link
+`:c:/Data/db/t2/.d
+</pre>
+<p>We remap and issue the query as before
+</p>
+<pre>
+q)\l c:/Data/db
+q)meta t2
+c     | t f  a
+------| ------
+c3    | s
+c4    | f
+t1link| i t1
+
+q)select t1link.c2, c3 from t2
+c2 c3
+-----
+30 a
+20 b
+30 a
+10 c
+</pre>
+<p>Finally, we consider two splayed tables that have not been mapped.
+</p>
+<pre>
+q)`:c:/Data/db/t1/ set .Q.en[`:c:/Data/db/; ([] c1:`c`b`a; c2: 10 20 30)]
+`:c:/Data/db/t1/
+
+q)`:c:/Data/db/t2/ set .Q.en[`:c:/Data/db/; ([] c3:`a`b`a`c; c4: 1. 2. 3. 4.)]
+`:c:/Data/db/t2/
+</pre>
+<p>We retrieve the column lists manually and proceed as before.
+</p>
+<pre>
+q)`:c:/Data/db/t2/t1link set `t1!(get `:c:/Data/db/t1/c1)?get `:c:/Data/db/t2/c3
+`:c:/Data/db/t2/t1link
+
+q)colst2:get `:c:/Data/db/t2/.d
+
+q)`:c:/Data/db/t2/.d set colst2,`t1link
+`:c:/Data/db/t2/.d
+</pre>
+<h3> <span class="mw-headline" id="Partitioned_Tables"> Partitioned Tables </span></h3>
+<p>Partitioned tables can have link columns provided the links do not span partitions.  In particular, you cannot link across days for a table partitioned by date.
+</p><p>Creating a link column in a partitioned table is best done as each partition is written, in which case the process reduces to that for splayed tables.
+</p><p>In our first example, we create a link between non-symbol columns in the simple partitioned tables <b>t1</b> and <b>t2</b>.
+</p><p>We create the first day's tables with the link and save them to a partition.
+</p>
+<pre>
+q)t1:([] id:101 102 103; v:1.1 2.2 3.3)
+
+q)t2:([] t1link:`t1!t1[`id]?103 101 101 102; n:10 20 30 40)
+
+q)`:c:/Temp/db/2009.01.01/t1/ set t1
+`:c:/Temp/db/2009.01.01/t1/
+
+q)`:c:/Temp/db/2009.01.01/t2/ set t2
+`:c:/Temp/db/2009.01.01/t2/
+</pre>
+<p>We do the same for the second day.
+</p>
+<pre>
+q)t1:([] id:104 105; v:4.4 5.5)
+q)t2:([] t1link:`t1!t1[`id]?105 104 104; n:50 60 70)
+
+q)`:c:/Temp/db/2009.01.02/t1/ set t1
+`:c:/Temp/db/2009.01.02/t1/
+q)`:c:/Temp/db/2009.01.02/t2/ set t2
+`:c:/Temp/db/2009.01.02/t2/
+</pre>
+<p>Finally, we restart q, map the tables and execute a query across the link.
+</p>
+<pre>
+&gt;q
+KDB+ 2.4 2008.10.15 Copyright (C) 1993-2008 Kx Systems...
+
+q)\l c:/Temp/db
+
+q)select date,n,t1link.v from t2 where date within 2009.01.01 2009.01.02
+date       n  v
+-----------------
+2009.01.01 10 3.3
+2009.01.01 20 1.1
+2009.01.01 30 1.1
+2009.01.01 40 2.2
+2009.01.02 50 5.5
+2009.01.02 60 4.4
+2009.01.02 70 4.4
+</pre>
+<p>The final example is similar except that it creates a link over enumerated symbol columns.
+</p>
+<pre>
+q)/ day 1
+q)t1:([] c1:`c`b`a; c2: 10 20 30)
+q)`:c:/Temp/db/2009.01.01/t1/ set .Q.en[`:c:/Temp/db/; t1]
+`:c:/Temp/db/2009.01.01/t1/
+
+q)t2:([] c3:`a`b`a`c; c4: 1. 2. 3. 4.)
+q)`:c:/Temp/db/2009.01.01/t2/ set .Q.en[`:c:/Temp/db/; update t1link:`t1!t1[`c1]?c2 from t2]
+`:c:/Temp/db/2009.01.01/t2/
+
+q)/ day 2
+q)t1:([] c1:`d`a; c2: 40 50)
+q)`:c:/Temp/db/2009.01.02/t1/ set .Q.en[`:c:/Temp/db/; t1]
+`:c:/Temp/db/2009.01.02/t1/
+
+q)t2:([] c3:`d`a`d; c4:5. 6. 7.)
+q)`:c:/Temp/db/2009.01.02/t2/ set .Q.en[`:c:/Temp/db/; update t1link:`t1!t1[`c1]?c2 from t2]
+`:c:/Temp/db/2009.01.02/t2/
+
+q)/ remap
+q)\l c:\Temp\db
+
+q)select c3,t1link.c2,c4 from t2 where date within 2009.01.01 2009.01.02
+c3 c2 c4
+--------
+a  30 1
+b  20 2
+a  30 3
+c  10 4
+d  40 5
+a  50 6
+d  40 7
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 202/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:344-0!*!0!!en!*!edit=0 and timestamp 20131013163920 -->
+<div class="printfooter">
+Retrieved from "<a href="LinkingColumns.html">http://code.kx.com/wiki/Cookbook/LinkingColumns</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/LinkingColumns" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="LinkingColumns.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/LinkingColumns&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="LinkingColumns.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/LinkingColumns&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/LinkingColumns&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/LinkingColumns" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/LinkingColumns" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/LinkingColumns&amp;oldid=2496" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FLinkingColumns" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FLinkingColumns&amp;oldid=2496&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/LinkingColumns&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 6 January 2012, at 12:06.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/LinkingColumns", "wgTitle": "Cookbook/LinkingColumns", "wgAction": "view", "wgArticleId": 344, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2496, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.029 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/LinkingColumns by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

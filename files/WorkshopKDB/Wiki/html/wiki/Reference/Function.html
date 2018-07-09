@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Reference/Function by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Reference/Function - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Reference_Function skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Reference/Function</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Functions"><span class="tocnumber">1</span> <span class="toctext">Functions</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Syntax"><span class="tocnumber">2</span> <span class="toctext">Syntax</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Action_on_Lists"><span class="tocnumber">3</span> <span class="toctext">Action on Lists</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Definition"><span class="tocnumber">4</span> <span class="toctext">Definition</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Explicit_Definition"><span class="tocnumber">5</span> <span class="toctext">Explicit Definition</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Return_and_Signal"><span class="tocnumber">5.1</span> <span class="toctext">Return and Signal</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Local_and_Global"><span class="tocnumber">5.2</span> <span class="toctext">Local and Global</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Conditional_Evaluation"><span class="tocnumber">5.3</span> <span class="toctext">Conditional Evaluation</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Control_Words"><span class="tocnumber">5.4</span> <span class="toctext">Control Words</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#Functional_Forms"><span class="tocnumber">6</span> <span class="toctext">Functional Forms</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Functions"> Functions </span></h2>
+<p>A <i>function</i> takes its argument on the right.
+</p>
+<h2> <span class="mw-headline" id="Syntax"> Syntax </span></h2>
+<p>The canonical form of the right argument is a semicolon-delimited list of parameters given in brackets:
+</p>
+<dl><dd><dl><dd><dl><dd>f[a<sub>1</sub>;a<sub>2</sub>;...;a<sub>n</sub>]
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<p>Note that the expression in brackets gives n parameters to the function, but is not itself a q list, i.e. it is <i>not</i> the same as:
+</p>
+<dl><dd><dl><dd><dl><dd>(a<sub>1</sub>;a<sub>2</sub>;...;a<sub>n</sub>)
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<p>Where a function takes only a single parameter, the brackets are not needed, so the following are the same:
+</p>
+<dl><dd><dl><dd><dl><dd>f[a1]
+</dd><dd>f a1
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<p>Where a function takes no parameter, it can be called with empty brackets, or given an argument which is ignored:
+</p>
+<dl><dd><dl><dd><dl><dd>f[]
+</dd><dd>f a1  <tt>   </tt>   / a1 is ignored
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<h2> <span class="mw-headline" id="Action_on_Lists"> Action on Lists </span></h2>
+<p>Functions can be atomic, aggregate or uniform (or none of these):
+</p>
+<ul><li>an <i>atomic</i> function returns an atom for each atom in its argument
+</li><li>an <i>aggregate</i> function returns an atom from a list
+</li><li>a <i>uniform</i> function returns a list from a list
+</li></ul>
+<p>For example:
+</p>
+<pre>
+q)signum 0 2 -3 5           / atomic
+0 1 -1 1
+q)sum 2 3 5 7               / aggregate
+17
+q)sums 2 3 5 7              / uniform
+2 5 10 17
+q)distinct 2 3 5 7 2 5      / none of the above
+2 3 5 7
+</pre>
+<h2> <span class="mw-headline" id="Definition"> Definition </span></h2>
+<p>A  function is created by assignment, in one of two ways:
+</p>
+<ul><li>as an explicit definition, given as a list of statements in matching braces
+</li><li>using q functional forms: adverbs and function projection
+</li></ul>
+<h2> <span class="mw-headline" id="Explicit_Definition"> Explicit Definition </span></h2>
+<p>An explicit definition has a list of statements, separated by semi-colons, and enclosed
+in matching braces, <tt>{ }</tt>. The arguments to the definition can optionally be named, as a
+list in square brackets, <tt>[ ]</tt>. If the arguments are not so named, then names <tt>x</tt>, <tt>y</tt> and <tt>z</tt> refer to the first three arguments. The format is:
+</p>
+<dl><dd><dl><dd><dl><dd>f:{[p<sub>1</sub>;...;p<sub>m</sub>]e<sub>1</sub>;...;e<sub>n</sub>}
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<p>where the optional [p<sub>1</sub>;...;p<sub>m</sub>] are named arguments, and e<sub>1</sub>;...;e<sub>n</sub> is a sequence of expressions to be evaluated.
+</p><p>A function can be defined and used without giving it a name, for example:
+</p>
+<pre>
+q){10+3*x} 1 2 3 13
+13 16 19 49
+</pre>
+<p>The result of the function is the result of the last statement evaluated. If the last statement is empty, the result is the generic null (which is not displayed):
+</p>
+<pre>
+q)f:{2*x;}      / last statement is empty
+q)f 10          / no result shown
+q)(::)~f 10     / matches generic null
+1b
+</pre>
+<h3> <span class="mw-headline" id="Return_and_Signal"> Return and Signal </span></h3>
+<p>Return and signal end execution early:
+</p>
+<ul><li><i>return</i> ends successfully
+</li><li><i>signal</i> aborts execution (after an error)
+</li></ul>
+<p>To terminate and return a value, use assignment <tt>:</tt> with no name to the left.
+</p>
+<pre>
+q)f:{a:3*x;:a;a+10}            / the final a+10 is never executed
+q)f 1
+3
+</pre>
+<p>To abort function execution, use signal <tt>'</tt> with an error message to its right:
+</p>
+<pre>
+q)f:{a:3*x;'&quot;end here&quot;;a+10}   / the final a+10 is never executed
+q)f 1
+'end here
+10
+</pre>
+<h3> <span class="mw-headline" id="Local_and_Global"> Local and Global </span></h3>
+<p>Names assigned with <tt>:</tt> are local to the definition, and names assigned with <tt>::</tt> are global:
+</p>
+<pre>
+q)a:b:0                      / set (global) a and b to 0
+q)f:{a:10+3*x;b::100+a;}     / f defines local a, global b
+q)f 1 2 3                    / run f
+q)a                          / global a is unchanged
+0
+q)b                          / global b is updated
+113 116 119
+</pre>
+<p>A local variable exists only from the time it is first assigned. A name referenced that is not a local variable, is searched for globally:
+</p>
+<pre>
+q)a:100                     / assign global a
+q)f:{a+x}                   / f references a
+q)f 1 2 3
+101 102 103
+</pre>
+<h3> <span class="mw-headline" id="Conditional_Evaluation"> Conditional Evaluation </span></h3>
+<p>Functions <tt>$</tt> and <tt>?</tt> allow conditional evaluation, see:
+</p>
+<ul><li><a href="DollarSign.html" title="Reference/DollarSign">Reference/DollarSign</a>
+</li><li><a href="QuestionSymbol.html" title="Reference/QuestionSymbol">Reference/QuestionSymbol</a>
+</li></ul>
+<h3> <span class="mw-headline" id="Control_Words"> Control Words </span></h3>
+<p>Functions <tt>if</tt>, <tt>do</tt> and <tt>while</tt> control the order of execution, see:
+</p>
+<ul><li><a href="if.html" title="Reference/if">Reference/if</a>
+</li><li><a href="do.html" title="Reference/do">Reference/do</a>
+</li><li><a href="while.html" title="Reference/while">Reference/while</a>
+</li></ul>
+<h2> <span class="mw-headline" id="Functional_Forms"> Functional Forms </span></h2>
+<p>A function can also be defined from one of two functional forms: adverbs and function projection.
+</p><p>For <i>adverbs</i>, see <a href="Adverb.html" title="Reference/Adverb">adverbs</a>.
+</p><p>Function <i>projection</i> occurs when a function or verb is given only a subset of its arguments - this results in a new function whose arguments are those not yet given. For example, this is useful when a function is to be called repeatedly with some of its arguments unchanged:
+</p>
+<pre>
+q)f:{x + 2 * y - z}       / f takes 3 arguments
+q)f[100;10;2 3 5]
+116 114 110
+
+q)g:f[100]                / g is projection of f on first argument
+q)g[10;2 3 5]             / g takes 2 arguments
+116 114 110
+
+q)g:f[100;;2 3 5]         / project on first and third arguments
+q)g 10                    / g now takes 1 argument
+116 114 110
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 111/1000000
+Post-expand include size: 55/2097152 bytes
+Template argument size: 9/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:361-0!*!0!!en!*!edit=0 and timestamp 20131013192857 -->
+<div class="printfooter">
+Retrieved from "<a href="Function.html">http://code.kx.com/wiki/Reference/Function</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Reference/Function" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="Function.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Reference/Function&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="Function.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/Function&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/Function&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Reference/Function" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Reference/Function" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/Function&amp;oldid=2047" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Reference%2FFunction" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Reference%2FFunction&amp;oldid=2047&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/Function&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 23 September 2009, at 06:37.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Reference/Function", "wgTitle": "Reference/Function", "wgAction": "view", "wgArticleId": 361, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2047, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.085 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Reference/Function by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

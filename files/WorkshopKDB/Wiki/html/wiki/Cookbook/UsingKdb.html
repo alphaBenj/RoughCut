@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/UsingKdb by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/UsingKdb - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_UsingKdb skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/UsingKdb</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Using_kdb.2B"><span class="tocnumber">1</span> <span class="toctext">Using kdb+</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#How_do_kdb.2B_tables_differ_from_SQL_relations_.3F"><span class="tocnumber">1.1</span> <span class="toctext">How do kdb+ tables differ from SQL relations&#160;?</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#How_do_I_create_a_table.3F"><span class="tocnumber">1.2</span> <span class="toctext">How do I create a table?</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Can_I_define_the_type_of_the_columns_when_I_create_a_table.3F"><span class="tocnumber">1.3</span> <span class="toctext">Can I define the type of the columns when I create a table?</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Can_I_give_the_column_values_when_creating_a_table.3F"><span class="tocnumber">1.4</span> <span class="toctext">Can I give the column values when creating a table?</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#How_do_I_define_a_table_with_a_primary_key_field.3F"><span class="tocnumber">1.5</span> <span class="toctext">How do I define a table with a primary key field?</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Can_the_primary_key_consist_of_more_than_one_field.3F"><span class="tocnumber">1.6</span> <span class="toctext">Can the primary key consist of more than one field?</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Can_I_specify_foreign_keys_for_a_table.3F"><span class="tocnumber">1.7</span> <span class="toctext">Can I specify foreign keys for a table?</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#How_do_I_insert_a_record_into_a_table.3F"><span class="tocnumber">1.8</span> <span class="toctext">How do I insert a record into a table?</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Can_I_insert_multiple_records_into_a_table.3F"><span class="tocnumber">1.9</span> <span class="toctext">Can I insert multiple records into a table?</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#What_is_an_upsert.3F"><span class="tocnumber">1.10</span> <span class="toctext">What is an upsert?</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Can_a_column_contain_non-scalar_values.3F"><span class="tocnumber">1.11</span> <span class="toctext">Can a column contain non-scalar values?</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#How_do_I_find_out_how_many_rows_are_in_a_table.3F"><span class="tocnumber">1.12</span> <span class="toctext">How do I find out how many rows are in a table?</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#How_can_access_the_ith_row_in_a_table.3F"><span class="tocnumber">1.13</span> <span class="toctext">How can access the i<sup>th</sup> row in a table?</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#When_accessing_the_ith_row_in_a_table.2C_what_happens_if_the_index_is_invalid.3F"><span class="tocnumber">1.14</span> <span class="toctext">When accessing the i<sup>th</sup> row in a table, what happens if the index is invalid?</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#How_can_I_access_the_first.2Flast_n_rows_in_a_table.3F"><span class="tocnumber">1.15</span> <span class="toctext">How can I access the first/last n rows in a table?</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#How_do_I_get_the_rows_in_a_table_as_a_set_.28no_duplicates.29.3F"><span class="tocnumber">1.16</span> <span class="toctext">How do I get the rows in a table as a set (no duplicates)?</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#What_is_the_syntax_of_select_in_kdb.2B.3F"><span class="tocnumber">1.17</span> <span class="toctext">What is the syntax of select in kdb+?</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#How_do_I_aggregate_column_values.3F"><span class="tocnumber">1.18</span> <span class="toctext">How do I aggregate column values?</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#How_can_I_add_a_column_with_the_row_number_to_a_table.3F"><span class="tocnumber">1.19</span> <span class="toctext">How can I add a column with the row number to a table?</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#How_do_I_delete_rows_from_a_table.3F"><span class="tocnumber">1.20</span> <span class="toctext">How do I delete rows from a table?</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#How_do_I_update_values_in_a_table.3F"><span class="tocnumber">1.21</span> <span class="toctext">How do I update values in a table?</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#How_do_I_replace_null_values_by_something_else.3F"><span class="tocnumber">1.22</span> <span class="toctext">How do I replace null values by something else?</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#What_are_parameterized_queries.3F"><span class="tocnumber">1.23</span> <span class="toctext">What are parameterized queries?</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#Does_kdb.2B_use_stored_procedures.3F"><span class="tocnumber">1.24</span> <span class="toctext">Does kdb+ use stored procedures?</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#Can_I_write_a_query_using_SQL_syntax_against_q_tables.3F"><span class="tocnumber">1.25</span> <span class="toctext">Can I write a query using SQL syntax against q tables?</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#How_do_I_write_a_table_to_disk.3F"><span class="tocnumber">1.26</span> <span class="toctext">How do I write a table to disk?</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#How_do_I_read_a_table_from_disk.3F"><span class="tocnumber">1.27</span> <span class="toctext">How do I read a table from disk?</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#How_do_I_export_a_table_to_a_CSV_file.3F"><span class="tocnumber">1.28</span> <span class="toctext">How do I export a table to a CSV file?</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#How_do_I_import_a_CSV_file_into_a_table.3F"><span class="tocnumber">1.29</span> <span class="toctext">How do I import a CSV file into a table?</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#What_if_the_CSV_file_contains_data_but_no_column_names.3F"><span class="tocnumber">1.30</span> <span class="toctext">What if the CSV file contains data but no column names?</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#How_do_I_export_a_table_to_a_text_file.3F"><span class="tocnumber">1.31</span> <span class="toctext">How do I export a table to a text file?</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#How_do_I_access_a_table_from_an_MDB_file_via_ODBC.3F"><span class="tocnumber">1.32</span> <span class="toctext">How do I access a table from an MDB file via ODBC?</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Using_kdb.2B"> Using kdb+ </span></h1>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> In this document, the terms 'tuple', 'row', and 'record' are used interchangeably. And similarly for 'column' and 'field'.</blockquote>
+<h2> <span class="mw-headline" id="How_do_kdb.2B_tables_differ_from_SQL_relations_.3F"> How do kdb+ tables differ from SQL relations&#160;? </span></h2>
+<p>Relations in SQL are sets. That is, there are no duplicate rows and rows are not ordered. It is
+possible to define a cursor on a result set and then manipulate the cursor rows in order, but that
+can't be done in ANSI SQL. kdb+ tables are ordered and may contain duplicates. The order allows a
+class of very useful aggregates that are unavailable to the relational database programmer without
+the cumbersome and poorly performing temporal extensions. For instance, there is the concept of the
+first row and last row of kdb+ table. The functions <tt>first</tt> and <tt>last</tt> give open and close
+prices in financial calculations. For instance, in q you can write
+</p>
+<pre>
+q)first trade
+</pre>
+<p>and
+</p>
+<pre>
+q)last trade
+</pre>
+<p>where <tt>trade</tt> is a kdb+ table.
+</p>
+<h2> <span class="mw-headline" id="How_do_I_create_a_table.3F"> How do I create a table? </span></h2>
+<p>Following the SQL convention, tables are created by naming the items and initializing the items as
+empty lists. For example, the following expression creates a table with four columns (stock, price,
+amount and time), and assigns it to <tt>trade</tt>.
+</p>
+<pre>
+q)trade:([] stock:(); price:(); amount:(); time:())
+</pre>
+<p>Each of the table columns is defined to be an empty list, denoted as the parentheses pair <tt>()</tt>
+in kdb+.
+</p>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> In this table, the datatype of the columns is not defined. The first record that is inserted into
+the table determines the datatype of each column. Subsequents inserts may only insert values of this
+type, or else a type error is raised.</blockquote>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> This creates a table in memory. You can read <a href="UsingKdb.html#HowdoIwriteatabletodisk" title="Cookbook/UsingKdb">here</a> how to store tables on disk.</blockquote>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> Tables can also be created functionally with q primitive functions. Details are available in the <a href="http://www.kx.com/q/d/primer.htm" class="external text" rel="nofollow">Kdb+ Database and Language Primer</a>.</blockquote>
+<h2> <span class="mw-headline" id="Can_I_define_the_type_of_the_columns_when_I_create_a_table.3F"> Can I define the type of the columns when I create a table? </span></h2>
+<p>Yes. A type descriptor can be specified for each column:
+</p>
+<pre>
+q)trade:([] stock:`symbol$(); price:`float$(); amount:`int$(); time:`time$())
+</pre>
+<p>Types are discussed in more detail in the [/trac/browser/kx/kdb+/d/a/q1.htm?format=raw Q language reference manual].
+</p>
+<h2> <span class="mw-headline" id="Can_I_give_the_column_values_when_creating_a_table.3F"> Can I give the column values when creating a table? </span></h2>
+<p>Yes, you can give values to initialize the items. By default, item names are taken from corresponding noun names.
+</p>
+<pre>
+q)stock:`ibm`bac`usb
+q)price:121.3 5.76 8.19
+q)amount:1000 500 800
+q)time:09:03:06.000 09:03:23.000 09:04:01.000
+q)trade:([]stock;price;amt:amount;time)
+q)trade
+stock price amt  time
+-----------------------------
+ibm   121.3 1000 09:03:06.000
+bac   5.76  500  09:03:23.000
+usb   8.19  800  09:04:01.000
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_define_a_table_with_a_primary_key_field.3F"> How do I define a table with a primary key field? </span></h2>
+<p>Just write the field definition inside the square brackets. For instance, this is a simple table of
+financial markets and their addresses (such as the NYSE, the LSE, etc).
+</p>
+<pre>
+q)market:([name:`symbol$()] address:())
+</pre>
+<h2> <span class="mw-headline" id="Can_the_primary_key_consist_of_more_than_one_field.3F"> Can the primary key consist of more than one field? </span></h2>
+<p>Yes. For instance, if market names are not unique, the country name can be part of the primary key.
+</p>
+<pre>
+q)market:([name:`symbol$(); country:`symbol$()] address:())
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> An alternative to using multiple columns as a primary key is to add to the table a column of unique values (e.g. integers).</blockquote>
+<h2> <span class="mw-headline" id="Can_I_specify_foreign_keys_for_a_table.3F"> Can I specify foreign keys for a table? </span></h2>
+<p>Yes.
+</p><p>Foreign keys in SQL provide referential integrity. Namely, an attempt to insert a foreign key value
+that is not in the primary key will fail. This is also true in q.
+</p><p>Imagine that we want to record in our trades table the market (NYSE, LSE, etc) where each trade has
+been done.
+</p><p>The primary key of the markets table is a foreign key in the trades table.
+</p>
+<pre>
+q)trade:([] stock:`symbol$(); market:`market$(); price:`float$(); amount:`int$(); time:`time$())
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_insert_a_record_into_a_table.3F"> How do I insert a record into a table? </span></h2>
+<pre>
+q)`trade insert (`ibm; 122.5; 500; 09:04:59:000)
+</pre>
+<p>An alternative syntax for insertions is
+</p>
+<pre>
+q)insert [`trade](`ibm; 122.5; 500; 09:04:59:000)
+</pre>
+<p>and
+</p>
+<pre>
+q)insert [`trade; (`ibm; 122.5; 500; 09:04:59:000)]
+</pre>
+<h2> <span class="mw-headline" id="Can_I_insert_multiple_records_into_a_table.3F"> Can I insert multiple records into a table? </span></h2>
+<p>Yes. This is called a bulk insert. The second argument to <tt>insert</tt> in the previous question is a
+q list. It can also be a table having the same column names as the first argument. For instance:
+</p>
+<pre>
+q)`trade insert trade
+</pre>
+<h2> <span class="mw-headline" id="What_is_an_upsert.3F"> What is an <tt>upsert</tt>? </span></h2>
+<pre>
+q)`trade upsert (`ibm; 122.5; 50; 09:04:59:000)
+</pre>
+<p>If the table is not keyed, the above is equivalent to an insert. For a keyed table, it's an update
+if the key exists in the table and an insert otherwise.
+</p><p>An alternative syntax for <tt>upsert</tt> is to use the operator <tt>,:</tt>
+</p>
+<pre>
+q)trade ,: (`ibm; 122.5; 50; 09:04:59:000)
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> In the second alternative the table name (<tt>trade</tt>) is not preceded by a backtick.</blockquote>
+<p><tt>upsert</tt> can also take a table as an argument.
+</p>
+<pre>
+trade ,: trade
+</pre>
+<h2> <span class="mw-headline" id="Can_a_column_contain_non-scalar_values.3F"> Can a column contain non-scalar values? </span></h2>
+<p>Yes.
+</p>
+<pre>
+q)table:([stock:()] price:())
+q)insert[`table; (`intel; enlist (123.2; 120.4; 131.0))]
+q)table
+stock| price
+-----| ---------------
+intel| 123.2 120.4 131
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> Notice the use of <tt>enlist</tt>.</blockquote>
+<h2> <span class="mw-headline" id="How_do_I_find_out_how_many_rows_are_in_a_table.3F"> How do I find out how many rows are in a table? </span></h2>
+<p>Use the function <tt>count</tt>.
+</p>
+<pre>
+q)count trade
+</pre>
+<h2> <span class="mw-headline" id="How_can_access_the_ith_row_in_a_table.3F"> How can access the i<sup>th</sup> row in a table? </span></h2>
+<p>This is complex in SQL, but easy in q. The keyword <tt>i</tt> represents the row index, which can be used in queries.
+</p>
+<pre>
+q)select from trade where i=17
+stock price amount time
+---------------------------------------
+ibm   122.5 50     09:04:59.000
+</pre>
+<p>An alternative is to use indexing.
+</p>
+<pre>
+q)trade[17]
+stock | `ibm
+price | 122.5
+amount| 500
+time  | 09:04:59.000
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> The result of the first expression (using <tt>select</tt>) is a table with a single row, while the result of indexing on a table is a dictionary.</blockquote>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> Indexing cannot be used on a keyed table, as the following example demonstrates.</blockquote>
+<pre>
+q)tab: ([stock:()] price:())
+q)insert[`tab; (`ibm; 109.5)]
+,0
+q)tab
+stock| price
+-----| -----
+ibm  | 109.5
+q)tab[0]
+'type
+</pre>
+<p>It's also easy to access, say, the second to last row.
+</p>
+<pre>
+q)trade[(count trade) - 2]
+</pre>
+<p>Indexing at depth can be used to read a column within a specific row
+</p>
+<pre>
+q)trade[17; `stock]
+</pre>
+<p>This is useful for updates too:
+</p>
+<pre>
+q)trade[17; `amount]&#160;: 15
+</pre>
+<h2> <span class="mw-headline" id="When_accessing_the_ith_row_in_a_table.2C_what_happens_if_the_index_is_invalid.3F"> When accessing the i<sup>th</sup> row in a table, what happens if the index is invalid? </span></h2>
+<p>If we use <tt>select</tt>, the result in a table with no rows.
+</p>
+<pre>
+q)select from trade where i = 300000
+stock price amount time
+---------------------------------------
+</pre>
+<p>If we use indexing, the result is a dictionary containing null values.
+</p>
+<pre>
+q)trade 300000
+stock | `
+market| `market$`
+price | 0n
+amount| 0N
+time  | 0Nt
+</pre>
+<h2> <span class="mw-headline" id="How_can_I_access_the_first.2Flast_n_rows_in_a_table.3F"> How can I access the first/last n rows in a table? </span></h2>
+<p>One way is to use the take operator (<tt>#</tt>). For instance,
+</p>
+<pre>
+q)3#trade
+stock market price amount time
+---------------------------------------
+ibm   nyse   122.5 50     09:04:59.000
+...
+</pre>
+<p>gives the first 3 rows, and
+</p>
+<pre>
+q)-3#trade
+stock market price    amount time
+---------------------------------------
+intel lse    130.3029 45     09:34:29.000 0
+...
+</pre>
+<p>gives the last 3 rows.
+</p><p>Note that the take operator treats a list as circular if the number of elements to take is longer than the list:
+</p>
+<pre>
+q)7#2 3 5
+2 3 5 2 3 5 2
+</pre>
+<p>An alternative is to use <a href="http://code.kx.com/wiki/JB:QforMortals2/built_in_functions#sublist" title="JB:QforMortals2/built in functions">sublist</a>. This takes only as many rows as are available. For instance:
+</p>
+<pre>
+q)count trade
+10
+q)count 3 sublist trade
+3
+q)count 30 sublist trade
+10
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_get_the_rows_in_a_table_as_a_set_.28no_duplicates.29.3F"> How do I get the rows in a table as a set (no duplicates)? </span></h2>
+<p>Use the function <tt>distinct</tt>.
+</p>
+<pre>
+q)distinct trade
+</pre>
+<p>And the following gives the number of distinct rows
+</p>
+<pre>
+q)count distinct trade
+</pre>
+<h2> <span class="mw-headline" id="What_is_the_syntax_of_select_in_kdb.2B.3F"> What is the syntax of <tt>select</tt> in kdb+? </span></h2>
+<p><tt>select</tt> expressions have the following general form.
+</p>
+<pre>
+select [columns] [by columns] from table [where conditions]	
+</pre>
+<p>The result of a select expression is a table. For instance:
+</p>
+<pre>
+q)select stock, amount from trade
+stock amount
+------------
+ibm   500
+...
+</pre>
+<p>In their simplest form, select expressions extract
+subtables. However, it is also possible for them to
+compute new columns or rename existing ones.
+</p>
+<pre>
+q)select stock,newamount:amount+10 from trade where price&gt;100
+stock newamount
+---------------
+ibm   510
+...
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_aggregate_column_values.3F"> How do I aggregate column values? </span></h2>
+<p>In SQL:
+</p>
+<pre>
+select stock, sum(amount) as total from trade group by stock
+</pre>
+<p>In q:
+</p>
+<pre>
+q)select total:sum amount by stock from trade
+stock| total
+-----| -----
+ibm  | 1550
+intel| 75
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> The column <tt>stock</tt> is a key in the result table.</blockquote>
+<h2> <span class="mw-headline" id="How_can_I_add_a_column_with_the_row_number_to_a_table.3F">  How can I add a column with the row number to a table? </span></h2>
+<p>The keyword <tt>i</tt> represents the row index.
+</p>
+<pre>
+q)select rowno:i, stock from trade
+rowno stock
+-----------
+0     intel
+1     ibm
+2     ibm
+...
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_delete_rows_from_a_table.3F"> How do I delete rows from a table? </span></h2>
+<pre>
+q)trade: delete from trade where stock=`ibm		
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> <tt>delete</tt> returns a table, but does not modify the <tt>trade</tt> table in place. The assigment accomplishes that. An alternative that updates the table in place is the following:</blockquote>
+<pre>
+q)delete from `trade where stock=`ibm		
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_update_values_in_a_table.3F"> How do I update values in a table? </span></h2>
+<p>In SQL:
+</p>
+<pre>
+update trade set amount=42+amount where stock='ibm'
+</pre>
+<p>In kdb+:
+</p>
+<pre>
+q)trade: update amount:42+amount from trade where stock=`ibm
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> <tt>update</tt> returns a table, but does not modify the underlying table.  The assigment accomplishes that.</blockquote>
+<p>Or more simply:
+</p>
+<pre>
+q)update amount+42 from `trade where stock=`ibm
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> <tt>update</tt> modifies the table in place like delete deletes in place if a symbol is given as tablename. Also note the default column names, for further information see  <a href="http://kx.com/q/d/a/kdb+.htm" class="external free" rel="nofollow">http://kx.com/q/d/a/kdb+.htm</a>.</blockquote>
+<h2> <span class="mw-headline" id="How_do_I_replace_null_values_by_something_else.3F"> How do I replace null values by something else? </span></h2>
+<p>Use the fill operator (<tt>^</tt>). For instance, the following replaces all nulls in column 'amount'
+by zeroes.
+</p>
+<pre>
+q)trade.amount: 0^trade.amount		
+</pre>
+<h2> <span class="mw-headline" id="What_are_parameterized_queries.3F"> What are parameterized queries? </span></h2>
+<p>Select, update and delete expressions can be evaluated in defined functions. For instance:
+</p>
+<pre>
+q)myquery:{[tbl; amt] select stock, time from tbl where amount &gt; amt}
+q)myquery[trade; 100]
+stock time
+------------------
+ibm   09:04:59.000
+...
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> Column names cannot be parameters of a query.</blockquote>
+<h2> <span class="mw-headline" id="Does_kdb.2B_use_stored_procedures.3F"> Does kdb+ use stored procedures? </span></h2>
+<p>Any user-defined function (of the right type) can be used in a query. For instance:
+</p>
+<pre>
+q)f:{[x] x+42}
+q)select stock, f amount from trade
+stock amount
+------------
+ibm   542
+...
+</pre>
+<h2> <span class="mw-headline" id="Can_I_write_a_query_using_SQL_syntax_against_q_tables.3F"> Can I write a query using SQL syntax against q tables? </span></h2>
+<p>Yes. kdb+ implements a translation layer from SQL to q. The syntax is to prepend <tt>s)</tt> to the SQL query. For instance:
+</p>
+<pre>
+q)s)select * from trade
+</pre>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> Only a subset of SQL is supported.</blockquote>
+<h2> <span class="mw-headline" id="How_do_I_write_a_table_to_disk.3F"> How do I write a table to disk? </span></h2>
+<pre>
+q)`:filename set trade
+</pre>
+<p>Or alternatively
+</p>
+<pre>
+q)save `:trade
+</pre>
+<p>You can also specify a directory:
+</p>
+<pre>
+q)`:../filename set trade
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_read_a_table_from_disk.3F"> How do I read a table from disk? </span></h2>
+<pre>
+q)trade: get `:filename
+</pre>
+<p>Or alternatively,
+</p>
+<pre>
+q)trade: value `:filename
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_export_a_table_to_a_CSV_file.3F"> How do I export a table to a CSV file? </span></h2>
+<pre>
+q)save `:trade.csv
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_import_a_CSV_file_into_a_table.3F"> How do I import a CSV file into a table? </span></h2>
+<p>Assume a file data.csv with columns of type int, string and int.
+</p>
+<pre>
+a,b,c
+0,hea,481
+10,dfi,579
+20,oil,77
+</pre>
+<p>Then, the following expression does the trick:
+</p>
+<pre>
+q)table: (&quot;ISI&quot;; enlist &quot;,&quot;) 0:`data.csv
+q)table
+a   b   c
+-----------
+0   hea 481
+10  dfi 579
+20  oil 77
+</pre>
+<h2> <span class="mw-headline" id="What_if_the_CSV_file_contains_data_but_no_column_names.3F"> What if the CSV file contains data but no column names? </span></h2>
+<p>For instance:
+</p>
+<pre>
+0,hea,481
+10,dfi,579
+20,oil,77
+</pre>
+<p>We can read the columns like this:
+</p>
+<pre>
+q)Cols: (&quot;ISI&quot;;&quot;,&quot;) 0:`data.csv
+q)Cols
+0   10  20
+hea dfi oil
+481 579 77
+</pre>
+<p>And we can create the table by first creating a dictionary and flipping it:
+</p>
+<pre>
+q)table: flip `a`b`c!Cols
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_export_a_table_to_a_text_file.3F"> How do I export a table to a text file? </span></h2>
+<pre>
+q)save `:trade.txt
+</pre>
+<h2> <span class="mw-headline" id="How_do_I_access_a_table_from_an_MDB_file_via_ODBC.3F"> How do I access a table from an MDB file via ODBC? </span></h2>
+<p>From windows, load odbc.k into your kdb+ session, and then load the MDB file.
+</p>
+<pre>
+q w32/odbc.k
+q)h: .odbc.load `mydb.mdb
+</pre>
+<p>This loads the entire database, which may consist of several tables. Use <tt>.odbc.tables</tt> to list
+the tables.
+</p>
+<pre>
+q).odbc.tables  h
+`aa`bb`cc`dd`ii`nn		
+</pre>
+<p>Use <tt>.odbc.eval</tt> to evaluate SQL commands via ODBC.
+</p>
+<pre>
+q).odbc.eval[h;&quot;select * from aa&quot;]
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 751/1000000
+Post-expand include size: 2617/2097152 bytes
+Template argument size: 1747/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:24-0!*!0!!en!2!edit=0 and timestamp 20131013192900 -->
+<div class="printfooter">
+Retrieved from "<a href="UsingKdb.html">http://code.kx.com/wiki/Cookbook/UsingKdb</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/UsingKdb" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="UsingKdb.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/UsingKdb&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="UsingKdb.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/UsingKdb&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/UsingKdb&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/UsingKdb" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/UsingKdb" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/UsingKdb&amp;oldid=218" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FUsingKdb" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FUsingKdb&amp;oldid=218&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/UsingKdb&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 16 March 2009, at 07:16.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/UsingKdb", "wgTitle": "Cookbook/UsingKdb", "wgAction": "view", "wgArticleId": 24, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 218, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.236 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/UsingKdb by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

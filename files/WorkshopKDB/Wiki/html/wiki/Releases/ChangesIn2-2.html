@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Releases/ChangesIn2.4 by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:37 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Releases/ChangesIn2.4 - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Releases_ChangesIn2_4 skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Releases/ChangesIn2.4</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#New_features_in_the_2.4_release_of_kdb.2B"><span class="tocnumber">1</span> <span class="toctext">New features in the 2.4 release of kdb+</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#multi-threaded_input"><span class="tocnumber">1.1</span> <span class="toctext">multi-threaded input</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#hopen"><span class="tocnumber">1.2</span> <span class="toctext">hopen</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#.z.pw"><span class="tocnumber">1.3</span> <span class="toctext">.z.pw</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#.z.pi"><span class="tocnumber">1.4</span> <span class="toctext">.z.pi</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#.z.pc"><span class="tocnumber">1.5</span> <span class="toctext">.z.pc</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#.5Cx"><span class="tocnumber">1.6</span> <span class="toctext">\x</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#.Q_.q_visibility"><span class="tocnumber">1.7</span> <span class="toctext">.Q .q visibility</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#.z.ts_delay"><span class="tocnumber">1.8</span> <span class="toctext">.z.ts delay</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#.z.i"><span class="tocnumber">1.9</span> <span class="toctext">.z.i</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#.z.t.2C_.z.d"><span class="tocnumber">1.10</span> <span class="toctext">.z.t, .z.d</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#1066_and_all_that"><span class="tocnumber">1.11</span> <span class="toctext">1066 and all that</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#.5Cb.2C_.5CB_and_.z.b"><span class="tocnumber">1.12</span> <span class="toctext">\b, \B and .z.b</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#-11.21file"><span class="tocnumber">1.13</span> <span class="toctext">-11!file</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#inetd"><span class="tocnumber">1.14</span> <span class="toctext">inetd</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#-b"><span class="tocnumber">1.15</span> <span class="toctext">-b</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#-q"><span class="tocnumber">1.16</span> <span class="toctext">-q</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#.5C1_filename_.26_.5C2_filename"><span class="tocnumber">1.17</span> <span class="toctext">\1 filename &amp; \2 filename</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#clients_.5Ca_.5Cf_.5Cw_.5Cb"><span class="tocnumber">1.18</span> <span class="toctext">clients \a \f \w \b</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#maintain_group_attribute_for_append_and_update"><span class="tocnumber">1.19</span> <span class="toctext">maintain group attribute for append and update</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#.60s.23_validated"><span class="tocnumber">1.20</span> <span class="toctext">`s# validated</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#month.2C_year_and_int_partition_columns_all_virtual"><span class="tocnumber">1.21</span> <span class="toctext">month, year and int partition columns all virtual</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#repeated_partitions"><span class="tocnumber">1.22</span> <span class="toctext">repeated partitions</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#skip_leading_.23.21"><span class="tocnumber">1.23</span> <span class="toctext">skip leading #!</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#.5Cc_automated"><span class="tocnumber">1.24</span> <span class="toctext">\c automated</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#no_limit_on_stdin"><span class="tocnumber">1.25</span> <span class="toctext">no limit on stdin</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#mlim_and_glim_increased_to_1024"><span class="tocnumber">1.26</span> <span class="toctext">mlim and glim increased to 1024</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#mcount_and_friends_null-aware"><span class="tocnumber">1.27</span> <span class="toctext">mcount and friends null-aware</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#.z.ph_and_.z.pp_changed"><span class="tocnumber">1.28</span> <span class="toctext">.z.ph and .z.pp changed</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#scalars"><span class="tocnumber">1.29</span> <span class="toctext">scalars</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#abs_is_primitive"><span class="tocnumber">1.30</span> <span class="toctext">abs is primitive</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#.5Cr_old_new"><span class="tocnumber">1.31</span> <span class="toctext">\r old new</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#splay_upsert"><span class="tocnumber">1.32</span> <span class="toctext">splay upsert</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="New_features_in_the_2.4_release_of_kdb.2B"> New features in the 2.4 release of kdb+ </span></h1>
+<p><b>Detailed change list / release notes</b>
+</p><p>Commercially licensed users may obtain the detailed change list / release notes from <a href="http://kxdownloads.com/" class="external free" rel="nofollow">http://kxdownloads.com</a>
+</p><p><b>General Info</b>
+</p><p>This release builds on the existing 2.3. The non upward compatible changes (NUC) are the change to .z.ph (which only impacts people who've written their own http handler), the additional .z.pc close event when closing stdin, and the removal of the hopen shortcut of just hopen<tt>`:port.</tt> All other code should run without change.
+</p>
+<h2> <span class="mw-headline" id="multi-threaded_input"> multi-threaded input </span></h2>
+<p>Although 2.3 used multithreading to farm out  queries to multiple partitions using the number of threads set via the -s parameter the input queue was still single threaded. In 2.4 it is possible to multithread that queue as well. Starting a kdb+ task with a positive  -p parameter like before preserves the single threaded behaviour.
+</p>
+<pre>
+q .. -p 5001 / single threaded input queue as before
+</pre>
+<p>if, however a negative port number is given the input queue is multithreaded
+</p>
+<pre>
+q .. -p -5001 / multithreaded input queue
+</pre>
+<p>The number of slaves set with -s are still dedicated to running queries over the partitions in parallel. However the number of threads used to handle the input queue is not user settable. For now each query gets an own thread - later it is probably going to change to a pool of threads, one per cpu.
+</p>
+<h2> <span class="mw-headline" id="hopen"> hopen </span></h2>
+<p>The shortcut syntax of <tt>hopen`:port</tt> has been removed, with 2.4 the host section must also be provided. The hostname can be elided, but the colon must be there.
+</p>
+<pre>
+hopen`:localhost:5001 / ok
+hopen`::5001 /ok
+hopen`:5001 / NOT ok, it will have opened a file handle to file &quot;5001&quot;!
+</pre>
+<p>The alternate shortcut of supplying solely the (integer) portnumber is still valid.
+</p>
+<pre>
+hopen 5001 / open port 5001 on local machine
+</pre>
+<h2> <span class="mw-headline" id=".z.pw"> .z.pw </span></h2>
+<p>z.pw adds an extra callback when a connection is being opened to a kdb+ session.
+</p><p>Previously userid and password were checked if a userid:password file had been specified with the -u or -U parameter. The checking happened outside of the user's session in the q executable. Only if that check was passed did the connect get created and a handle passed into the "user space" as a parameter to .z.po.
+</p><p>Now after the -u/-U check has been done (if specified on he command line) the userid and password are passed to .z.pw allowing a function to be run to perform custom validation - for example to check aganst an LDAP server. If .z.pw returns a 1b the login can proceed and the next stop will be .z.po, if it returns a 0b the user attempting to open the connection will get an access error.
+</p>
+<h2> <span class="mw-headline" id=".z.pi"> .z.pi </span></h2>
+<p>.z.pi has been extended to handle console input as well as remote client input (like with qcon). This allows validating console input, or replacing the default display (<tt>.Q.s value x</tt>) with a home-knitted version.
+</p><p>to get the old (2.3 and earlier) display reset .z.pi
+</p><p><tt>.z.pi:{0N!value x;} </tt>
+</p><p>to return to the default display execute <tt>\x .z.pi</tt>
+</p>
+<h2> <span class="mw-headline" id=".z.pc"> .z.pc </span></h2>
+<p>in addition to the close events previously handled .z.pc is now also called when stdin is "closed" by redirecting it to /dev/null. In this case the handle provided to .z.pc will be 0 (the current console)
+</p>
+<h2> <span class="mw-headline" id=".5Cx"> \x </span></h2>
+<p>By default callbacks like .z.po are not defined in the session, which makes it awkward to revert to the default behaviour after modifying them - for example when debugging or tracing. \x allows deleting their definitions to force default behaviour.
+</p>
+<h2> <span class="mw-headline" id=".Q_.q_visibility"> .Q .q visibility </span></h2>
+<p>In 2.3 the display of the definitions of functions in .q and .Q was supressed. People complained .. so the display is back.
+</p>
+<h2> <span class="mw-headline" id=".z.ts_delay"> .z.ts delay </span></h2>
+<p>before 2.4 the timer event would next happen n milliseconds after completion of the execution of the timer's code. In 2.4 the event fires every n milliseconds.
+</p>
+<h2> <span class="mw-headline" id=".z.i"> .z.i </span></h2>
+<p>Process PID
+</p>
+<h2> <span class="mw-headline" id=".z.t.2C_.z.d"> .z.t, .z.d </span></h2>
+<p>Shorthand for <tt>`time$.z.z</tt>, similarly <tt>.z.d</tt> &lt;-&gt; <tt>`date$.z.z</tt>, <tt>.z.T</tt> &lt;-&gt; <tt>`time$.z.Z</tt>, <tt>.z.D</tt> &lt;-&gt; <tt>`date$.z.Z</tt>
+</p>
+<h2> <span class="mw-headline" id="1066_and_all_that"> 1066 and all that </span></h2>
+<p>The valid year range has been expanded to 1710-2290
+</p>
+<h2> <span class="mw-headline" id=".5Cb.2C_.5CB_and_.z.b"> \b, \B and .z.b </span></h2>
+<p>Extended support for tracking dependencies.
+</p><p>\b lists all dependencies (views)
+</p><p>\B lists all dependencies that have been invalidated
+</p><p>.z.b lists dependencies and the values they depend on
+</p>
+<pre>
+q)a
+11
+q)b
+12 13 14
+q)a:99
+q)b
+100 101 102
+q)\b
+,`b
+q)\B
+`symbol$()
+q)a:22
+q)\B
+,`b
+q)b
+23 24 25
+q)\B
+`symbol$()
+q).z.b
+a| b
+q)
+</pre>
+<h2> <span class="mw-headline" id="-11.21file"> -11!file </span></h2>
+<p>-11! (used to replay logfiles) has been made more robust when dealing with corrupt files.
+</p><p>Previously it would have crashed and exited on encountering corrupt  records, now it will truncate the file to remove the invalid records and only process valid elements.
+</p><p>Rather than the individual cells being executed directly .z.ps is called on each allowing easier customisation of log loaders
+</p>
+<h2> <span class="mw-headline" id="inetd"> inetd </span></h2>
+<p>Run a kdb+ server under inetd, see  <a href="../Cookbook/kdb%2binetd.html" title="Cookbook/kdb+inetd">kdb+ under inetd/xinetd</a>
+</p>
+<h2> <span class="mw-headline" id="-b">  -b </span></h2>
+<p>Block client access to a kdb+ database. The ability to write directly to disk allows an incorrectly written query to create havoc with a database. If the kdb+ server is started with the -b flag all client writes are disabled.
+</p><p>note: this functionality was incorrectly assigned to the -z startup parameter for a while during the 2.4 test cycle
+</p>
+<h2> <span class="mw-headline" id="-q"> -q </span></h2>
+<p>startup kdb+ in quiet mode - don't display the startup banner and license information.
+</p><p>makes it easier to process the output from a q session if redirecting it as part of a larger application
+</p>
+<h2> <span class="mw-headline" id=".5C1_filename_.26_.5C2_filename"> \1 filename &amp; \2 filename </span></h2>
+<p>\1 and \2 allow redirecting stdin and stdout to files from within the q session.
+the filename and any intermediate directories are created if needed
+</p>
+<h2> <span class="mw-headline" id="clients_.5Ca_.5Cf_.5Cw_.5Cb"> clients \a \f \w \b </span></h2>
+<p>When the -u/-U client restrictions are in place the list of valid commands for a client has been reduced to \a \f \w and \b
+</p>
+<h2> <span class="mw-headline" id="maintain_group_attribute_for_append_and_update"> maintain group attribute for append and update </span></h2>
+<p>The <tt>`g#</tt> attribute is maintained in places where in 2.3 it would have been cleared.
+</p>
+<pre>
+n:100000
+/ this has .5% change of sym
+x:+(n?100*n;n?`3;n?100)
+/id sym size
+t:([o:`u#!0]s:`g#0#`;z:0)
+\t .[`t;();,;]'x
+</pre>
+<h2> <span class="mw-headline" id=".60s.23_validated"> <tt>`s#</tt> validated </span></h2>
+<p>Before 2.4 the data being "decorated" with the <tt>`s#</tt> flag was not validated - so it was possible to flag as sorted a list that actually wasn't - causing problems when using primitives that depend on order like bin. Now an error will be signalled if data is incorrectly flagged.
+</p>
+<pre>
+q)`s#1 2 3
+`s#1 2 3
+q)`s#1 2 3 3
+`s#1 2 3 3
+q)`s#1 2 3 3 2
+'fail
+q)
+</pre>
+<p>In the case of tables it just checks the first column.
+</p>
+<h2> <span class="mw-headline" id="month.2C_year_and_int_partition_columns_all_virtual"> month, year and int partition columns all virtual </span></h2>
+<p>Before 2.4 the only the date column in a database partitioned by date was virtual. With 2.4 the year, month or int columns in databases partitioned by year, month or int respectively are treated the same way
+</p>
+<h2> <span class="mw-headline" id="repeated_partitions"> repeated partitions </span></h2>
+<p>With 2.4 it is possible to have the same named partition on multiple partitions (as defined in par.txt) allowing for example splitting symbols by A-M on drive0, N-Z on drive1. Aggregations are handled correctly.
+</p>
+<h2> <span class="mw-headline" id="skip_leading_.23.21"> skip leading <tt>#!</tt> </span></h2>
+<p>When loading a script file that starts with <tt>#!</tt>, the first line is skipped.
+</p>
+<h2> <span class="mw-headline" id=".5Cc_automated"> \c automated </span></h2>
+<p>On OSs that support it the values passed to \c (console width and height) are taken from the system variables $LINES and $COLUMNS
+</p>
+<h2> <span class="mw-headline" id="no_limit_on_stdin"> no limit on stdin </span></h2>
+<p>before 2.4 there was a limit of 999 characters on stdin/console - with 2.4 there is no limit
+</p>
+<h2> <span class="mw-headline" id="mlim_and_glim_increased_to_1024"> mlim and glim increased to 1024 </span></h2>
+<p>the maximum number of simultaneously mapped nested columns (mlim) and the maximum number of active <tt>`g#</tt> indices (glim) have been increased to 1024
+</p>
+<h2> <span class="mw-headline" id="mcount_and_friends_null-aware"> mcount and friends null-aware </span></h2>
+<p>Windowed functions like mcount, mavg have been made consistently aware of null values
+</p>
+<pre>
+q)3 mcount 1 1 1 1 1 1
+1 2 3 3 3 3
+q)3 mcount 1 1 0N 1 1 1
+1 2 2 2 2 3
+</pre>
+<h2> <span class="mw-headline" id=".z.ph_and_.z.pp_changed"> .z.ph and .z.pp changed </span></h2>
+<p>Previously kdb+ stripped the header information from incoming http requests before passing it on to the user via .z.ph or .z.pp.
+</p><p>Unfortunately that meant useful information like the client's browser or preferred languages was being discarded.
+</p><p>With 2.4 the header information is passed back as a dictionary in addition to the body text as before.
+</p><p>This is a change in behaviour, but will only affect those who have customised .z.ph or .z.pp directly. The previous value is now the first element of a 2 element list, the new header dictionary is the second element.
+</p>
+<h2> <span class="mw-headline" id="scalars"> scalars </span></h2>
+<p>General speedups to the code to handle scalar values
+</p>
+<h2> <span class="mw-headline" id="abs_is_primitive"> abs is primitive </span></h2>
+<h2> <span class="mw-headline" id=".5Cr_old_new"> \r old new </span></h2>
+<p>unix mv (rename)
+</p>
+<h2> <span class="mw-headline" id="splay_upsert"> splay upsert </span></h2>
+<p>With 2.4, the upsert function appends splayed tables on disk.  Note that keyed tables cannot be splayed, so splayed upsert is the same as insert.
+</p>
+<pre>
+q)`:x/ upsert ([]a:til 3)
+`:x/
+q)count get`:x
+3
+q)`:x/ upsert ([]a:til 3)
+`:x/
+q)count get`:x
+6
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 205/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:243-0!*!0!!en!*!edit=0 and timestamp 20131013154921 -->
+<div class="printfooter">
+Retrieved from "<a href="ChangesIn2-2.html">http://code.kx.com/wiki/Releases/ChangesIn2.4</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Releases/ChangesIn2.4" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="ChangesIn2-2.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Releases/ChangesIn2.4&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="ChangesIn2-2.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Releases/ChangesIn2.4&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Releases/ChangesIn2.4&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Releases/ChangesIn2.4" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Releases/ChangesIn2.4" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Releases/ChangesIn2.4&amp;oldid=1553" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Releases%2FChangesIn2.4" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Releases%2FChangesIn2.4&amp;oldid=1553&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Releases/ChangesIn2.4&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 19 May 2010, at 09:13.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Releases/ChangesIn2.4", "wgTitle": "Releases/ChangesIn2.4", "wgAction": "view", "wgArticleId": 243, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 1553, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.031 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Releases/ChangesIn2.4 by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:37 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

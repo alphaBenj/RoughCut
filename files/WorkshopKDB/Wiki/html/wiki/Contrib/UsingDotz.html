@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Contrib/UsingDotz by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Contrib/UsingDotz - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Contrib_UsingDotz skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Contrib/UsingDotz</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Using_Modified_.z_Functions_to_Trace.2C_Monitor_and_Control_execution"><span class="tocnumber">1</span> <span class="toctext">Using Modified .z Functions to Trace, Monitor and Control execution</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Take_it_for_a_Spin"><span class="tocnumber">1.1</span> <span class="toctext">Take it for a Spin</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#The_Gory_Details"><span class="tocnumber">1.2</span> <span class="toctext">The Gory Details</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#The_Toolkit"><span class="tocnumber">1.2.1</span> <span class="toctext">The Toolkit</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#saveorig.q"><span class="tocnumber">1.2.2</span> <span class="toctext">saveorig.q</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-6"><a href="#Tracing_Execution"><span class="tocnumber">1.3</span> <span class="toctext">Tracing Execution</span></a>
+<ul>
+<li class="toclevel-3 tocsection-7"><a href="#dumpusage.q"><span class="tocnumber">1.3.1</span> <span class="toctext">dumpusage.q</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#traceusage.q"><span class="tocnumber">1.3.2</span> <span class="toctext">traceusage.q</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#lastusage.q"><span class="tocnumber">1.3.3</span> <span class="toctext">lastusage.q</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#monitorusage.q"><span class="tocnumber">1.3.4</span> <span class="toctext">monitorusage.q</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#logusage.q_and_loadusage.q"><span class="tocnumber">1.3.5</span> <span class="toctext">logusage.q and loadusage.q</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-12"><a href="#Slamming_the_Doors"><span class="tocnumber">1.4</span> <span class="toctext">Slamming the Doors</span></a>
+<ul>
+<li class="toclevel-3 tocsection-13"><a href="#blockusage.q"><span class="tocnumber">1.4.1</span> <span class="toctext">blockusage.q</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#controlaccess.q_and_loadinvalidaccess.q"><span class="tocnumber">1.4.2</span> <span class="toctext">controlaccess.q and loadinvalidaccess.q</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-15"><a href="#Tracking_Clients_and_Servers"><span class="tocnumber">1.5</span> <span class="toctext">Tracking Clients and Servers</span></a>
+<ul>
+<li class="toclevel-3 tocsection-16"><a href="#trackclients.q"><span class="tocnumber">1.5.1</span> <span class="toctext">trackclients.q</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#trackservers.q"><span class="tocnumber">1.5.2</span> <span class="toctext">trackservers.q</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-18"><a href="#Running_on_Other_Servers"><span class="tocnumber">1.6</span> <span class="toctext">Running on Other Servers</span></a>
+<ul>
+<li class="toclevel-3 tocsection-19"><a href="#remotetasks.q"><span class="tocnumber">1.6.1</span> <span class="toctext">remotetasks.q</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-20"><a href="#Utilities"><span class="tocnumber">1.7</span> <span class="toctext">Utilities</span></a>
+<ul>
+<li class="toclevel-3 tocsection-21"><a href="#hutil.q"><span class="tocnumber">1.7.1</span> <span class="toctext">hutil.q</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-22"><a href="#Notes_on_Production_Usage"><span class="tocnumber">1.8</span> <span class="toctext">Notes on Production Usage</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#See_also"><span class="tocnumber">1.9</span> <span class="toctext">See also</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Using_Modified_.z_Functions_to_Trace.2C_Monitor_and_Control_execution"> Using Modified .z Functions to Trace, Monitor and Control execution </span></h1>
+<p>Every client interaction with a kdb+ server is handled by one of the p? functions you’ll find in the system locale .z. These functions have reasonable, simple defaults that work fine right out of the box. What we’re doing here is taking advantage of the fact that  they’re just functions, allowing you to overwrite them with your own custom code to show or modify what’s happening.
+</p><p>The utility scripts in the <a href="http://code.kx.com/wsvn/code/contrib/simon/dotz" class="external text" rel="nofollow">dotz</a> directory in the <a href="http://code.kx.com/wsvn/code/contrib" class="external text" rel="nofollow">user-contributed code</a> section are <i>examples</i> of how to do this, and these files are described in detail below.
+</p><p>In all of the examples the code to wrap up existing definitions looks complicated - the reason is that these are general scripts and so a combination of them could be loaded into applications with pre-existing custom .z.p? definitions. The wrapping code protects these definitions, but in a particular application you can probably simply replace or extend existing definitions rather than wrapping them.
+</p>
+<h2> <span class="mw-headline" id="Take_it_for_a_Spin"> Take it for a Spin </span></h2>
+<p>The simplest way to get a feeling for what’s going on is to try it out. Start up two kdb+ sessions, load traceusage.q into one of them - and then talk to it from the other server. Watch the output in the traceusage session.
+</p><p>vanilla server session:
+</p>
+<pre>
+q)h:hopen 5001
+q)h
+3
+q)h&quot;2+2 3&quot;
+4 5
+q)h&quot;2 3 4+2 3&quot;
+'length
+q)hclose h
+</pre>
+<p>traceusage server session:
+</p>
+<pre>
+..simon/dotz$ q traceusage.q -p 5001
+…
+ 2008.05.09 12:38:10.367 ms:0.002003799 m+:0K pw a:localhost u: w:4 (`simon;&quot;***&quot;)
+ 2008.05.09 12:38:10.370 ms:0.003025343 m+:0K po a:localhost u:simon w:4 4
+ 2008.05.09 12:38:17.151 ms:0.02098095 m+:0K pg a:localhost u:simon w:4 2+2 3
+*2008.05.09 12:38:25.438 (error:length) pg a:localhost u:simon w:4 2 3 4+2 3
+ 2008.05.09 12:38:33.246 ms:0.002986053 m+:0K pc a:192.168.1.34 u:simon w:0 4
+</pre>
+<p>(on non-windows OSs the error line will be in glorious 1980’s style colour)
+</p>
+<h2> <span class="mw-headline" id="The_Gory_Details"> The Gory Details </span></h2>
+<p>What the individual files do, and how to use them.
+</p>
+<h3> <span class="mw-headline" id="The_Toolkit"> The Toolkit </span></h3>
+<p>The "tools" you have to work with are the p? functions from .z: <a href="../Reference/dotzdotpo.html" title="Reference/dotzdotpo">.z.po</a>, <a href="../Reference/dotzdotpc.html" title="Reference/dotzdotpc">.z.pc</a>, <a href="../Reference/dotzdotpw.html" title="Reference/dotzdotpw">.z.pw</a>, <a href="../Reference/dotzdotpg.html" title="Reference/dotzdotpg">.z.pg</a>, <a href="../Reference/dotzdotps.html" title="Reference/dotzdotps">.z.ps</a>, <a href="../Reference/dotzdotph.html" title="Reference/dotzdotph">.z.ph</a>,  <a href="../Reference/dotzdotpp.html" title="Reference/dotzdotpp">.z.pp</a> and <a href="../Reference/dotzdotexit.html" title="Reference/dotzdotexit">.z.exit</a>. Combined with the .z variables <a href="../Reference/dotzdota.html" title="Reference/dotzdota">.z.a</a>, <a href="../Reference/dotzdotu.html" title="Reference/dotzdotu">.z.u</a> and <a href="../Reference/dotzdotw.html" title="Reference/dotzdotw">.z.w</a> which are always set to the values of the CLIENT during execution of the .z.p? function. Depending on the function being called additional information may be provided as arguments to the .z.p? functions  (userid and password for .z.pw, browser environment for .z.ph and .z.pp).
+</p><p>By default execution is done using <a href="../Reference/value.html" title="Reference/value">value</a> so strings or symbol+parameter lists can be tested in a console.
+</p><p>see also: <a href="http://code.kx.com/wiki/JB:QforMortals2/i_o#Q_for_Mortals.2C_Interprocess_Communication" title="JB:QforMortals2/i o">Q for Mortals, Interprocess Communication</a>
+</p>
+<h3> <span class="mw-headline" id="saveorig.q"> saveorig.q </span></h3>
+<p>This script just saves original values of things like .z.pg so you can revert to original definitions without having to restart the task. This is made a little more complicated by the way some of the default definitions aren’t materialised in the user workspace. For example by default .z.pg is just {value x} but that’s run in the q executable. The default values are created explicitly if need be.
+</p>
+<pre>
+	.dotz.exit.ORIG:.z.exit:@[.:;`.z.exit;{;}];
+	.dotz.pg.ORIG:.z.pg:@[.:;`.z.pg;{.:}];
+	.dotz.ps.ORIG:.z.ps:@[.:;`.z.ps;{.:}];
+	…
+</pre>
+<p>Other functions and variables shared between multiple scripts (like debug output level - .debug.LEVEL, or the .z.a ip-address &lt;-&gt; hostname cache .dotz.IPA) are defined here too. Although it would be simpler to embed this setup code in each script allowing them to be standalone I got tired of the cut’n’paste  forays required by every tiny change.
+</p><p>Note that after the various state variables have been defined the script saveorig.custom.q is loaded if found, allowing you to customise the setup without needing to have a modified version of the saveorig script.
+</p><p>Again, for production use you should rip out the unneeded definitions.
+</p>
+<h2> <span class="mw-headline" id="Tracing_Execution"> Tracing Execution </span></h2>
+<p>Tracing execution of the various callbacks is the simplest application. It can be as simple as just sprinkling 0N! statements around the functions, or as complicated as logging to an external file. As these are samples they also track the use of .z.pi - but that can get tiresome if you’re debugging from a console. In that case just zap the custom .z.pi definition with:
+</p>
+<pre>
+q)\x .z.pi
+</pre>
+<p>The variable .usage.LEVEL can be set to control how much is output - by default (2) it displays all messages, a value of 1 will only display errors and a value of 0 will temporarily disable logging.
+In the examples below the sample session is a simple hopen, get “2+2”, get “2 3+3 4 5” then hclose
+</p>
+<h3> <span class="mw-headline" id="dumpusage.q"> dumpusage.q </span></h3>
+<p>The simplest file of all, it just puts in 0N! to display the input and the results. It’s fine for debugging a simple conversation with a single client - but not informative enough for more complex setups.
+</p>
+<pre>
+dotz$ q dumpusage.q -p 5001
+…
+q)&quot;***&quot;
+`simon
+1b
+4
+4
+&quot;2+2&quot;
+4
+&quot;2 3+3 4 5&quot;
+4
+4
+</pre>
+<h3> <span class="mw-headline" id="traceusage.q"> traceusage.q </span></h3>
+<p>Dumps formatted output to the console, and on non-windows consoles it will colour errors and expensive calls. The definition of what’s expensive can be set by .usage.EXPENSIVE (in milliseconds).
+</p>
+<pre>
+dotz$ q traceusage.q -p 5001
+…
+q)
+ 2008.05.13 11:42:56.290 ms:0.002003799 m+:0K pw a:localhost u: w:4 (`simon;&quot;***&quot;)
+ 2008.05.13 11:42:56.319 ms:0.003968307 m+:0K po a:localhost u:simon w:4 4
+ 2008.05.13 11:43:00.866 ms:0.0159911 m+:0K pg a:localhost u:simon w:4 2+2
+*2008.05.13 11:43:08.818 (error:length) pg a:localhost u:simon w:4 2 3+3 4 5
+ 2008.05.13 11:43:13.986 ms:0.004007597 m+:0K pc a:192.168.1.34 u:simon w:0 4
+</pre>
+<h3> <span class="mw-headline" id="lastusage.q"> lastusage.q </span></h3>
+<p>When debugging it’s sometimes more helpful to be able to grab the last request that came in rather than just looking at a trace of what happened. This set of custom callbacks stores the last calls in locale .last allowing you to fetch the data and retry the request directly in your session.
+</p>
+<pre>
+dotz$ q lastusage.q -p 5001
+…
+q).last
+    |&#160;::
+pw  | ``when`u`w`a`x`y`z`r!(::;2008.05.13T11:44:36.655;`;4;2130706433;{[x;y]1b};`simon;&quot;&quot;;1b)
+zcmd| `pc
+po  | ``when`u`w`a`x`y`r!(::;2008.05.13T11:44:36.655;`simon;4;2130706433;::;4;4)
+pg  | ``when`u`w`a`x`y`r!(::;2008.05.13T11:44:40.951;`simon;4;2130706433;.:;&quot;2+2&quot;;4)
+pc  | ``when`u`w`a`x`y`r!(::;2008.05.13T11:44:52.111;`simon;0;-1062731486;::;4;4)
+q).last.pg
+    |&#160;::
+when| 2008.05.13T11:44:40.951
+u   | `simon
+w   | 4
+a   | 2130706433
+x   | .:
+y   | &quot;2+2&quot;
+r   | 4
+q)value .last.pg.y
+4
+</pre>
+<h3> <span class="mw-headline" id="monitorusage.q"> monitorusage.q </span></h3>
+<p>If the monitoring is to be left running for a long  time scrolling back through the console is not a sensible way to look for problems. This script logs all requests to a local table USAGE allowing you to analyse the data. As the data is stored in an in-memory table it’s of course lost when you exit unless you choose to do something with .z.exit.
+</p>
+<pre>
+dotz$ q monitorusage.q -p 5001
+…
+q)USAGE
+date time ms mdelta zcmd ipa u w cmd ok error
+---------------------------------------------
+q)USAGE
+date       time         ms          mdelta zcmd ipa          u     w cmd                ok error
+-------------------------------------------------------------------------------------------------
+2008.05.13 11:48:19.360 0.2459958   0      pi   192.168.1.34 simon 0 &quot;USAGE&quot;            1
+2008.05.13 11:48:31.728 0.002003799 0      pw   localhost          4 &quot;(`simon;\&quot;***\&quot;)&quot; 1
+2008.05.13 11:48:31.729 0           0      po   localhost    simon 4 ,&quot;4&quot;               1
+2008.05.13 11:48:36.360 0.0159911   0      pg   localhost    simon 4 &quot;2+2&quot;              1
+2008.05.13 11:48:41.920 0           0      pg   localhost    simon 4 &quot;2 3+3 4 5&quot;        0  length
+2008.05.13 11:48:46.512 0.003025343 0      pc   192.168.1.34 simon 0 ,&quot;4&quot;               1
+q)
+</pre>
+<h3> <span class="mw-headline" id="logusage.q_and_loadusage.q"> logusage.q and loadusage.q </span></h3>
+<p>Finally, the all singing all dancing version. This script logs all requests directly to an external logfile - using the same log mechanism as kdb+tick. This allows leaving logging running for days without having to worry about tables growing - and will ensure that the logging data is safe even if the session terminates unexpectedly.
+Use loadusage.q to load the logged data into a session as a table (same schema as that from monitorusage.q except hostname added).
+</p>
+<pre>
+dotz$ q logusage.q -p 5001
+…
+q)'type
+q)\\ / nothing to see here..
+dotz$ q loadusage.q
+…
+q)USAGE
+date       time         ms           mdelta zcmd ipa          host      u     w cmd            ok error
+--------------------------------------------------------------------------------------------------------
+2008.05.13 13:01:42.694 0.002003799  0      pw   127.0.0.1    localhost       5 (`simon;&quot;***&quot;) 1
+2008.05.13 13:01:42.695 0.0009822543 0      po   127.0.0.1    localhost simon 5 5              1
+2008.05.13 13:01:46.198 0.0159911    0      pg   127.0.0.1    localhost simon 5 2+2            1
+2008.05.13 13:01:57.350 0            0      pg   127.0.0.1    localhost simon 5 2 3+3 4 5      0  length
+2008.05.13 13:02:00.901 0.004007597  0      pc   192.168.1.34           simon 0 5              1
+q)q)select from USAGE where not ok
+date       time         ms mdelta zcmd ipa       host      u     w cmd       ok error
+--------------------------------------------------------------------------------------
+2008.05.13 11:50:55.988 0  0      pg   127.0.0.1 localhost simon 5 2 3+3 4 5 0  length
+q)
+</pre>
+<h2> <span class="mw-headline" id="Slamming_the_Doors"> Slamming the Doors </span></h2>
+<p>Another important use for modified .z.p? callbacks is to control access to a kdb+ session. Kdb+ contains some very coarse access controls settable by command line options - particularly -u or -U to enforce password controlled access (with md5’d passwords), -b to enforce read-only access and -T to set a maximum cputime per single client call.
+</p><p>The password control in -u and -U is all done in the q executable, so completely outside user control. However as soon as the initial check (if any) has been done control is passed to z.pw which can say if a connection is to be allowed. This can be via some session internal table or function, or can go outside to something like a central single-signon server.
+</p>
+<h3> <span class="mw-headline" id="blockusage.q"> blockusage.q </span></h3>
+<p>Use this script to simply block all client interaction, it just sets .z.pw to always return false - ie no connection allowed for supplied userid+password.
+</p>
+<h3> <span class="mw-headline" id="controlaccess.q_and_loadinvalidaccess.q"> controlaccess.q and loadinvalidaccess.q </span></h3>
+<p>There are so many ways to control access that this script is way too complicated for immediate use as it stands - just pick an interesting subset.
+</p><p>It shows how to control access via
+</p>
+<ul><li>a user table - splitting users into superusers (who can do anything), powerusers  (who can run adhoc queries, but can’t do things like shutdown the session) and defaultusers (who can only use a speciic list of pre-defined commands).
+</li><li>the client's server - with name matching a set of wildcards
+</li><li>a list of valid commands
+</li><li>a command validator which parses input
+</li></ul>
+<p>Invalid access attempts are logged, and the logfile can be loaded into a table and queried with loadinvalidaccess.q
+</p>
+<h2> <span class="mw-headline" id="Tracking_Clients_and_Servers"> Tracking Clients and Servers </span></h2>
+<p>Kdb+ provides a a list of handles in use with the keys of .z.W. These clients provide more background information about what's "behind" the handles by extending .z.po and .z.pc.
+</p>
+<h3> <span class="mw-headline" id="trackclients.q"> trackclients.q </span></h3>
+<p>Tracking of clients can be automated using this script, .z.po and .z.pc maintain the list automatically.
+</p><p>By default the table of clients just uses information provided by .z.po like .z.u and .z.w, but if .clients.INTRUSIVE is set the server will ask the clients for more details like their q versions, number of slaves etc.
+</p><p>output from a session where a client did 3 hopen 5001's, and one hclose
+</p>
+<pre>
+dotz$ q trackclients.q -p 5001
+…
+q)CLIENTS
+w| ipa       u     a          poz                     pcz
+-| --------------------------------------------------------------------------
+4| localhost simon 2130706433 2008.05.13T13:37:14.176
+5| localhost simon 2130706433 2008.05.13T13:37:15.007
+ | localhost simon 2130706433 2008.05.13T13:37:15.735 2008.05.13T13:37:26.359
+q)
+</pre>
+<h3> <span class="mw-headline" id="trackservers.q"> trackservers.q </span></h3>
+<p>Giving client applications the ability to track servers simplifies application design - no need to hardcode server+port settings, or to handle servers becoming unavailable.
+</p><p>Unlike trackclients you do have to manually add server records, although .z.pc handles them going away. You can either add a new server using a function like .servers.addnh (nh &lt;-&gt; name, hpup)  or add a server record for an existing open handle using .servers.addw.
+</p><p>Servers can be public or private - a private server is not handed on to other users who request a list of current servers (the simplest way of setting up a new session, no central "handle server" to be maintained).
+</p><p>By default servers that disappear are retried regularly.
+</p>
+<pre>
+dotz$ q trackservers.q
+…
+q).servers.addw hopen`:welly3:2018
+3
+q).servers.addw hopen`:welly3:2017
+4
+q)SERVERS
+name     hpup            w hits private lastz
+---------------------------------------------------------------
+servers &#160;:192.168.1.34:0 0 0    1       2008.05.13T13:44:10.337
+taq2007 &#160;:welly3:2018    3 0    0       2008.05.13T13:45:00.761
+lava2006&#160;:welly3:2017    4 0    0       2008.05.13T13:45:05.400
+q)SERVERS
+name     hpup            w hits private lastz
+---------------------------------------------------------------
+servers &#160;:192.168.1.34:0 0 0    1       2008.05.13T13:44:10.337
+taq2007 &#160;:welly3:2018    3 0    0       2008.05.13T13:45:00.761
+lava2006&#160;:welly3:2017    4 0    0       2008.05.13T13:45:05.400
+q).servers.handlefor`lava2006
+4
+q).servers.handlefor`lava2007
+'lava2007.not.available
+q)SERVERS
+name     hpup            w hits private lastz
+---------------------------------------------------------------
+servers &#160;:192.168.1.34:0 0 0    1       2008.05.13T13:44:10.337
+taq2007 &#160;:welly3:2018    3 0    0       2008.05.13T13:45:00.761
+lava2006&#160;:welly3:2017    4 1    0       2008.05.13T13:45:44.824
+q)
+</pre>
+<p>adding servers with user supplied name with .servers.addnh:
+</p>
+<pre>
+q).servers.addnh[`taq;`::5001]
+3
+q).servers.addnh[`taq;`::5001]
+5
+q).servers.addnh[`taq;`::5001]
+6
+q).servers.addnh[`taq;`::5001]
+7
+q)SERVERS
+name     hpup            w hits private lastz
+---------------------------------------------------------------
+servers &#160;:192.168.1.34:0 0 0    1       2008.05.13T13:44:10.337
+taq2007 &#160;:welly3:2018    3 0    0       2008.05.13T13:45:00.761
+lava2006&#160;:welly3:2017    4 1    0       2008.05.13T13:45:44.824
+taq     &#160;::5001          3 0    0       2008.05.13T13:50:03.777
+taq     &#160;::5001          5 0    0       2008.05.13T13:50:05.513
+taq     &#160;::5001          6 0    0       2008.05.13T13:50:06.848
+taq     &#160;::5001          7 0    0       2008.05.13T13:50:07.640
+q).servers.handlefor`taq
+3
+q).servers.handlefor`taq
+5
+q).servers.handlefor`taq
+6
+q).servers.handlefor`taq
+7
+q).servers.handlefor`taq
+3
+</pre>
+<h2> <span class="mw-headline" id="Running_on_Other_Servers"> Running on Other Servers </span></h2>
+<p>The default q-ipc allows you to easily submit synchronous or asynchronous requests, and combined with a list of all available servers from trackservers.q above you can deal with most simple requests.
+</p>
+<h3> <span class="mw-headline" id="remotetasks.q"> remotetasks.q </span></h3>
+<p>This script provides an extra way of dealing with a lot of data requests. It allows you to submit synchronous or asynchronous requests, locally or remotely - and collects all the results in a local table (TASKS). So for example if you had to run a few hundred queries to be able to build a report  and you had 10 server sessions available to query you'd simply submit all 100 queries and either pick up results as they drift in, or wait until all are complete.
+</p><p>You can additionally allocate requests to a request group to make it easy to check when a complete group has completed.
+</p><p>Here's an example session using two servers on 5001 and 5002, first create the server table entries
+</p>
+<pre>
+q).servers.addnh[`hh;`::5001]
+5
+q).servers.addnh[`hh;`::5002]
+6
+q).servers.addnh[`hh;`::5002]
+7
+q)SERVERS
+name    hpup            w hits private lastz
+--------------------------------------------------------------
+servers&#160;:192.168.1.34:0 0 0    1       2008.05.13T18:37:41.087
+hh     &#160;::5001          5 0    0       2008.05.13T18:38:59.455
+hh     &#160;::5002          6 0    0       2008.05.13T18:39:03.886
+hh     &#160;::5002          7 0    0       2008.05.13T18:39:05.390
+</pre>
+<p>submit a few tasks:
+</p>
+<pre>
+q).tasks.rxa[.servers.handlefor`hh;&quot;max til 10&quot;]
+10001
+q).tasks.rxa[.servers.handlefor`hh;&quot;max til 10&quot;]
+10002
+q).tasks.rxa[.servers.handlefor`hh;&quot;max til 10&quot;]
+10003
+q)TASKS
+nr   | grp   startz                  endz                    w ipa       status   expr         result
+-----| ----------------------------------------------------------------------------------------------
+10001| 20001 2008.05.13T18:41:43.057 2008.05.13T18:41:43.058 5 localhost complete &quot;max til 10&quot; 9
+10002| 20002 2008.05.13T18:41:46.138 2008.05.13T18:41:46.138 6 localhost complete &quot;max til 10&quot; 9
+10003| 20003 2008.05.13T18:41:47.009 2008.05.13T18:41:47.010 7 localhost complete &quot;max til 10&quot; 9
+q).tasks.results 10002
+10002| 9
+q).tasks.results .tasks.completed[]
+10001| 9
+10002| 9
+10003| 9
+</pre>
+<p>and one invalid task:
+</p>
+<pre>
+q).tasks.rxa[.servers.handlefor`hh;&quot;17+`this&quot;]
+10004
+q).tasks.failed[]
+,10004
+q).tasks.results 10004
+q).tasks.status 10004
+10004| fail
+q)TASKS
+nr   | grp   startz                  endz                    w ipa       status   expr         result
+-----| ----------------------------------------------------------------------------------------------
+10001| 20001 2008.05.13T18:41:43.057 2008.05.13T18:41:43.058 5 localhost complete &quot;max til 10&quot; 9
+10002| 20002 2008.05.13T18:41:46.138 2008.05.13T18:41:46.138 6 localhost complete &quot;max til 10&quot; 9
+10003| 20003 2008.05.13T18:41:47.009 2008.05.13T18:41:47.010 7 localhost complete &quot;max til 10&quot; 9
+10004| 20004 2008.05.13T18:44:05.229 2008.05.13T18:44:05.229 5 localhost fail     &quot;17+`this&quot;   &quot;type&quot;
+q)
+</pre>
+<h2> <span class="mw-headline" id="Utilities"> Utilities </span></h2>
+<h3> <span class="mw-headline" id="hutil.q"> hutil.q </span></h3>
+<h2> <span class="mw-headline" id="Notes_on_Production_Usage"> Notes on Production Usage </span></h2>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> all of these utility files should be looked on as examples, for any particular case they probably have too many options and should be cut down to do just what you want. The access control script is the most obvious case - it probably has far too many options/checks going on.</blockquote>
+<h2> <span class="mw-headline" id="See_also"> See also </span></h2>
+<ul><li><a href="../Reference/dotzdotpo.html" title="Reference/dotzdotpo">.z.po</a>
+</li><li><a href="../Reference/dotzdotpc.html" title="Reference/dotzdotpc">.z.pc</a>
+</li><li><a href="../Reference/dotzdotpw.html" title="Reference/dotzdotpw">.z.pw</a>
+</li><li><a href="../Reference/dotzdotpg.html" title="Reference/dotzdotpg">.z.pg</a>
+</li><li><a href="../Reference/dotzdotps.html" title="Reference/dotzdotps">.z.ps</a>
+</li><li><a href="../Reference/dotzdotph.html" title="Reference/dotzdotph">.z.ph</a>
+</li><li><a href="../Reference/dotzdotpp.html" title="Reference/dotzdotpp">.z.pp</a>
+</li><li><a href="../Reference/dotzdotexit.html" title="Reference/dotzdotexit">.z.exit</a>
+</li><li><a href="../Releases/ChangesIn2-2.html#.z.pw" title="Releases/ChangesIn2.4">Releases/ChangesIn2.4#.z.pw</a>
+</li><li><a href="http://code.kx.com/wiki/JB:QforMortals2/i_o#Interprocess_Communication" title="JB:QforMortals2/i o">Interprocess Communication</a>
+</li><li><a href="../Cookbook/AuthenticationAndAccessControl.html" title="Cookbook/AuthenticationAndAccessControl">Authentication And Access Control</a>
+</li></ul>
+<p><br />
+</p>
+<hr />
+<p>For a complete list of functions, see the <a href="../Reference.html" title="Reference">kdb+ Function Reference</a>.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 231/1000000
+Post-expand include size: 333/2097152 bytes
+Template argument size: 275/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:323-0!*!0!!en!2!edit=0 and timestamp 20131013191700 -->
+<div class="printfooter">
+Retrieved from "<a href="UsingDotz.html">http://code.kx.com/wiki/Contrib/UsingDotz</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Contrib/UsingDotz" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="UsingDotz.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Contrib/UsingDotz&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="UsingDotz.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/UsingDotz&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/UsingDotz&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Contrib/UsingDotz" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Contrib/UsingDotz" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/UsingDotz&amp;oldid=2432" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Contrib%2FUsingDotz" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Contrib%2FUsingDotz&amp;oldid=2432&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/UsingDotz&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 18 November 2011, at 19:48.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Contrib/UsingDotz", "wgTitle": "Contrib/UsingDotz", "wgAction": "view", "wgArticleId": 323, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2432, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.031 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Contrib/UsingDotz by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

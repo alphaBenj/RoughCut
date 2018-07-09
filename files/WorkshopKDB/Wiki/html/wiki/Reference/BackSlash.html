@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Reference/BackSlash by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Reference/BackSlash - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Reference_BackSlash skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Reference/BackSlash</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#.5C_.28abort.2Fscan.2Fiterate.2Fsystem.2Fescape.29"><span class="tocnumber">1</span> <span class="toctext">\ (abort/scan/iterate/system/escape)</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#abort"><span class="tocnumber">1.1</span> <span class="toctext">abort</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#toggle_q.2Fk"><span class="tocnumber">1.2</span> <span class="toctext">toggle q/k</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#end_of_multi-line_comment"><span class="tocnumber">1.3</span> <span class="toctext">end of multi-line comment</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#end_of_script"><span class="tocnumber">1.4</span> <span class="toctext">end of script</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#scan"><span class="tocnumber">1.5</span> <span class="toctext">scan</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#iterate"><span class="tocnumber">1.6</span> <span class="toctext">iterate</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#system"><span class="tocnumber">1.7</span> <span class="toctext">system</span></a>
+<ul>
+<li class="toclevel-3 tocsection-9"><a href="#See_also"><span class="tocnumber">1.7.1</span> <span class="toctext">See also</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-10"><a href="#escape"><span class="tocnumber">1.8</span> <span class="toctext">escape</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#commands"><span class="tocnumber">1.9</span> <span class="toctext">commands</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id=".5C_.28abort.2Fscan.2Fiterate.2Fsystem.2Fescape.29"> \ (<a href="#abort">abort</a>/<a href="#scan">scan</a>/<a href="#iterate">iterate</a>/<a href="#system">system</a>/<a href="#escape">escape</a>) </span></h1>
+<h2> <span class="mw-headline" id="abort"> abort </span></h2>
+<p>Type <tt>\</tt> at the debugger (<tt>q))</tt>) prompt to return to the interactive session.
+</p>
+<pre>
+q)f:{g[]}
+q)g:{'`xyz}
+q)f[]
+{g[]}
+'xyz
+@
+{'`xyz}
+::
+q))\
+q)
+</pre>
+<h2> <span class="mw-headline" id="toggle_q.2Fk"> toggle q/k </span></h2>
+<p>In the interactive session <tt>\</tt> toggles between q and k prompts:
+</p>
+<pre>
+q)\
+  \
+q)
+</pre>
+<h2> <span class="mw-headline" id="end_of_multi-line_comment"> end of multi-line comment </span></h2>
+<h2> <span class="mw-headline" id="end_of_script"> end of script </span></h2>
+<p>In q scripts, <tt>\</tt> on a line by itself marks the end of the q program.  The remaining text in the file is ignored. Note that unlike <tt>\\</tt>, <tt>\</tt> does not cause q to terminate after executing the script.
+</p>
+<h2> <span class="mw-headline" id="scan"> scan </span></h2>
+<p>If f is a <b>dyadic</b> function, f\ applied to a list x<sub>1</sub>, x<sub>2</sub>, .. x<sub>n</sub> returns x<sub>1</sub>, f(x<sub>1</sub>,x<sub>2</sub>), f(f(x<sub>1</sub>,x<sub>2</sub>),x<sub>3</sub>), ..,f(..,x<sub>n</sub>). For example,
+</p>
+<pre>
+q)(+\)til 10
+0 1 3 6 10 15 21 28 36 45
+q)+\[til 10]   / alternate syntax
+0 1 3 6 10 15 21 28 36 45
+</pre>
+<p>When <tt>f\</tt> is used as a dyad, the first argument is used as the initial value:
+</p>
+<pre>
+q)1+\1 2 3
+2 4 7
+q)+\[1;1 2 3]   / alternate syntax
+2 4 7
+</pre>
+<p>The alternate syntax generalizes to functions of 3 or more arguments where the first argument is used as the initial value and the arguments are corresponding elements from the lists:
+</p>
+<pre>
+q){(x;y;z)}\[0;1 2 3;4 5 6]
+0           1 4
+0 1 4       2 5
+(0 1 4;2;5) 3 6
+</pre>
+<p>As of kdb+3.1 2013.07.07, scan has a built in function for the following
+</p>
+<pre>
+q){{z+y*x}\[x;y;z]}
+{{z+y*x}\[x;y;z]}
+q){x y\z}    / alternate syntax that uses built in function
+</pre>
+<p>Note that for the built in version it is for floats.
+</p>
+<h2> <span class="mw-headline" id="iterate"> iterate </span></h2>
+<p>If f is a <b>monadic</b> function, f\ calls f on its argument repeatedly until a value matching the argument or the last seen is produced.  The result is the argument followed by all the results except the last.  For example:
+</p>
+<pre>
+q)(neg\)1
+1 -1
+q)(rotate[1]\)&quot;abcd&quot;
+(&quot;abcd&quot;;&quot;bcda&quot;;&quot;cdab&quot;;&quot;dabc&quot;)
+q)({x*x}\)0.1
+0.1 0.01 0.0001 1e-08 1e-16 1e-32 1e-64 1e-128 1e-256 0
+q){x*x}\[0.1]   / alternate syntax
+0.1 0.01 0.0001 1e-08 1e-16 1e-32 1e-64 1e-128 1e-256 0
+</pre>
+<p>When f\ is called with two arguments, the first argument can be either an integer number of iterations or a "while" condition that can be applied to the result of f:
+</p>
+<pre>
+q)f:1+
+q)f\[3;100]
+100 101 102 103
+q)f\[105&gt;;100]
+100 101 102 103 104 105
+</pre>
+<p>Dyadic form of f\ can also be specified using infix notation:
+</p>
+<pre>
+q)3 f\100
+100 101 102 103
+</pre>
+<h2> <span class="mw-headline" id="system"> system </span></h2>
+<p><tt>\</tt> followed by a system command results in the command being executed in a subshell and the result returned to q as a list of strings. For example,
+</p>
+<pre>
+q)\printf hello\\nworld
+&quot;hello&quot;
+&quot;world&quot;
+</pre>
+<blockquote><a href="../File_Warning.html" class="image"><img alt="Warning.png" src="../../mediawiki/images/c/cb/Warning.png" width="32" height="28" /></a> 
+When <tt>\</tt> is used as a shell escape, it is important not to leave any white space either before or after it.  Compare the following behaviors:
+
+<pre>
+q)\echo xyz
+&quot;xyz&quot;
+q)\ k
+::\ q
+q) \echo xyz
+'\
+</pre></blockquote>
+<h3> <span class="mw-headline" id="See_also"> See also </span></h3>
+<ul><li><a href="system.html" title="Reference/system">system</a>
+</li></ul>
+<h2> <span class="mw-headline" id="escape"> escape </span></h2>
+<p>When  <tt>\</tt> is used inside character or string displays, it serves as an escape character.
+</p>
+<table class="wikitable" style="margin:1em auto 1em auto;">
+
+<tr>
+<td>\"</td>
+<td>double quote
+</td></tr>
+<tr>
+<td>\NNN</td>
+<td>character with octal value NNN (3 digits)
+</td></tr>
+<tr>
+<td>\\</td>
+<td>backslash
+</td></tr>
+<tr>
+<td>\n</td>
+<td>new line
+</td></tr>
+<tr>
+<td>\r</td>
+<td>carriage return
+</td></tr>
+<tr>
+<td>\t</td>
+<td>horizontal tab
+</td></tr></table>
+<blockquote><a href="../File_Warning.html" class="image"><img alt="Warning.png" src="../../mediawiki/images/c/cb/Warning.png" width="32" height="28" /></a> 
+
+Q is not C. Some C escape sequences such as <tt>\0</tt>, <tt>\a</tt> or <tt>\v</tt> do not work as expected.</blockquote>
+<h2> <span class="mw-headline" id="commands"> commands </span></h2>
+<p>See <a href="SystemCommands.html" title="Reference/SystemCommands">System Commands</a>.
+</p>
+<hr />
+<p>For a complete list of functions, see the <a href="../Reference.html" title="Reference">kdb+ Function Reference</a>.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 151/1000000
+Post-expand include size: 408/2097152 bytes
+Template argument size: 300/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:273-0!*!0!!en!2!edit=0 and timestamp 20131013125037 -->
+<div class="printfooter">
+Retrieved from "<a href="BackSlash.html">http://code.kx.com/wiki/Reference/BackSlash</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Reference/BackSlash" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="BackSlash.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Reference/BackSlash&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="BackSlash.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/BackSlash&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/BackSlash&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Reference/BackSlash" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Reference/BackSlash" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/BackSlash&amp;oldid=2937" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Reference%2FBackSlash" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Reference%2FBackSlash&amp;oldid=2937&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/BackSlash&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 11 October 2013, at 10:00.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Reference/BackSlash", "wgTitle": "Reference/BackSlash", "wgAction": "view", "wgArticleId": 273, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2937, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.029 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Reference/BackSlash by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

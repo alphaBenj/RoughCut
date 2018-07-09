@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Reference/SystemCommands by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Reference/SystemCommands - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Reference_SystemCommands skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Reference/SystemCommands</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#System_Commands"><span class="tocnumber">1</span> <span class="toctext">System Commands</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#.5Ca_.5Bnamespace.5D_-_tables"><span class="tocnumber">2</span> <span class="toctext">\a [namespace] - tables</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#.5Cb_-_views.2Fdependencies"><span class="tocnumber">3</span> <span class="toctext">\b - views/dependencies</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#.5CB_-_pending_views.2Fdependencies"><span class="tocnumber">4</span> <span class="toctext">\B - pending views/dependencies</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#.5Cc_.5Bh.2Cw.5D_-_console_height.2Cwidth"><span class="tocnumber">5</span> <span class="toctext">\c [h,w] - console height,width</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#.5CC_.5Bh.2Cw.5D_-_http_height.2Cwidth"><span class="tocnumber">6</span> <span class="toctext">\C [h,w] - http height,width</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#.5Ccd_.5Bname.5D_-_change_directory"><span class="tocnumber">7</span> <span class="toctext">\cd [name] - change directory</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#.5Cd_.5Bnamespace.5D_-_directory"><span class="tocnumber">8</span> <span class="toctext">\d [namespace] - directory</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#.5Ce_.5B0.7C1.5D_-_error_trap_clients"><span class="tocnumber">9</span> <span class="toctext">\e [0|1] - error trap clients</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#.5Cf_.5Bnamespace.5D_-_functions"><span class="tocnumber">10</span> <span class="toctext">\f [namespace] - functions</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#.5Cg_.5Bmode.5D_-_garbage_collection_mode"><span class="tocnumber">11</span> <span class="toctext">\g [mode] - garbage collection mode</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#.5Cl_name_-_load_file_or_directory"><span class="tocnumber">12</span> <span class="toctext">\l name - load file or directory</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#.5Co_.5Bn.5D_-_offset_from_GMT"><span class="tocnumber">13</span> <span class="toctext">\o [n] - offset from GMT</span></a></li>
+<li class="toclevel-1 tocsection-13"><a href="#.5Cp_.5Bi.5D_-_port"><span class="tocnumber">14</span> <span class="toctext">\p [i] - port</span></a></li>
+<li class="toclevel-1 tocsection-14"><a href="#.5CP_.5Bn.5D_-_precision"><span class="tocnumber">15</span> <span class="toctext">\P [n] - precision</span></a></li>
+<li class="toclevel-1 tocsection-15"><a href="#.5Cr_-_replication_master"><span class="tocnumber">16</span> <span class="toctext">\r - replication master</span></a></li>
+<li class="toclevel-1 tocsection-16"><a href="#.5Cr_src_dst_-_rename"><span class="tocnumber">17</span> <span class="toctext">\r src dst - rename</span></a></li>
+<li class="toclevel-1 tocsection-17"><a href="#.5Cs_-_number_of_slaves"><span class="tocnumber">18</span> <span class="toctext">\s - number of slaves</span></a></li>
+<li class="toclevel-1 tocsection-18"><a href="#.5CS_.5Bn.5D_-_random_seed"><span class="tocnumber">19</span> <span class="toctext">\S [n] - random seed</span></a></li>
+<li class="toclevel-1 tocsection-19"><a href="#.5Ct_.5Bp.5D_-_timer"><span class="tocnumber">20</span> <span class="toctext">\t [p] - timer</span></a></li>
+<li class="toclevel-1 tocsection-20"><a href="#.5Cts_exp_-_time_and_space"><span class="tocnumber">21</span> <span class="toctext">\ts exp - time and space</span></a></li>
+<li class="toclevel-1 tocsection-21"><a href="#.5CT_.5Bn.5D_-_timeout"><span class="tocnumber">22</span> <span class="toctext">\T [n] - timeout</span></a></li>
+<li class="toclevel-1 tocsection-22"><a href="#.5Cu_-_reload_user_password_file"><span class="tocnumber">23</span> <span class="toctext">\u - reload user password file</span></a></li>
+<li class="toclevel-1 tocsection-23"><a href="#.5Cv_.5Bnamespace.5D_-_variables"><span class="tocnumber">24</span> <span class="toctext">\v [namespace] - variables</span></a></li>
+<li class="toclevel-1 tocsection-24"><a href="#.5Cw_.5B0.5D_-_workspace"><span class="tocnumber">25</span> <span class="toctext">\w [0] - workspace</span></a></li>
+<li class="toclevel-1 tocsection-25"><a href="#.5CW_.5Bn.5D_-_week_offset"><span class="tocnumber">26</span> <span class="toctext">\W [n] - week offset</span></a></li>
+<li class="toclevel-1 tocsection-26"><a href="#.5Cx_.z.p.2A_-_expunge"><span class="tocnumber">27</span> <span class="toctext">\x .z.p* - expunge</span></a></li>
+<li class="toclevel-1 tocsection-27"><a href="#.5Cz_.5B0.7C1.5D_-_date_parsing"><span class="tocnumber">28</span> <span class="toctext">\z [0|1] - date parsing</span></a></li>
+<li class="toclevel-1 tocsection-28"><a href="#.5C1_.26_.5C2_filename_-_redirect"><span class="tocnumber">29</span> <span class="toctext">\1 &amp; \2 filename - redirect</span></a></li>
+<li class="toclevel-1 tocsection-29"><a href="#.5C_.5Bscriptname.5D_-_hide_q_code"><span class="tocnumber">30</span> <span class="toctext">\_ [scriptname] - hide q code</span></a></li>
+<li class="toclevel-1 tocsection-30"><a href="#.5C_-_terminate"><span class="tocnumber">31</span> <span class="toctext">\ - terminate</span></a></li>
+<li class="toclevel-1 tocsection-31"><a href="#.5C.5C_-_exit"><span class="tocnumber">32</span> <span class="toctext">\\ - exit</span></a></li>
+<li class="toclevel-1 tocsection-32"><a href="#OS_Commands"><span class="tocnumber">33</span> <span class="toctext">OS Commands</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="System_Commands"> System Commands </span></h2>
+<p>System commands control the q environment. They have the form:
+</p>
+<pre>
+\cmd [p]
+</pre>
+<p>for some command <tt>cmd</tt>, and optional parameter list <tt>p</tt>.
+</p><p>Commands with optional parameters that <i>set</i> values, will <i>show</i> the current values if the parameters are elided.
+</p><p>Some system commands have equivalent command line parameters.
+</p><p>The entry must begin with <tt>\</tt>. To call a system command in a q expression, use <tt>system</tt>, for example:
+</p>
+<pre>
+q)\l sp.q
+...
+q)\a                     / tables in namespace
+`p`s`sp
+q)count \a               / \ must be the first character
+'\
+q)system &quot;a&quot;             / same command called with system
+`p`s`sp
+q)count system &quot;a&quot;       / this returns a result
+3
+</pre>
+<h2> <span class="mw-headline" id=".5Ca_.5Bnamespace.5D_-_tables"> \a [namespace] - tables </span></h2>
+<p>Lists tables in the given namespace, default current namespace.
+</p>
+<pre>
+q)\l sp.q
+...
+q)\a                      / tables in default namespace
+`p`s`sp
+q)\a .o                   / tables in .o
+,`TI
+</pre>
+<h2> <span class="mw-headline" id=".5Cb_-_views.2Fdependencies"> \b - views/dependencies </span></h2>
+<p>Lists all dependencies (views). See also <a href="dotzdotb.html" title="Reference/dotzdotb">.z.b</a>. For example:
+</p>
+<pre>
+q)a::x+y
+q)b::x+1
+q)\b
+`s#`a`b
+</pre>
+<h2> <span class="mw-headline" id=".5CB_-_pending_views.2Fdependencies"> \B - pending views/dependencies </span></h2>
+<p>Lists all pending dependencies (views), i.e. dependencies not yet referenced, or not referenced after their referents have changed.
+</p>
+<pre>
+q)a::x+1              / a depends on x
+q)\B                  / the dependency is pending
+,`a
+q)x:10
+q)\B                  / still pending after x is defined
+,`a
+q)a                   / use a
+11
+q)\B                  / no longer pending
+`symbol$()
+</pre>
+<h2> <span class="mw-headline" id=".5Cc_.5Bh.2Cw.5D_-_console_height.2Cwidth"> \c [h,w] - console height,width </span></h2>
+<p>Sets console height and width. This is the same as the <tt>-c</tt> command line parameter, see <a href="ConsoleSize.html" title="Reference/ConsoleSize">Console Size</a>
+</p>
+<h2> <span class="mw-headline" id=".5CC_.5Bh.2Cw.5D_-_http_height.2Cwidth"> \C [h,w] - http height,width </span></h2>
+<p>Sets the http height and width. This is the same as the <tt>-C</tt> command line parameter, see <a href="ConsoleSize.html" title="Reference/ConsoleSize">Console Size</a>
+</p>
+<h2> <span class="mw-headline" id=".5Ccd_.5Bname.5D_-_change_directory"> \cd [name] - change directory </span></h2>
+Changes the current directory. <blockquote><a href="../File_Warning.html" class="image"><img alt="Warning.png" src="../../mediawiki/images/c/cb/Warning.png" width="32" height="28" /></a> Directory will be created if it doesn't exist.</blockquote>
+<pre>
+~/q$ q
+KDB+ 2.6 2010.05.10 Copyright (C) 1993-2010 Kx Systems
+..
+q)\cd
+&quot;/home/guest/q&quot;
+q)\cd /home/guest/dev
+q)\cd
+&quot;/home/guest/dev&quot;
+</pre>
+<h2> <span class="mw-headline" id=".5Cd_.5Bnamespace.5D_-_directory"> \d [namespace] - directory </span></h2>
+<p>Sets the current namespace (also known as directory or context). The namespace can be empty, and a new namespace is created when an object is defined in it. The prompt indicates the current namespace. For example:
+</p>
+<pre>
+q)\d                      / default namespace
+`.
+q)\d .o                   / change to .o
+q.o)\f
+`Cols`Columns`FG`Fkey`Gkey`Key`Special..
+q.o)\d .                  / return to default
+q)key`                    / lists namespaces other than .z
+`q`Q`o`h
+q)\d .s                   / change to non-existent namespace
+q.s)key`                  / not yet created
+`q`Q`o`h
+q.s)a:1                   / create object, also creates namespace
+q.s)key`
+`q`Q`o`h`s
+</pre>
+<h2> <span class="mw-headline" id=".5Ce_.5B0.7C1.5D_-_error_trap_clients"> \e [0|1] - error trap clients </span></h2>
+<p>This enables error trapping for client requests. The default is 0 (off).
+</p><p>When a client request has an error, by default the server clears the stack. This is appropriate for production use as it enables the server to continue processing other client requests.
+</p><p>For development, you can set <tt>\e 1</tt> to enable debugging on the server. In this case, the server suspends on an error, and does not process other requests until the stack is cleared.
+</p>
+<h2> <span class="mw-headline" id=".5Cf_.5Bnamespace.5D_-_functions"> \f [namespace] - functions </span></h2>
+<p>Lists functions in the given namespace, default current namespace.
+</p>
+<pre>
+q)f:g:h:{x+2*y}
+q)\f
+`f`g`h
+q)\f .q
+`aj`aj0`all`and`any`asc`asof`attr`avgs`ceiling`cols..
+</pre>
+<h2> <span class="mw-headline" id=".5Cg_.5Bmode.5D_-_garbage_collection_mode"> \g [mode] - garbage collection mode </span></h2>
+<p>Since 2.7 2011.02.04. Switch garbage collection between immediate (1) and deferred (0) modes. See also <a href="Cmdline.html" title="Reference/Cmdline">-g</a>.
+</p>
+<h2> <span class="mw-headline" id=".5Cl_name_-_load_file_or_directory"> \l name - load file or directory </span></h2>
+<p>The parameter can be a script filename or a directory. A script is loaded, and a directory database is opened.
+If the directory is specified as '.', any scripts in that directory will be ignored; this is to allow (re)loading of data only.
+</p>
+<pre>
+q)\l sp.q                / load sp.q script
+...
+q)\a                     / tables defined in sp.q
+`p`s`sp
+q)\l db/tickdata         / load the data found in db/tickdata
+q)\a                     / with tables quote and trade
+`p`quote`s`sp`trade
+</pre>
+<h2> <span class="mw-headline" id=".5Co_.5Bn.5D_-_offset_from_GMT"> \o [n] - offset from GMT </span></h2>
+<p>Sets the local time offset, as hours from GMT, or as minutes if abs[n]&gt;23. Initially, the value is 0N, meaning that the machine's offset is used.
+</p>
+<pre>
+q)\o
+0N
+q).z.p                            / GMT
+2010.05.31D23:45:52.086467000
+q).z.P                            / local time is GMT + 8
+2010.06.01D07:45:53.830469000
+q)\o -5                           / set local time as GMT - 5
+q).z.P
+2010.05.31D18:45:58.470468000
+q)\o 390                          / set local time as GMT + 6:30
+q).z.P
+2010.06.01D06:16:06.603981000
+</pre>
+<p>This corresponds to the <tt>-o</tt> command line parameter.
+</p>
+<h2> <span class="mw-headline" id=".5Cp_.5Bi.5D_-_port"> \p [i] - port </span></h2>
+<p>Sets the listening port number. The default is 0 (no listening port). The port must be available and the process must have permission for the port.
+</p><p>A negative parameter sets a <a href="../Releases/ChangesIn2-2.html#multi-threadedinput" title="Releases/ChangesIn2.4">multi-threaded</a> port and if used it must be the initial and only mode of operation, i.e. do not dynamically switch between positive port and negative port.
+</p><p>A parameter of <tt>0W</tt> means pick a random available port within the range 32768 - 60999
+</p>
+<pre>
+q)\p 5010         / set port 5010
+q)\p
+5010
+q)\p 0W           / pick a random available port within the range 32768 - 60999
+q)\p
+45512
+
+q)\p 0            / turn off listening port
+</pre>
+<p>This corresponds to the <tt>-p</tt> command line parameter.
+</p>
+<h2> <span class="mw-headline" id=".5CP_.5Bn.5D_-_precision"> \P [n] - precision </span></h2>
+<p>Sets display precision for floating point numbers, i.e. the number of digits shown, see <a href="DisplayPrecision.html" title="Reference/DisplayPrecision">Display Precision</a>.
+</p>
+<h2> <span class="mw-headline" id=".5Cr_-_replication_master"> \r - replication master </span></h2>
+<p>This should not be executed manually otherwise it can disrupt replication. It is executed automatically by the replicating process on the master process, and returns the log file name and log file count (see <a href="../Cmdline.html" title="Cmdline">Command Line Reference</a>).
+</p>
+<h2> <span class="mw-headline" id=".5Cr_src_dst_-_rename"> \r src dst - rename </span></h2>
+<p>This renames file src to dst. It is equivalent to the unix mv command, or the windows move command (except that it will not rename to a different disk drive).
+</p>
+<h2> <span class="mw-headline" id=".5Cs_-_number_of_slaves"> \s - number of slaves </span></h2>
+<p>This queries the number of slaves, set with the <tt>-s</tt> command line parameter (query only).
+</p>
+<h2> <span class="mw-headline" id=".5CS_.5Bn.5D_-_random_seed"> \S [n] - random seed </span></h2>
+<p>Sets the random number seed. The parameter is a non-zero integer. Note that \S is not updated as the random number generator is used.
+</p>
+<pre>
+q)\S              / default
+-314159
+q)5?10
+8 1 9 5 4
+q)5?10
+6 6 1 8 5
+q)\S -314159      / restore default seed
+q)5?10            / same random numbers generated
+8 1 9 5 4
+q)\S              / seed is not updated
+-314159
+</pre>
+<p>n.b. since kdb+v3.1 2013.08.19 the behaviour is as follows
+</p>
+<pre>rng is thread local.
+\S 1234 sets the seed for the rng for the main thread only.
+the rng in a slave thread is assigned a seed based on the slave thread number.
+in multithreaded input mode, the seed is based on socket descriptor.
+instances started on ports 20000 thru 20099 (slave procs, used with e.g. q -s -4) have the main thread's default seed based on the port number.
+</pre>
+<h2> <span class="mw-headline" id=".5Ct_.5Bp.5D_-_timer"> \t [p] - timer </span></h2>
+<p>This command has two different uses depending on the parameter given.
+</p><p>An integer parameter is the number of milliseconds between timer ticks. If 0, the timer is turned off, otherwise the timer is turned on and the first tick given. On each tick, the function assigned to <tt>.z.ts</tt> is executed.
+</p>
+<pre>
+q)\t                           / default off
+0
+q).z.ts:{show`second$.z.N}
+q)\t 1000                      / tick each second
+q)13:12:52
+13:12:53
+13:12:54
+\t 0                           / turn off
+</pre>
+<p>A parameter of a q expression other than a single integer is executed and the execution time shown in milliseconds.
+</p>
+<pre>
+q)\t log til 100000            / milliseconds for log of first 100000 numbers
+7
+q)\t do[100;log til 100000]    / timing for 100 repetitions
+638
+</pre>
+<p>The tick timer usage corresponds to the <tt>-t</tt> command line parameter.
+</p>
+<h2> <span class="mw-headline" id=".5Cts_exp_-_time_and_space"> \ts exp - time and space </span></h2>
+<p>Executes the expression and shows the execution time in milliseconds and the space used in bytes.
+</p>
+<pre>
+q)\ts log til 100000
+7 2621568j
+</pre>
+<h2> <span class="mw-headline" id=".5CT_.5Bn.5D_-_timeout"> \T [n] - timeout </span></h2>
+<p>This sets the client execution timeout, as the integer number of seconds a client call will execute before timing out, default 0 (no timeout). Note that this is in seconds, not milliseconds like <tt>\t</tt>.
+</p><p>This corresponds to the <tt>-T</tt> command line parameter.
+</p>
+<h2> <span class="mw-headline" id=".5Cu_-_reload_user_password_file"> \u - reload user password file </span></h2>
+<p>When q is invoked with the <tt>-u</tt> parameter specifying a user password file, then <tt>\u</tt> will reload the password file. This allows updates to the password file while the server is running.
+</p>
+<h2> <span class="mw-headline" id=".5Cv_.5Bnamespace.5D_-_variables"> \v [namespace] - variables </span></h2>
+<p>Lists the variables in the given namespace, default current namespace.
+</p>
+<pre>
+q)a:1+b:2
+q)\v
+`a`b
+q)\v .o
+`B0`C0`PS`T`T0`TI`t
+</pre>
+<h2> <span class="mw-headline" id=".5Cw_.5B0.5D_-_workspace"> \w [0] - workspace </span></h2>
+<p>If there is no parameter, lists current memory usage, as a list of 6 long integers:
+</p>
+<dl><dd><tt>[0]</tt>  number of bytes allocated 
+</dd><dd><tt>[1]</tt>  bytes available in heap 
+</dd><dd><tt>[2]</tt>  maximum heap size so far 
+</dd><dd><tt>[3]</tt>  maximum bytes available, given in <tt>-w</tt> command line parameter 
+</dd><dd><tt>[4]</tt>  mapped bytes
+</dd><dd><tt>[5]</tt>  physical memory
+</dd></dl>
+<p>If there is a parameter, returns a pair:
+</p>
+<dl><dd><tt>[0]</tt> number of internalized symbols 
+</dd><dd><tt>[1]</tt> corresponding memory usage
+</dd></dl>
+<pre>
+q)\w
+168144 67108864 67108864 0 0 8589934592j
+q)\w 0
+577 25436j
+</pre>
+<p>The function <tt>.Q.w</tt> formats all this information:
+</p>
+<pre>
+q).Q.w[]
+used| 168304
+heap| 67108864
+peak| 67108864
+wmax| 0
+mmap| 0
+mphy| 8589934592
+syms| 577
+symw| 25436
+</pre>
+<h2> <span class="mw-headline" id=".5CW_.5Bn.5D_-_week_offset"> \W [n] - week offset </span></h2>
+<p>Specifies the start of week offset, where 0 is Saturday. The default is 2 = Monday.
+</p><p>This corresponds to the <tt>-W</tt> command line parameter.
+</p>
+<h2> <span class="mw-headline" id=".5Cx_.z.p.2A_-_expunge"> \x .z.p* - expunge </span></h2>
+<p>By default, callbacks like <tt>.z.po</tt> are not defined in the session. After they have been assigned, you can restore the default using <tt>\x</tt> to delete the definition that was made.
+</p>
+<pre>
+q).z.pi                       / default has no user defined function
+'.z.pi
+q).z.pi:{&quot;&gt;&quot;,.Q.s value x}    / assign function
+q)2+3
+&gt;5
+q)\x .z.pi                    / restore default
+</pre>
+<p>N.B. This works only for .z.p* variables defined in k before q.k is loaded. e.g. as .z.ph is defined in q.k, there is no default for it to be reset to.
+</p>
+<h2> <span class="mw-headline" id=".5Cz_.5B0.7C1.5D_-_date_parsing"> \z [0|1] - date parsing </span></h2>
+<p>Specifies the format for date parsing. 0 is "mm/dd/yyyy" and 1 is "dd/mm/yyyy".
+</p>
+<pre>
+q)\z
+0
+q)&quot;D&quot;$&quot;06/01/2010&quot;
+2010.06.01
+q)\z 1
+q)&quot;D&quot;$&quot;06/01/2010&quot;
+2010.01.06
+</pre>
+<h2> <span class="mw-headline" id=".5C1_.26_.5C2_filename_-_redirect"> \1 &amp; \2 filename - redirect </span></h2>
+<p><tt>\1</tt> and <tt>\2</tt> allow redirecting stdout and stderr to files from within the q session. The files and intermediate directories are created if necessary.
+</p>
+<pre>
+~/q$ rm -f t1.txt t2.txt
+~/q$ l64/q
+KDB+ 2.6 2010.05.10 Copyright (C) 1993-2010 Kx Systems
+...
+q)\1 t1.txt              / stdout
+q)\2 t2.txt              / stderr
+til 10
+2 + &quot;hello&quot;
+\\
+~/q$ cat t1.txt          / entry in stdout
+0 1 2 3 4 5 6 7 8 9
+~/q$ cat t2.txt          / entry in stderr
+q)q)'type
+</pre>
+<h2> <span class="mw-headline" id=".5C_.5Bscriptname.5D_-_hide_q_code"> \_ [scriptname] - hide q code </span></h2>
+<p>This command has two different uses depending on whether a parameter is given.
+</p><p>If no parameter, then <tt>\_</tt>  checks if client write access is blocked, see <a href="Cmdlineb.html" title="Reference/Cmdlineb">-b</a>.
+</p><p>If a parameter is given, it should be a scriptname and <tt>\_ f.q</tt> makes a runtime script <tt>f.q_</tt>. The q code cannot be viewed or serialized.
+</p>
+<pre>
+~/q$ echo &quot;a:123;f:{x+2*y}&quot; &gt; t1.q
+~/q$ l64/q
+KDB+ 2.6 2010.05.10 Copyright (C) 1993-2010 Kx Systems
+..
+q)\_ t1.q               / create locked script
+`t1.q_
+q)\l t1.q_              / can be loaded as usual
+q)a                     / definitions are correct
+123
+q)f[10;1 2 3]
+12 14 16
+q)f                     / q code cannot be displayed
+locked
+q)-8!f                  / or serialized
+'type
+q)read1`:t1.q_          / file contents are scrambled
+0x27fc45d98727b2ed0a530c25881733a5
+</pre>
+<h2> <span class="mw-headline" id=".5C_-_terminate"> \ - terminate </span></h2>
+<p>If there is a suspension, this exits one level of the suspension. Otherwise, it toggles between q and k mode. (To switch languages from inside a suspension, type "<tt>\ </tt>".)
+</p>
+<pre>
+q){1+x}&quot;hello&quot;
+{1+x}
+'type
++
+1
+&quot;hello&quot;
+q))\                         / clear suspension (only one level)
+q)\                          / toggle to k mode
+ &#160;!5
+0 1 2 3 4
+  \                          / toggle to q mode
+q)
+</pre>
+<h2> <span class="mw-headline" id=".5C.5C_-_exit"> \\ - exit </span></h2>
+<p>Exit from q.
+</p>
+<h1> <span class="mw-headline" id="OS_Commands"> OS Commands </span></h1>
+<p>If an expression begins with <tt>\</tt> but is not recognized as a system command, then it is executed as an OS command.
+</p>
+<blockquote><a href="../File_Warning.html" class="image"><img alt="Warning.png" src="../../mediawiki/images/c/cb/Warning.png" width="32" height="28" /></a> 
+<dl><dd>- this means that typos can get passed to the OS.</blockquote>
+</dd></dl>
+
+For example:
+
+<pre>
+q)\ls                 / usual ls command
+&quot;help.q&quot;
+&quot;k4.lic&quot;
+&quot;l64&quot;
+&quot;odbc.k&quot;
+&quot;profile.q&quot;
+&quot;q.k&quot;
+..
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 357/1000000
+Post-expand include size: 273/2097152 bytes
+Template argument size: 112/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:392-0!*!0!!en!2!edit=0 and timestamp 20131013192853 -->
+<div class="printfooter">
+Retrieved from "<a href="SystemCommands.html">http://code.kx.com/wiki/Reference/SystemCommands</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Reference/SystemCommands" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="SystemCommands.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Reference/SystemCommands&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="SystemCommands.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/SystemCommands&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference/SystemCommands&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Reference/SystemCommands" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Reference/SystemCommands" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/SystemCommands&amp;oldid=2926" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Reference%2FSystemCommands" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Reference%2FSystemCommands&amp;oldid=2926&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Reference/SystemCommands&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 2 October 2013, at 13:38.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Reference/SystemCommands", "wgTitle": "Reference/SystemCommands", "wgAction": "view", "wgArticleId": 392, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2926, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.171 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Reference/SystemCommands by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

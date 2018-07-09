@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/ProgrammingExamples by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Cookbook/ProgrammingExamples - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Cookbook_ProgrammingExamples skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Cookbook/ProgrammingExamples</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Programming_Examples"><span class="tocnumber">1</span> <span class="toctext">Programming Examples</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#HTTP_client_request_and_parse_string_result_into_a_kdb.2B_table."><span class="tocnumber">1.1</span> <span class="toctext">HTTP client request and parse string result into a kdb+ table.</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#An_efficient_query_to_extract_last_n_ticks_for_a_particular_stock_from_quote_table"><span class="tocnumber">1.2</span> <span class="toctext">An efficient query to extract last n ticks for a particular stock from quote table</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#An_efficient_query_to_know_which_days_a_given_symbol_appears_in"><span class="tocnumber">1.3</span> <span class="toctext">An efficient query to know which days a given symbol appears in</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#A_function_to_convert_a_table_into_XML"><span class="tocnumber">1.4</span> <span class="toctext">A function to convert a table into XML</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Computing_Bollinger_bands"><span class="tocnumber">1.5</span> <span class="toctext">Computing Bollinger bands</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Parallel_correlation_of_time_series"><span class="tocnumber">1.6</span> <span class="toctext">Parallel correlation of time series</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Programming_Examples"> Programming Examples </span></h1>
+<h2> <span class="mw-headline" id="HTTP_client_request_and_parse_string_result_into_a_kdb.2B_table."> HTTP client request and parse string result into a kdb+ table. </span></h2>
+<p><a href="http://code.kx.com/wsvn/code/cookbook_code/yahoo.q" class="external text" rel="nofollow">source</a>
+</p><p>This example function queries yahoo financials and produces a table of trading info for a list of stocks during the last few days. The list of stocks and the number of days are parameters of the function.
+</p><p>The function definition contains examples of:
+</p>
+<ul><li>date manipulation
+</li><li>string creation, manipulation and pattern matching
+</li><li>do loops
+</li><li>sending HTTP requests to an HTTP server
+</li><li>parsing tables from strings
+</li><li>queries with user-defined functions
+</li><li>parsing dates from strings
+</li></ul>
+<p>Sample use:
+</p>
+<pre>
+q)yahoo[10;`GOOG`AMZN]
+Date       Open   High   Low    Close  Volume   Sym
+----------------------------------------------------
+2006.08.21 28.7   28.98  27.97  28.13  5334900  AMZN
+2006.08.21 378.1  379    375.22 377.3  4023300  GOOG
+2006.08.22 28.14  28.89  28.05  28.37  4587100  AMZN
+2006.08.22 377.73 379.26 374.84 378.29 4164100  GOOG
+2006.08.23 28.56  28.89  27.77  28.14  4726400  AMZN
+2006.08.23 377.64 378.27 372.66 373.43 3642300  GOOG
+...
+</pre>
+<p>The above function definition has been adapted from a more compact one by Simon Garland. The long version adds comments, renames variables, and splits computations into smaller steps so that the code is easier to follow. For reference, we include the original version below.
+</p><p><a href="http://code.kx.com/wsvn/code/cookbook_code/yahoo_compact.q" class="external text" rel="nofollow">source for the compact version</a>
+</p>
+<h2> <span class="mw-headline" id="An_efficient_query_to_extract_last_n_ticks_for_a_particular_stock_from_quote_table"> An efficient query to extract last n ticks for a particular stock from quote table </span></h2>
+<p>The quote table is defined as follows:
+</p>
+<pre>
+q)quote: ([] stock:();time:();price())
+</pre>
+<p>For fast (constant-time) continuous queries on last n ticks we have to maintain the data nested. For our quote table, we define
+</p>
+<pre>
+q)q: ([stock:()]time:();price:())
+</pre>
+<p>where, for each row, the columns 'time' and 'price' contain a list, rather than a scalar (i.e., the columns 'time' and 'price' are lists of lists). This table is populated as follows:
+</p>
+<pre>
+q)q: select time, price by stock from quote
+</pre>
+<p>Now, to get the last 5 quotes for google
+</p>
+<pre>
+q)select -5#'time,-5#'price from q where stock=`GOOG
+</pre>
+<p>This query executes in constant time. If you want the quotes LIFO,
+</p>
+<pre>
+q)select reverse each -5#'time, reverse each -5#'price from q where stock=`GOOG
+</pre>
+<p>This one is also constant time.
+</p>
+<blockquote><a href="../File_Information.html" class="image"><img alt="Information.png" src="../../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> Why do we use <tt>each</tt> and the operator <tt>'</tt>? Answer: because the columns 'time' and 'price' are lists of lists, rather than lists of scalars.</blockquote>
+<h2> <span class="mw-headline" id="An_efficient_query_to_know_which_days_a_given_symbol_appears_in"> An efficient query to know which days a given symbol appears in </span></h2>
+<p>Issuing a single select that covers a whole year would be too inefficient. You could issue a
+separate select for each date, but if you are covering a year or two, the cumulative time quickly adds up.
+</p><p>The design of the following query is based on efficiency (both time and memory) on a
+large, parallel database.
+</p><p>A straightforward implementation of this query takes over a second per
+month. The version shown here takes 50ms for a whole year (there will
+be an initial warm-up cost for a new kdb+ instance, but once it has
+been issued once, queries with other symbols take 50ms).
+</p>
+<pre>
+getDates:{[table;testSyms;startDate;endDate]
+ symsByDate:select distinct sym by date from table[]where date within(startDate;endDate);
+ firstSymList:exec first sym from symsByDate;
+ val:(@[type[firstSymList]$;;`badCast]each(),testSyms)except`badCast;
+ exec date from(select date,val{(x in y)|/}/:sym from symsByDate)where sym=1b}
+</pre>
+<p>Sample usage:
+</p>
+<pre>
+getDates[`quote;`GOOG`AMZN;2005.01.01;2006.02.01]
+</pre>
+<h2> <span class="mw-headline" id="A_function_to_convert_a_table_into_XML"> A function to convert a table into XML </span></h2>
+<pre>
+/given a value of type number, string or time, make an XML element with the type and the value
+typedData:{
+  typeOf:{(string`Number`String`Time)[0 10 13h bin neg type x]};
+  &quot;&lt;data ss:type='&quot; , (typeOf x) ,&quot;'&gt;&quot;,string[x],&quot;&lt;/data&gt;&quot;}
+
+/ wrap a value around a tag
+tagit:{[tagname; v]
+  tagname: string [tagname];
+  &quot;&lt;&quot;,tagname,&quot;&gt;&quot;, v,&quot;&lt;/&quot;,tagname,&quot;&gt;&quot;};
+
+/convert a table (of numbers, strings and time vaues) into xml
+
+toxml:{
+  f: {flip value flip x};
+  colNames: enlist cols x;
+  tagit[`worksheet]tagit[`table]raze(tagit[`row] raze tagit[`cell] each typedData each)each colNames,f x}
+</pre>
+<p>Sample usage:
+</p>
+<pre>
+q)t
+stock price
+-----------
+ibm   102
+goog  103
+q)toxml t
+&quot;&lt;worksheet&gt;&lt;table&gt;&lt;row&gt;&lt;cell&gt;&lt;data ss:type='String'&gt;stock&lt;/data&gt;&lt;/cell&gt;&lt;cell..
+</pre>
+<p>The result looks as follows after some space is added by hand:
+</p>
+<pre>
+&lt;worksheet&gt;
+&lt;table&gt;
+
+&lt;row&gt;
+&lt;cell&gt;&lt;data ss:type='String'&gt;stock&lt;/data&gt;&lt;/cell&gt;
+&lt;cell&gt;&lt;data ss:type='String'&gt;price&lt;/data&gt;&lt;/cell&gt;
+&lt;/row&gt;
+
+&lt;row&gt;
+&lt;cell&gt;&lt;data ss:type='String'&gt;ibm&lt;/data&gt;&lt;/cell&gt;
+&lt;cell&gt;&lt;data ss:type='Number'&gt;102&lt;/data&gt;&lt;/cell&gt;
+&lt;/row&gt;
+
+&lt;row&gt;
+&lt;cell&gt;&lt;data ss:type='String'&gt;goog&lt;/data&gt;&lt;/cell&gt;
+&lt;cell&gt;&lt;data ss:type='Number'&gt;103&lt;/data&gt;&lt;/cell&gt;
+&lt;/row&gt;
+
+&lt;/table&gt;
+&lt;/worksheet&gt;
+</pre>
+<h2> <span class="mw-headline" id="Computing_Bollinger_bands"> Computing Bollinger bands </span></h2>
+<p>Bollinger bands consist of:
+</p>
+<ul><li>a middle band being a N-period simple moving average
+</li><li>an upper band at K times a N-period standard deviation above the middle band
+</li><li>a lower band at K times a N-period standard deviation below the middle band
+</li></ul>
+<p>Typical values for N and K are 20 and 2, respectively.
+</p><p>See <a href="http://wikipedia.org/wiki/bollinger_bands" class="external free" rel="nofollow">http://wikipedia.org/wiki/bollinger_bands</a> for more details.
+</p>
+<pre>
+bollingerBands: {[k;n;data]
+                  movingAvg: mavg[n;data];
+                  md: sqrt mavg[n;data*data]-movingAvg*movingAvg;
+                  movingAvg+/:(k*-1 0 1)*\:md}
+</pre>
+<p>The above definition makes sure nothing is calculated twice compared to a more naive version.
+</p><p>Sample usage:
+</p>
+<pre>
+q)vals: 20 + (100?5.0)
+q)vals
+20.32759 21.56053 23.19912 24.08458 24.73181 22.88464 22.09355 22.54231 20.81..
+q)bollingerBands[2;20] vals
+20.32759 19.71112 19.34336 19.38947 19.53251 19.83184 19.90732 20.06612 19.74..
+20.32759 20.94406 21.69575 22.29296 22.78073 22.79804 22.6974  22.67802 22.47..
+20.32759 22.177   24.04813 25.19644 26.02894 25.76425 25.48749 25.28992 25.19..
+</pre>
+<h2> <span class="mw-headline" id="Parallel_correlation_of_time_series"> Parallel correlation of time series </span></h2>
+<p>Parallelism is achieved by the use of <tt>peach</tt>.
+</p>
+<pre>
+k)comb:{(,!0){,/(|!#y),''y#\:1+x}/x+\\(y-x-:1)#1}
+/ d - date
+/ st, et - start time, end time
+/ gt - granularity type `minute `second `hour ..
+/ gi - granularity interval (for xbar)
+/ s - symbols
+pcorr:{[d;st;et;gt;gi;s]
+	data:select last price by sym,gi xbar gt$time from trade where date=d,sym in s,time within(st,et);
+	us:select distinct sym from data;
+       ut:select distinct time from data;
+	if[not(count data)=(count us)*count ut; / if there are data holes..
+		filler:first 1#0#exec price from data;
+		data:update price:fills price by sym from`time xasc(2!update price:filler from us cross ut),data;
+		if[count ns:exec sym from data where time=st,null price;
+			data:update price:reverse fills reverse price by sym from data where sym in ns]];
+	PCORR::0!select avgp:avg price,devp:dev price,price by sym from data;
+	data:(::);r:{.[pcorrcalc;;0]PCORR x}peach comb[2]count PCORR;PCORR::(::);r}
+
+pcorrcalc:{[x;y]`sym0`sym1`co!(x[`sym];y[`sym];(avg[x[`price]*y[`price]]-x[`avgp]*y[`avgp])%x[`devp]*y[`devp])}
+
+matrix:{ / convert output from pcorr to matrix
+	u:asc value distinct exec sym0 from x; / sym0 has 1 more element than sym1!
+	exec u#(value sym1)!co by value sym0 from x}
+</pre>
+<p>Sample usage:
+</p>
+<pre>
+d:first daily.date;
+st:10:00;
+et:11:30;
+gt:`second;
+gi:10;
+s:`GOOG`MSFT`AAPL`CSCO`IBM`INTL;
+s:100#exec sym from `size xdesc select sym,size from daily where date=d;
+show pcorr[d;st;et;gt;gi;s];
+show matrix pcorr[d;st;et;gt;gi;s]
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 155/1000000
+Post-expand include size: 211/2097152 bytes
+Template argument size: 153/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:26-0!*!0!!en!2!edit=0 and timestamp 20131013125947 -->
+<div class="printfooter">
+Retrieved from "<a href="ProgrammingExamples.html">http://code.kx.com/wiki/Cookbook/ProgrammingExamples</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Cookbook/ProgrammingExamples" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="ProgrammingExamples.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Cookbook/ProgrammingExamples&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="ProgrammingExamples.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ProgrammingExamples&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ProgrammingExamples&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Cookbook/ProgrammingExamples" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Cookbook/ProgrammingExamples" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ProgrammingExamples&amp;oldid=256" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Cookbook%2FProgrammingExamples" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Cookbook%2FProgrammingExamples&amp;oldid=256&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Cookbook/ProgrammingExamples&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 10 November 2010, at 19:38.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Cookbook/ProgrammingExamples", "wgTitle": "Cookbook/ProgrammingExamples", "wgAction": "view", "wgArticleId": 26, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 256, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.030 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Cookbook/ProgrammingExamples by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

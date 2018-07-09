@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Contrib/DataMiner by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Contrib/DataMiner - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="../TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Contrib_DataMiner skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Contrib/DataMiner</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Data_Miner"><span class="tocnumber">1</span> <span class="toctext">Data Miner</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Overview"><span class="tocnumber">1.1</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Setup_and_Example_Table"><span class="tocnumber">1.2</span> <span class="toctext">Setup and Example Table</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Practical_Use"><span class="tocnumber">1.3</span> <span class="toctext">Practical Use</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Limits"><span class="tocnumber">1.4</span> <span class="toctext">Limits</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Problems"><span class="tocnumber">1.5</span> <span class="toctext">Problems</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Data_Miner"> Data Miner </span></h1>
+<p>Sample Data Miner in kdb+.  Available from <a href="http://code.kx.com/wsvn/code/contrib/jloveless/data_miner" class="external free" rel="nofollow">http://code.kx.com/wsvn/code/contrib/jloveless/data_miner</a>.
+</p>
+<h2> <span class="mw-headline" id="Overview"> Overview </span></h2>
+<p>Kdb+ is ideal for data mining applications. Application logic is in q and data queries are in kdb+- direct access and manipulation. The components of queries are created in matrix form for easy manipulation- then passed directly to query the data via functional select. The following lab will walk through this code and the major features of the application. This application uses a genetic algorithm framework to maximum the sum of the column fit. This is known as the maximum subarray sums problem. The problem is simple, maximize the sum of the column FIT by using any combination of intervals of the remaining arrays.
+</p><p>Lower dimension solutions:
+<a href="http://www-static.cc.gatech.edu/people/home/kalyan/papers/mss-ppl95.pdf#search=%22k%20maximum-sum%20subarrays%20problem%22" class="external free" rel="nofollow">http://www-static.cc.gatech.edu/people/home/kalyan/papers/mss-ppl95.pdf#search=%22k%20maximum-sum%20subarrays%20problem%22</a>
+</p><p>We will examine the problem in N dimensions.
+</p>
+<h2> <span class="mw-headline" id="Setup_and_Example_Table"> Setup and Example Table </span></h2>
+<p>The table under study should be unkeyed and must be named <b>db</b> and must contain a column <b>FIT</b>  ( as in fitness). The system will optimize combinations towards the column <b>FIT</b>  using the variables allowed in the list <b>il</b>  (independent list)
+</p>
+<pre>
+//create a sample database: notice that time can be used as time is simly float
+q)db:flip `time`var1`var2`var3`var4`FIT!({1000?x}each(12:00:00;10;10;10;5.0;100?(-1*(100?10)),(50?10)))
+//define our available attributes to use- these are the columns we will allow solutions
+//to be created from. We will refer to these as attributes.
+q) il:`time`var1`var2`var3`var4
+</pre>
+<p>To begin, we will define some initial parameters. The most import here is the <b>bckts</b> parameter. This specifies how many buckets to place the values of attributes in.  We do this in order to reduce the dimensionality- at the cost of specificity.
+</p>
+<pre>
+//system inputs
+gen:5; //number of generations
+complx:(floor (.5*count il)); //maximum complexity allowed for a random choice, e.g. 1/2 the number of variables
+recssize:rndsize:10*mutesize:shftsize:elitesize:5*crossover:joinsize:5000; //set's sizes for components
+sft:{1}; //how much should a point move on shift? e.g. if 2 the can be 0 1 2
+bckts: 5; //number of buckets to  to place variables in
+</pre>
+<p>We must now define some utility functions, including a fitness function. This is the function that’s is applied to solutions to determine correctness. In this case we will simply sum FIT@ solution indices.
+</p>
+<pre>
+getfit:{(+/)db[`FIT]@x}; //get fitness for a given set
+comb:{m:x:key x;do[y-1;x:{raze{y,/:(1+max y)_x}[y]each x}[x;m]];x}; //permutations
+gettop25:{keepNdis[2;sm@distinct raze{where 3=x}each 4 xrank'sm (`FIT`cntbi)]}; //top quartile for each component of fitness
+gettop50:{keepNdis[2;sm@distinct raze{where 1
+getbot50:{keepNdis[2;sm@distinct raze{where 1&gt;x}each 4 xrank'sm (`FIT`cntbi)]}; //bottom 2 quartiles for each component of fitness
+keepNdis:{[n;t](+)(cols t)!flip where n&amp;count each group flip value flip t}; //keep n distinct record from t
+memclr:{![`.;();0b;enlist x]}; //clear memory used
+indx2eng:{{pairs[x@0]x@1}@/:x}; //lookup the english version of a solution using index
+</pre>
+<p>We now create a list of lists, where each individual list component is a collection of operator;attribute;value. We call this mnA as it is the <b>m</b>i<b>n</b>imum component for any <b>a</b>ttribute in our il.
+</p>
+<pre>
+q)mnA:distinct each((&gt;=),\:/:il),/:'{asc value min each(x@(=)distinct xrank[bckt
+s;x])}peach db[il]
+q)show mnA
+((~&lt;;`time;00:30:26);(~&lt;;`time;00:32:16);(~&lt;;`time;06:41:35);(~&lt;;`time;08:29:..
+((~&lt;;`var1;0);(~&lt;;`var1;3);(~&lt;;`var1;6);(~&lt;;`var1;9))
+((~&lt;;`var2;1);(~&lt;;`var2;2);(~&lt;;`var2;3);(~&lt;;`var2;5);(~&lt;;`var2;6))
+((~&lt;;`var3;4);(~&lt;;`var3;5);(~&lt;;`var3;6);(~&lt;;`var3;8))
+((~&lt;;`var4;0.7500965);(~&lt;;`var4;1.205486);(~&lt;;`var4;1.415407);(~&lt;;`var4;3.695..
+</pre>
+<p>We perform the same calculation for the maximum, then collect these two solution sets into <b>pairs</b>. Pairs represents the components of the search space, the search space itself is all combinations.
+</p>
+<pre>
+q)count pairs
+5
+q)show pairs
+(((~&lt;;`time;00:30:26);(~&gt;;`time;00:30:26));((~&lt;;`time;00:30:26);(~&gt;;`time;00:..
+(((~&lt;;`var1;0);(~&gt;;`var1;0));((~&lt;;`var1;0);(~&gt;;`var1;3));((~&lt;;`var1;0);(~&gt;;`v..
+(((~&lt;;`var2;1);(~&gt;;`var2;1));((~&lt;;`var2;1);(~&gt;;`var2;2));((~&lt;;`var2;1);(~&gt;;`v..
+(((~&lt;;`var3;4);(~&gt;;`var3;4));((~&lt;;`var3;4);(~&gt;;`var3;5));((~&lt;;`var3;4);(~&gt;;`v..
+(((~&lt;;`var4;0.7500965);(~&gt;;`var4;0.7500965));((~&lt;;`var4;0.7500965);(~&gt;;`var4;..
+q)show pairs@0
+~&lt; time 00:30:26 ~&gt; time 00:30:26
+~&lt; time 00:30:26 ~&gt; time 00:32:16
+~&lt; time 00:30:26 ~&gt; time 06:41:35
+~&lt; time 00:30:26 ~&gt; time 08:29:10
+~&lt; time 00:30:26 ~&gt; time 08:37:17
+~&lt; time 00:32:16 ~&gt; time 00:30:26
+..
+q)
+</pre>
+<p>We now calculate the index for each value in <b>pairs</b>, remove those intervals which have no index, then calculate the fitness for each individual value in pairs. We perform this last calculate using <b>peach</b>- <b>p</b>arallel <b>each</b>. Peach is simply the application of each one -s N distinct threads. Each index value set is passed to get fit on –s threads- we are assured the data returns ordered.
+</p>
+<pre>
+idx:{{?[db;x;();`i]}each x}each pairs; //calculate index for each pair value
+c:({where not 0=x}each({count each x}each idx));idx:idx@'c;pairs:pairs@'c; //only keep good indices
+c:where not 0=(count each idx);idx:idx@c;pairs:pairs@c;badil:il[(til count il)except c];il:il@c; //![`db;();0b;badil] if it didn't have an idx- get rid of it. This removes bad variables
+fit:{{getfit x}peach x}@/:idx;
+</pre>
+<p>Finnaly we clean up and table our starting information.
+</p>
+<pre>
+a:raze {x#y}'[count each pairs;til count pairs];v:raze iasc each pairs;
+sm:`FIT xdesc (+) `av`FIT`cntbi`src!(enlist each av:{{x,y}'[x;y]}'[a;raze v];raze fit;count each raze idx;(count (raze fit))#`init);memclr@/:(`a`v`av);
+mxcnt:count each pairs
+</pre>
+<p>At this point we define a general function for testing fitness. For a given set of attributes and values, <b>dofit</b> will return the fitness. Dofit performs the intersection in parallel.
+</p>
+<pre>
+dofit:{[av;src]
+  chk:distinct asc sm[`av];av:av[where not (asc av) in chk]; //don't run it again
+  bi:(inter/)peach({{idx[x[0]]@x[1]}each x} each av); //find intersections
+  gfit:{getfit x}peach bi;`FIT xdesc (+) `av`FIT`cntbi`src!(av;gfit;count each bi;(count gfit)#src)};
+</pre>
+<p>We now have a general framework for running search algorithms- in 45 lines. The simplest algorithm is a random search. The algorithm randomly selects an attribute value pair from the list, runs dofit and holds the result.
+</p>
+<pre>
+//build a random generation
+randgen:{[rndsize]
+  a:{asc (neg x)?count pairs}each (1+rndsize?complx); //initial attribute population: pure random
+  v:raze each{{1?x}each count each pairs[x]}each a; //initial intervals for the chosen attributes (family): pure random
+  av:{{x,y}'[x;y]}'[a;v];dofit[av;`rand]}; //join the attributes and values together, update sm
+</pre>
+<p>We then define a number of subsequent search methods (cross over, mutation, elite selection, and shifting. Each algorithm (function) will be run from our main execution loop- writing back their results to a central location. This allows each search to benefit from the results of previous other searches executions. The exercise is left to the user about which order is most optimal for line 97.
+</p>
+<pre>
+94 while[0
+96 status,::0!select gen:gen,cnt:count i,maxFIT:max FIT,avgFIT:avg FIT by src from sm;
+97 {sm::keepNdis[2;(sm,value x)]}each(&quot;randgen[rndsize]&quot;;&quot;shftgen[shftsize]&quot;;&quot;joingen[joinsize]&quot;;&quot;crssgen[crossover]&quot;;&quot;elitgen[elitesize]&quot;;&quot;recsgen[recssize]&quot;);
+98 show select distinct maxFIT by src from status;gen-::1;show .z.Z;];
+</pre>
+<p>And finally the system runs, showing our progress as generations execute. This setup included  1 million records of data, and the 5 variables from the example. Since this was executing on x64, the algorithm takes big chunks each generation: e.g.
+</p>
+<pre>
+//pretty big chunks, x64 only
+recssize:rndsize:10*mutesize:shftsize:elitesize:5*crossover:joinsize:5000
+
+// 32 bit ok- why are you running on 32 bit? Increase the number of generations to make up for decreased chunk.
+recssize:rndsize:10*mutesize:shftsize:elitesize:5*crossover:joinsize:50
+</pre>
+<p>he print out of solutions correspond to the underlying algorithms that generated them. For 32 bit, start with 100,000 records (max memory with this setup should be about 900 mb). You will notice the code will utilize –s threads. E.g. if you start with –s 4, make sure you have 4 CPU’s. The heavy peach is within the intersection of dofit[a;v] - this is possible because peach returns data in order.
+</p>
+<pre>
+begin fit calc
+2006.09.17T13:21:04.266
+2006.09.17T13:21:04.391
+end fit calc
+
+//calculate each individual fitness- 130 ms.
+
+starting loop
+5
+2006.09.17T13:21:04.406
+src | maxFIT
+----| ------
+init| 5
+
+//this is the best singleton solution- individual array
+
+//each generation- we get a printout
+2006.09.17T13:22:33.672
+src  | maxFIT
+-----| ------
+crss | 5
+elite| 12
+init | 5
+join | 9
+rand | 9
+recs | 0
+shift| 9
+</pre>
+<p>Look at the table status, what queries can you perform which yeild insights? Could you maximize this table?
+</p>
+<pre>
+q)show select deltas maxFIT by src from status
+src  | maxFIT
+-----| ---------
+crss | 5 4 0 0
+elite| 12 0 0 0
+init | 5 0 0 0 0
+join | 9 0 0 0
+rand | 9 0 0 0
+recs | 0 5 0 3
+shift| 9 0 0 3
+q)show select deltas avgFIT by src from status
+src  | avgFIT
+-----| ---------------------------------------------
+crss | -36954.38 23140.04 10356.84 3372.479
+elite| -30832.09 17745.94 10026.67 2984.438
+init | -510952.4 446901.8 55039.71 8545.832 430.8909
+join | -8305.019 2350.709 4566.641 1296.76
+rand | -41040.33 16490.83 18310.04 6100.395
+recs | 0 -17837.18 14283.83 2650.61
+shift| -40908.76 25909.88 12929.72 2018.11
+q)
+</pre>
+<h2> <span class="mw-headline" id="Practical_Use"> Practical Use </span></h2>
+<ul><li>Flag good trades as true (FIT).
+</li><li>Add a ton of variables
+</li><li>Find combination of variables to define good trades.
+</li><li>Better would be to have FIT as profit if position was taken
+</li></ul>
+<p>OR
+</p>
+<ul><li>NBBO
+</li><li>Flag FIT as 1b where not inside
+</li><li>Add a ton a variables describing that moment
+</li><li>Find combinations that should yield outside trades.
+</li></ul>
+<h2> <span class="mw-headline" id="Limits"> Limits </span></h2>
+<p>Will use some RAM, db size is not an issue. Pops and buckets set time. 300 variables is no problem.
+</p>
+<h2> <span class="mw-headline" id="Problems"> Problems </span></h2>
+<p>This is an example application as such you can see it converges quickly.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 139/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:20-0!*!0!!en!*!edit=0 and timestamp 20131013192919 -->
+<div class="printfooter">
+Retrieved from "<a href="DataMiner.html">http://code.kx.com/wiki/Contrib/DataMiner</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Contrib/DataMiner" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="DataMiner.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Contrib/DataMiner&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="DataMiner.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/DataMiner&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/DataMiner&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../../mediawiki/skins/common/images/kxmedia.png);" href="../Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="../Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="../Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="../Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="../Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="../Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Contrib/DataMiner" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Contrib/DataMiner" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/DataMiner&amp;oldid=2417" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Contrib%2FDataMiner" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Contrib%2FDataMiner&amp;oldid=2417&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Contrib/DataMiner&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 16 November 2011, at 18:20.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="../TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="../TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="../About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="../TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Contrib/DataMiner", "wgTitle": "Contrib/DataMiner", "wgAction": "view", "wgArticleId": 20, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2417, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.091 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Contrib/DataMiner by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:30:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

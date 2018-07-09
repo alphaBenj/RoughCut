@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from code.kx.com/wiki/Reference by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:28:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8" />
+<title>Reference - Kx Wiki</title>
+<meta name="generator" content="MediaWiki 1.17.0" />
+<link rel="shortcut icon" href="http://code.kx.com/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="../mediawiki/opensearch_desc.php" title="Kx Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="../mediawiki/api251f.php?action=rsd" />
+<link rel="copyright" href="TermsAndConditions.html" />
+<link rel="alternate" type="application/atom+xml" title="Kx Wiki Atom feed" href="http://code.kx.com/mediawiki/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="../mediawiki/loadeb8e.css?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&amp;only=styles&amp;skin=vector&amp;*" />
+<meta name="ResourceLoaderDynamicStyles" content="" /><link rel="stylesheet" href="../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+<link rel="stylesheet" href="../mediawiki/loadc6d2.css?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=vector&amp;*" />
+
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/mediawiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Reference skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">Reference</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<div id="siteSub">From Kx Wiki</div>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="#mw-head">navigation</a>,
+					<a href="#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<h1> <span class="mw-headline" id="kdb.2B_Function_Reference"> kdb+ Function Reference </span></h1>
+<blockquote><a href="File_Information.html" class="image"><img alt="Information.png" src="../mediawiki/images/5/54/Information.png" width="32" height="32" /></a> This list is not necessarily exhaustive. If you spot something new, feel free to add it below!</blockquote>
+<dl><dt>Symbols
+</dt></dl>
+<dl><dd><table class="wikitable">
+
+<tr>
+<td><a href="Reference/Parentheses.html" title="Reference/Parentheses">()</a></td>
+<td>precedence/list/table
+</td>
+<td><a href="Reference/Brackets.html" title="Reference/Brackets">[]</a></td>
+<td>block/arguments
+</td>
+<td><a href="Reference/CurlyBraces.html" title="Reference/CurlyBraces">{}</a></td>
+<td>function
+</td></tr>
+<tr>
+<td><a href="Reference/EqualsSymbol.html" title="Reference/EqualsSymbol">=</a></td>
+<td>equal
+</td>
+<td><a href="Reference/LeftRightAngleBracket.html" title="Reference/LeftRightAngleBracket">&lt;&gt;</a></td>
+<td>not equal
+</td>
+<td><a href="Reference/Comparatives.html" title="Reference/Comparatives">&lt;</a></td>
+<td>less/greater (etc.)
+</td></tr>
+<tr>
+<td><a href="Reference/PlusSymbol.html" title="Reference/PlusSymbol">+</a></td>
+<td>plus
+</td>
+<td><a href="Reference/MinusSymbol.html" title="Reference/MinusSymbol">-</a></td>
+<td>minus
+</td>
+<td><a href="Reference/Asterisk.html" title="Reference/Asterisk">*</a></td>
+<td>times
+</td></tr>
+<tr>
+<td><a href="Reference/PercentSymbol.html" title="Reference/PercentSymbol">%</a></td>
+<td>divided by
+</td>
+<td><a href="Reference/Semicolon.html" title="Reference/Semicolon">;</a></td>
+<td>separator
+</td>
+<td><a href="Reference/Backtick.html" title="Reference/Backtick">`</a></td>
+<td>symbol
+</td></tr>
+<tr>
+<td><a href="Reference/QuestionSymbol.html" title="Reference/QuestionSymbol">?</a></td>
+<td>find/rand/select/exec
+</td>
+<td><a href="Reference/DotSymbol.html" title="Reference/DotSymbol">.</a></td>
+<td>index/apply/trap
+</td>
+<td><a href="Reference/AtSymbol.html" title="Reference/AtSymbol">@</a></td>
+<td>index/apply/trap
+</td></tr>
+<tr>
+<td><a href="Reference/Caret.html" title="Reference/Caret">^</a></td>
+<td>fill/coalesce
+</td>
+<td><a href="Reference/DollarSign.html" title="Reference/DollarSign">$</a></td>
+<td>cast/if-else/dot product
+</td>
+<td><a href="Reference/Tilde.html" title="Reference/Tilde">~</a></td>
+<td>match
+</td></tr>
+<tr>
+<td><a href="Reference/NumberSign.html" title="Reference/NumberSign">#</a></td>
+<td>take
+</td>
+<td><a href="Reference/Underscore.html" title="Reference/Underscore">_</a></td>
+<td>drop/cut
+</td>
+<td><a href="Reference/Comma.html" title="Reference/Comma">,</a></td>
+<td>join
+</td></tr>
+<tr>
+<td><a href="Reference/BangSymbol.html" title="Reference/BangSymbol">!</a></td>
+<td>dict/update/delete
+</td>
+<td><a href="Reference/Bar.html" title="Reference/Bar">&#x7c;</a></td>
+<td>max
+</td>
+<td><a href="Reference/Ampersand.html" title="Reference/Ampersand">&amp;</a></td>
+<td>min
+</td></tr>
+<tr>
+<td><a href="Reference/Slash.html" title="Reference/Slash">/</a></td>
+<td>comment/over/converge
+</td>
+<td><a href="Reference/BackSlash.html" title="Reference/BackSlash">\</a></td>
+<td>abort/scan/iterate
+</td>
+<td><a href="Reference/BackSlashBackSlash.html" title="Reference/BackSlashBackSlash">\\</a></td>
+<td>quit
+</td></tr>
+<tr>
+<td><a href="Reference/SlashColon.html" title="Reference/SlashColon">/:</a></td>
+<td>eachright
+</td>
+<td><a href="Reference/BackSlashColon.html" title="Reference/BackSlashColon">\:</a></td>
+<td>eachleft
+</td>
+<td><a href="Reference/ApostropheColon.html" title="Reference/ApostropheColon">':</a></td>
+<td>eachprior/peach
+</td></tr>
+<tr>
+<td><a href="Reference/Apostrophe.html" title="Reference/Apostrophe">' </a></td>
+<td>signal/eachboth
+</td>
+<td><a href="Reference/Colon.html" title="Reference/Colon">:</a></td>
+<td>amend/return
+</td>
+<td><a href="Reference/ColonColon.html" title="Reference/ColonColon">::</a></td>
+<td>generic null/global amend
+</td></tr></table></dd></dl>
+<dl><dt>Numbers
+</dt></dl>
+<dl><dd><table class="wikitable">
+
+<tr>
+<td><a href="Reference/ZeroColon.html" title="Reference/ZeroColon">0:</a></td>
+<td>prepare/save/load text
+</td></tr>
+<tr>
+<td><a href="Reference/OneColon.html" title="Reference/OneColon">1:</a></td>
+<td>binary
+</td></tr>
+<tr>
+<td><a href="Reference/TwoColon.html" title="Reference/TwoColon">2:</a></td>
+<td>dynamic load
+</td></tr>
+<tr>
+<td><a href="Reference/One.html" title="Reference/One">1</a>, <a href="Reference/One.html" title="Reference/One">-1</a></td>
+<td>write to stdout
+</td></tr>
+<tr>
+<td><a href="Reference/Two.html" title="Reference/Two">2</a>, <a href="Reference/Two.html" title="Reference/Two">-2</a></td>
+<td>write to stderr
+</td></tr>
+<tr>
+<td><a href="http://code.kx.com/mediawiki/index.php?title=Reference/Number&amp;action=edit&amp;redlink=1" class="new" title="Reference/Number (page does not exist)">n</a>, <a href="http://code.kx.com/mediawiki/index.php?title=Reference/Number&amp;action=edit&amp;redlink=1" class="new" title="Reference/Number (page does not exist)">-n</a></td>
+<td>send to handle
+</td></tr></table></dd></dl>
+<dl><dt>Names
+</dt></dl>
+<dl><dd><table>
+<tr>
+<td>A
+</td>
+<td><a href="Reference/abs.html" title="Reference/abs">abs</a>, <a href="Reference/aj.html" title="Reference/aj">aj</a>, <a href="Reference/aj.html" title="Reference/aj">aj0</a>, <a href="Reference/acos.html" title="Reference/acos">acos</a>, <a href="Reference/all.html" title="Reference/all">all</a>, <a href="Reference/and.html" title="Reference/and">and</a>, <a href="Reference/any.html" title="Reference/any">any</a>, <a href="Reference/asc.html" title="Reference/asc">asc</a>, <a href="Reference/asin.html" title="Reference/asin">asin</a>, <a href="Reference/asof.html" title="Reference/asof">asof</a>, <a href="Reference/atan.html" title="Reference/atan">atan</a>, <a href="Reference/attr.html" title="Reference/attr">attr</a>, <a href="Reference/avg.html" title="Reference/avg">avg</a>, <a href="Reference/avgs.html" title="Reference/avgs">avgs</a>
+</td></tr>
+<tr>
+<td>B
+</td>
+<td><a href="Reference/bin.html" title="Reference/bin">bin</a>, <a href="Reference/bin.html" title="Reference/bin">binr</a>
+</td></tr>
+<tr>
+<td>C
+</td>
+<td><a href="Reference/ceiling.html" title="Reference/ceiling">ceiling</a>, <a href="Reference/cols.html" title="Reference/cols">cols</a>, <a href="Reference/cor.html" title="Reference/cor">cor</a>, <a href="Reference/cos.html" title="Reference/cos">cos</a>, <a href="Reference/count.html" title="Reference/count">count</a>, <a href="Reference/cov.html" title="Reference/cov">cov</a>, <a href="Reference/cross.html" title="Reference/cross">cross</a>, <a href="Reference/cut.html" title="Reference/cut">cut</a>
+</td></tr>
+<tr>
+<td>D
+</td>
+<td><a href="Reference/delete.html" title="Reference/delete">delete</a>, <a href="Reference/deltas.html" title="Reference/deltas">deltas</a>, <a href="Reference/desc.html" title="Reference/desc">desc</a>, <a href="Reference/dev.html" title="Reference/dev">dev</a>, <a href="Reference/differ.html" title="Reference/differ">differ</a>, <a href="Reference/distinct.html" title="Reference/distinct">distinct</a>, <a href="Reference/div.html" title="Reference/div">div</a>, <a href="Reference/do.html" title="Reference/do">do</a>
+</td></tr>
+<tr>
+<td>E
+</td>
+<td><a href="Reference/each.html" title="Reference/each">each</a>, <a href="Reference/ej.html" title="Reference/ej">ej</a>, <a href="Reference/enlist.html" title="Reference/enlist">enlist</a>, <a href="Reference/eval.html" title="Reference/eval">eval</a>, <a href="Reference/except.html" title="Reference/except">except</a>, <a href="Reference/exec.html" title="Reference/exec">exec</a>, <a href="Reference/exit.html" title="Reference/exit">exit</a>, <a href="Reference/exp.html" title="Reference/exp">exp</a>
+</td></tr>
+<tr>
+<td>F
+</td>
+<td><a href="Reference/fby.html" title="Reference/fby">fby</a>, <a href="Reference/fills.html" title="Reference/fills">fills</a>, <a href="Reference/first.html" title="Reference/first">first</a>, <a href="Reference/flip.html" title="Reference/flip">flip</a>, <a href="Reference/floor.html" title="Reference/floor">floor</a>, <a href="Reference/fkeys.html" title="Reference/fkeys">fkeys</a>
+</td></tr>
+<tr>
+<td>G
+</td>
+<td><a href="Reference/get.html" title="Reference/get">get</a>, <a href="Reference/getenv.html" title="Reference/getenv">getenv</a>, <a href="Reference/group.html" title="Reference/group">group</a>, <a href="Reference/gtime.html" title="Reference/gtime">gtime</a>
+</td></tr>
+<tr>
+<td>H
+</td>
+<td><a href="Reference/hclose.html" title="Reference/hclose">hclose</a>, <a href="Reference/hcount.html" title="Reference/hcount">hcount</a>, <a href="Reference/hdel.html" title="Reference/hdel">hdel</a>, <a href="Reference/hopen.html" title="Reference/hopen">hopen</a>, <a href="Reference/hsym.html" title="Reference/hsym">hsym</a>
+</td></tr>
+<tr>
+<td>I
+</td>
+<td><a href="Reference/iasc.html" title="Reference/iasc">iasc</a>, <a href="Reference/idesc.html" title="Reference/idesc">idesc</a>, <a href="Reference/if.html" title="Reference/if">if</a>, <a href="Reference/ij.html" title="Reference/ij">ij</a>, <a href="Reference/in.html" title="Reference/in">in</a>, <a href="Reference/insert.html" title="Reference/insert">insert</a>, <a href="Reference/inter.html" title="Reference/inter">inter</a>, <a href="Reference/inv.html" title="Reference/inv">inv</a>
+</td></tr>
+<tr>
+<td>K
+</td>
+<td><a href="Reference/key.html" title="Reference/key">key</a>, <a href="Reference/keys.html" title="Reference/keys">keys</a>
+</td></tr>
+<tr>
+<td>L
+</td>
+<td><a href="Reference/last.html" title="Reference/last">last</a>, <a href="Reference/like.html" title="Reference/like">like</a>, <a href="Reference/lj.html" title="Reference/lj">lj</a>, <a href="Reference/load.html" title="Reference/load">load</a>, <a href="Reference/log.html" title="Reference/log">log</a>, <a href="Reference/lower.html" title="Reference/lower">lower</a>, <a href="Reference/lsq.html" title="Reference/lsq">lsq</a>, <a href="Reference/ltime.html" title="Reference/ltime">ltime</a>, <a href="Reference/ltrim.html" title="Reference/ltrim">ltrim</a>
+</td></tr>
+<tr>
+<td>M
+</td>
+<td><a href="Reference/mavg.html" title="Reference/mavg">mavg</a>, <a href="Reference/max.html" title="Reference/max">max</a>, <a href="Reference/maxs.html" title="Reference/maxs">maxs</a>, <a href="Reference/mcount.html" title="Reference/mcount">mcount</a>, <a href="Reference/md5.html" title="Reference/md5">md5</a>, <a href="Reference/mdev.html" title="Reference/mdev">mdev</a>, <a href="Reference/med.html" title="Reference/med">med</a>, <a href="Reference/meta.html" title="Reference/meta">meta</a>, <a href="Reference/min.html" title="Reference/min">min</a>, <a href="Reference/mins.html" title="Reference/mins">mins</a>, <a href="Reference/mmax.html" title="Reference/mmax">mmax</a>, <a href="Reference/mmin.html" title="Reference/mmin">mmin</a>, <a href="Reference/mmu.html" title="Reference/mmu">mmu</a>, <a href="Reference/mod.html" title="Reference/mod">mod</a>, <a href="Reference/msum.html" title="Reference/msum">msum</a>
+</td></tr>
+<tr>
+<td>N
+</td>
+<td><a href="Reference/neg.html" title="Reference/neg">neg</a>, <a href="Reference/next.html" title="Reference/next">next</a>, <a href="Reference/not.html" title="Reference/not">not</a>, <a href="Reference/null.html" title="Reference/null">null</a>
+</td></tr>
+<tr>
+<td>O
+</td>
+<td><a href="Reference/or.html" title="Reference/or">or</a>, <a href="Reference/over.html" title="Reference/over">over</a>
+</td></tr>
+<tr>
+<td>P
+</td>
+<td><a href="Reference/parse.html" title="Reference/parse">parse</a>, <a href="Reference/peach.html" title="Reference/peach">peach</a>, <a href="Reference/pj.html" title="Reference/pj">pj</a>, <a href="Reference/plist.html" title="Reference/plist">plist</a>, <a href="Reference/prd.html" title="Reference/prd">prd</a>, <a href="Reference/prds.html" title="Reference/prds">prds</a>, <a href="Reference/prev.html" title="Reference/prev">prev</a>, <a href="Reference/prior.html" title="Reference/prior">prior</a>
+</td></tr>
+<tr>
+<td>R
+</td>
+<td><a href="Reference/rand.html" title="Reference/rand">rand</a>, <a href="Reference/rank.html" title="Reference/rank">rank</a>, <a href="Reference/ratios.html" title="Reference/ratios">ratios</a>, <a href="Reference/raze.html" title="Reference/raze">raze</a>, <a href="Reference/read0.html" title="Reference/read0">read0</a>, <a href="Reference/read1.html" title="Reference/read1">read1</a>, <a href="Reference/reciprocal.html" title="Reference/reciprocal">reciprocal</a>, <a href="Reference/reverse.html" title="Reference/reverse">reverse</a>, <a href="Reference/rload.html" title="Reference/rload">rload</a>, <a href="Reference/rotate.html" title="Reference/rotate">rotate</a>, <a href="Reference/rsave.html" title="Reference/rsave">rsave</a>, <a href="Reference/rtrim.html" title="Reference/rtrim">rtrim</a>
+</td></tr>
+<tr>
+<td>S
+</td>
+<td><a href="Reference/save.html" title="Reference/save">save</a>, <a href="Reference/scan.html" title="Reference/scan">scan</a>, <a href="Reference/select.html" title="Reference/select">select</a>, <a href="Reference/set.html" title="Reference/set">set</a>, <a href="Reference/setenv.html" title="Reference/setenv">setenv</a>, <a href="Reference/show.html" title="Reference/show">show</a>, <a href="Reference/signum.html" title="Reference/signum">signum</a>, <a href="Reference/sin.html" title="Reference/sin">sin</a>, <a href="Reference/sqrt.html" title="Reference/sqrt">sqrt</a>, <a href="Reference/ss.html" title="Reference/ss">ss</a>, <a href="Reference/ssr.html" title="Reference/ssr">ssr</a>, <a href="Reference/string.html" title="Reference/string">string</a>, <a href="Reference/sublist.html" title="Reference/sublist">sublist</a>, <a href="Reference/sum.html" title="Reference/sum">sum</a>, <a href="Reference/sums.html" title="Reference/sums">sums</a>, <a href="Reference/sv.html" title="Reference/sv">sv</a>, <a href="Reference/system.html" title="Reference/system">system</a>
+</td></tr>
+<tr>
+<td>T
+</td>
+<td><a href="Reference/tables.html" title="Reference/tables">tables</a>, <a href="Reference/tan.html" title="Reference/tan">tan</a>, <a href="Reference/til.html" title="Reference/til">til</a>, <a href="Reference/trim.html" title="Reference/trim">trim</a>, <a href="Reference/txf.html" title="Reference/txf">txf</a>, <a href="Reference/type.html" title="Reference/type">type</a>
+</td></tr>
+<tr>
+<td>U
+</td>
+<td><a href="Reference/uj.html" title="Reference/uj">uj</a>, <a href="Reference/ungroup.html" title="Reference/ungroup">ungroup</a>, <a href="Reference/union.html" title="Reference/union">union</a>, <a href="Reference/update.html" title="Reference/update">update</a>,  <a href="Reference/upper.html" title="Reference/upper">upper</a>, <a href="Reference/upsert.html" title="Reference/upsert">upsert</a>
+</td></tr>
+<tr>
+<td>V
+</td>
+<td><a href="Reference/value.html" title="Reference/value">value</a>, <a href="Reference/var.html" title="Reference/var">var</a>, <a href="Reference/view.html" title="Reference/view">view</a>, <a href="Reference/views.html" title="Reference/views">views</a>, <a href="Reference/vs.html" title="Reference/vs">vs</a>
+</td></tr>
+<tr>
+<td>W
+</td>
+<td><a href="Reference/wavg.html" title="Reference/wavg">wavg</a>, <a href="Reference/where.html" title="Reference/where">where</a>, <a href="Reference/while.html" title="Reference/while">while</a>, <a href="Reference/within.html" title="Reference/within">within</a>, <a href="Reference/wj.html" title="Reference/wj">wj</a>, <a href="Reference/wj.html" title="Reference/wj">wj1</a>, <a href="Reference/wsum.html" title="Reference/wsum">wsum</a>
+</td></tr>
+<tr>
+<td>X
+</td>
+<td><a href="Reference/xasc.html" title="Reference/xasc">xasc</a>, <a href="Reference/xbar.html" title="Reference/xbar">xbar</a>, <a href="Reference/xcol.html" title="Reference/xcol">xcol</a>, <a href="Reference/xcols.html" title="Reference/xcols">xcols</a>, <a href="Reference/xdesc.html" title="Reference/xdesc">xdesc</a>, <a href="Reference/xexp.html" title="Reference/xexp">xexp</a>, <a href="Reference/xgroup.html" title="Reference/xgroup">xgroup</a>, <a href="Reference/xkey.html" title="Reference/xkey">xkey</a>, <a href="Reference/xlog.html" title="Reference/xlog">xlog</a>, <a href="Reference/xprev.html" title="Reference/xprev">xprev</a>, <a href="Reference/xrank.html" title="Reference/xrank">xrank</a>
+</td></tr></table></dd></dl>
+<dl><dt>Namespaces
+</dt></dl>
+<blockquote><a href="File_Warning.html" class="image"><img alt="Warning.png" src="../mediawiki/images/c/cb/Warning.png" width="32" height="28" /></a> The single letter namespaces - upper case and lowercase - are reserved for Kx use and should not be used to store user-written code or data.</blockquote>
+<dl><dt>.Q namespace
+</dt><dd>for functions in the .Q namespace see the <a href="DotQ.html" title="DotQ">.Q unreference</a>
+</dd></dl>
+<dl><dt>.z namespace
+</dt></dl>
+<dl><dd><table class="wikitable">
+
+<tr>
+<td><a href="Reference/dotzdota.html" title="Reference/dotzdota">.z.a</a></td>
+<td>address</td>
+<td><a href="Reference/dotzdotac.html" title="Reference/dotzdotac">.z.ac</a></td>
+<td>auth from cookie
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotb.html" title="Reference/dotzdotb">.z.b</a></td>
+<td>dependencies</td>
+<td><a href="Releases/ChangesIn2.html#IPCMessageValidator" title="Releases/ChangesIn2.7">.z.bm</a></td>
+<td>bad message
+</td></tr>
+<tr>
+<td>.z.c</td>
+<td>physical core count</td>
+<td> </td>
+<td>
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotexit.html" title="Reference/dotzdotexit">.z.exit</a></td>
+<td>action on exit</td>
+<td><a href="Reference/dotzdotf.html" title="Reference/dotzdotf">.z.f</a></td>
+<td>file
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdoth.html" title="Reference/dotzdoth">.z.h</a></td>
+<td>host</td>
+<td><a href="Reference/dotzdoti.html" title="Reference/dotzdoti">.z.i</a></td>
+<td>PID
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotk.html" title="Reference/dotzdotk">.z.k</a></td>
+<td>release date</td>
+<td><a href="Reference/dotzdotK-2.html" title="Reference/dotzdotK">.z.K</a></td>
+<td>version
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotl.html" title="Reference/dotzdotl">.z.l</a></td>
+<td>license</td>
+<td><a href="Reference/dotzdotn.html" title="Reference/dotzdotn">.z.n</a></td>
+<td>gmt (timespan)
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotN-2.html" title="Reference/dotzdotN">.z.N</a></td>
+<td>local (timespan)</td>
+<td><a href="Reference/dotzdoto.html" title="Reference/dotzdoto">.z.o</a></td>
+<td>OS
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotp.html" title="Reference/dotzdotp">.z.p</a></td>
+<td>gmt (timestamp)</td>
+<td><a href="Reference/dotzdotP-2.html" title="Reference/dotzdotP">.z.P</a></td>
+<td>local (timestamp)
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotpc.html" title="Reference/dotzdotpc">.z.pc</a></td>
+<td>close</td>
+<td><a href="Reference/dotzdotpg.html" title="Reference/dotzdotpg">.z.pg</a></td>
+<td>get
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotph.html" title="Reference/dotzdotph">.z.ph</a></td>
+<td>http get</td>
+<td><a href="Reference/dotzdotpi.html" title="Reference/dotzdotpi">.z.pi</a></td>
+<td>input
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotpo.html" title="Reference/dotzdotpo">.z.po</a></td>
+<td>open</td>
+<td><a href="Reference/dotzdotpp.html" title="Reference/dotzdotpp">.z.pp</a></td>
+<td>http post
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotps.html" title="Reference/dotzdotps">.z.ps</a></td>
+<td>set</td>
+<td><a href="Reference/dotzdotpw.html" title="Reference/dotzdotpw">.z.pw</a></td>
+<td>validate user
+</td></tr>
+<tr>
+<td>.z.q</td>
+<td>quiet mode</td>
+<td><a href="Reference/dotzdots.html" title="Reference/dotzdots">.z.s</a></td>
+<td>self
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotts.html" title="Reference/dotzdotts">.z.ts</a></td>
+<td>timer</td>
+<td><a href="Reference/dotzdotu.html" title="Reference/dotzdotu">.z.u</a></td>
+<td>userid
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotvs.html" title="Reference/dotzdotvs">.z.vs</a></td>
+<td>value set</td>
+<td><a href="Reference/dotzdotw.html" title="Reference/dotzdotw">.z.w</a></td>
+<td>handle
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotW-2.html" title="Reference/dotzdotW">.z.W</a></td>
+<td>handles</td>
+<td><a href="Reference/dotzdotws.html" title="Reference/dotzdotws">.z.ws</a></td>
+<td>websockets
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotx.html" title="Reference/dotzdotx">.z.x</a></td>
+<td>argv
+</td></tr>
+<tr>
+<td><a href="Reference/dotzdotz.html" title="Reference/dotzdotz">.z.z</a></td>
+<td>gmt time (datetime)</td>
+<td><a href="Reference/dotzdotZ-2.html" title="Reference/dotzdotZ">.z.Z</a></td>
+<td>local time (datetime)
+</td></tr>
+<tr>
+<td><a href="Releases/ChangesIn2-2.html#a.z.t.z.d" title="Releases/ChangesIn2.4">.z.[tTdD]</a></td>
+<td>time/date shortcuts</td>
+<td><a href="Reference/dotzdotzd.html" title="Reference/dotzdotzd">.z.zd</a></td>
+<td>zip defaults
+</td></tr></table></dd></dl>
+<dl><dt><a href="Reference/Cmdline.html" title="Reference/Cmdline">Command Line Options</a> and <a href="Reference/SystemCommands.html" title="Reference/SystemCommands">System Commands</a>
+</dt></dl>
+<dl><dd><table class="wikitable">
+
+<tr>
+<td><a href="Reference/Sysa.html" title="Reference/Sysa">\a</a></td>
+<td>tables
+</td>
+<td><a href="Reference/Cmdlineb.html" title="Reference/Cmdlineb">-b</a></td>
+<td>block client write access
+</td></tr>
+<tr>
+<td><a href="Reference/Sysb.html" title="Reference/Sysb">\b</a></td>
+<td>views
+</td>
+<td>\B</td>
+<td>pending views
+</td></tr>
+<tr>
+<td><a href="Reference/Cmdlinec.html" title="Reference/Cmdlinec">-c</a>, <a href="Reference/Syscmdc.html" title="Reference/Syscmdc">\c</a></td>
+<td>q console size
+</td>
+<td><a href="Reference/CmdlineC-2.html" title="Reference/CmdlineC">-C</a>, \C</td>
+<td>web console size
+</td></tr>
+<tr>
+<td>\cd</td>
+<td>current directory
+</td>
+<td>\d</td>
+<td>namespace
+</td></tr>
+<tr>
+<td>\e</td>
+<td>error trap clients
+</td>
+<td><a href="Reference/Sysf.html" title="Reference/Sysf">\f</a></td>
+<td>functions
+</td></tr>
+<tr>
+<td> -g, \g</td>
+<td>garbage collect
+</td>
+<td> -[lL]</td>
+<td>log updates
+</td></tr>
+<tr>
+<td>\l</td>
+<td>load
+</td>
+<td> -o, \o</td>
+<td>local time offset
+</td></tr>
+<tr>
+<td> -p, \p</td>
+<td>port
+</td>
+<td><a href="Reference/CmdlineP.html" title="Reference/CmdlineP">-P</a>, \P</td>
+<td>float precision
+</td></tr>
+<tr>
+<td><a href="Reference/Cmdlineq.html" title="Reference/Cmdlineq">-q</a></td>
+<td>quiet
+</td>
+<td> -r</td>
+<td>replicate from host/post
+</td></tr>
+<tr>
+<td>\r</td>
+<td>replication master
+</td>
+<td>\r</td>
+<td>rename file
+</td></tr>
+<tr>
+<td> -s</td>
+<td>use slaves
+</td>
+<td>\s</td>
+<td>number of slaves
+</td></tr>
+<tr>
+<td>\S</td>
+<td>prng seed
+</td>
+<td>\t</td>
+<td>time expression
+</td></tr>
+<tr>
+<td> -t, \t</td>
+<td>timer
+</td>
+<td> -T, \T</td>
+<td>timeout
+</td></tr>
+<tr>
+<td>\ts</td>
+<td>time and space of expression
+</td>
+<td> -u 1</td>
+<td>disable system exits
+</td></tr>
+<tr>
+<td>\u</td>
+<td>reload password file
+</td>
+<td> -[uU]</td>
+<td>usr:pwd file
+</td></tr>
+<tr>
+<td><a href="Reference/Sysv.html" title="Reference/Sysv">\v</a></td>
+<td>variables
+</td>
+<td><a href="Reference/SystemCommands.html#.5Cw_.5B0.5D_-_workspace" title="Reference/SystemCommands">-w, \w</a></td>
+<td>workspace size
+</td></tr>
+<tr>
+<td> -W, \W</td>
+<td>week offset
+</td>
+<td>\x</td>
+<td>expunge handler
+</td></tr>
+<tr>
+<td><a href="http://code.kx.com/wiki/JB:QforMortals2/commands_and_system_variables#Date_Format_.28-z.29" title="JB:QforMortals2/commands and system variables">-z, \z</a></td>
+<td>date format
+</td>
+<td>\1, \2</td>
+<td>redirect stdout/stderr
+</td></tr>
+<tr>
+<td>\_</td>
+<td>hide q code
+</td></tr>
+</table></dd></dl>
+<dl><dt>Other Reference Pages
+</dt></dl>
+<dl><dd><table class="wikitable">
+
+<tr>
+<td><a href="Reference/Adverb.html" title="Reference/Adverb">adverbs</a></td>
+<td><a href="Reference/AssocDict.html" title="Reference/AssocDict">associations and dictionaries</a>
+</td></tr>
+<tr>
+<td><a href="Reference/AtomList.html" title="Reference/AtomList">atoms and lists</a></td>
+<td><a href="Reference/BangSymbolInternalFunction.html" title="Reference/BangSymbolInternalFunction">! internal functions</a>
+</td></tr>
+<tr>
+<td><a href="Reference/ConsoleSize.html" title="Reference/ConsoleSize">console size</a></td>
+<td><a href="Reference/DisplayPrecision.html" title="Reference/DisplayPrecision">display precision</a>
+</td></tr>
+<tr>
+<td><a href="Reference/Datatypes.html" title="Reference/Datatypes">datatypes</a></td>
+<td><a href="Errors.html" title="Errors">q errors</a>
+</td></tr>
+<tr>
+<td><a href="Reference/Function.html" title="Reference/Function">functions</a></td>
+<td><a href="Reference/Grammar.html" title="Reference/Grammar">grammar</a>
+</td></tr>
+<tr>
+<td><a href="Reference/ipcprotocol.html" title="Reference/ipcprotocol">IPC protocol</a></td>
+<td><a href="Reference/joins.html" title="Reference/joins">joins</a>
+</td></tr>
+<tr>
+<td><a href="Reference/Nouns.html" title="Reference/Nouns">nouns</a></td>
+<td><a href="Reference/pardottxt.html" title="Reference/pardottxt">par.txt</a>
+</td></tr>
+<tr>
+<td><a href="Reference/parse_tree.html" title="Reference/parse tree">parse trees</a></td>
+<td><a href="Reference/Syntax.html" title="Reference/Syntax">syntax</a>
+</td></tr>
+<tr>
+<td><a href="Reference/Table.html" title="Reference/Table">table</a></td>
+<td><a href="Reference/Verb.html" title="Reference/Verb">verb</a>
+</td></tr></table></dd></dl>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 10/1000000
+Post-expand include size: 346/2097152 bytes
+Template argument size: 234/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key my_wiki:pcache:idhash:27-0!*!0!!*!2!edit=0 and timestamp 20131013124311 -->
+<div class="printfooter">
+Retrieved from "<a href="Reference.html">http://code.kx.com/wiki/Reference</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id='catlinks' class='catlinks catlinks-allhidden'></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li  id="pt-login"><a href="http://code.kx.com/mediawiki/index.php?title=Special:UserLogin&amp;returnto=Reference" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li  id="ca-nstab-main" class="selected"><span><a href="Reference.html"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+					<li  id="ca-talk" class="new"><span><a href="http://code.kx.com/mediawiki/index.php?title=Talk:Reference&amp;action=edit&amp;redlink=1"  title="Discussion about the content page [t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="Reference.html" >Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible "><span><a href="http://code.kx.com/mediawiki/index.php?title=Reference&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://code.kx.com/mediawiki/index.php" id="searchform">
+		<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text"  title="Search Kx Wiki [f]" accesskey="f"  value="" />
+		<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(../mediawiki/skins/common/images/kxmedia.png);" href="Main_Page.html"  title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id='p-navigation'>
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-Reference"><a href="Reference.html">Reference</a></li>
+					<li id="n-Cookbooks"><a href="Cookbook.html">Cookbooks</a></li>
+					<li id="n-Articles"><a href="Articles.html">Articles</a></li>
+					<li id="n-Tutorials"><a href="Tutorials.html">Tutorials</a></li>
+					<li id="n-Contrib"><a href="Contrib.html">Contrib</a></li>
+					<li id="n-Code-repository"><a href="http://code.kx.com/wsvn/code">Code repository</a></li>
+					<li id="n-recentchanges"><a href="http://code.kx.com/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://code.kx.com/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://code.kx.com/wiki/Special:WhatLinksHere/Reference" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://code.kx.com/wiki/Special:RecentChangesLinked/Reference" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://code.kx.com/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://code.kx.com/mediawiki/index.php?title=Reference&amp;oldid=2912" title="Permanent link to this revision of the page">Permanent link</a></li>
+						</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- coll-print_export -->
+<div class="portal" id='p-coll-print_export'>
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Reference" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://code.kx.com/mediawiki/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Reference&amp;oldid=2912&amp;writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://code.kx.com/mediawiki/index.php?title=Reference&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 13 September 2013, at 16:55.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="TermsAndConditions.html" title="TermsAndConditions">terms and conditions</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="TermsAndConditions.html" title="TermsAndConditions">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="About.html" title="About">About Kx Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="TermsAndConditions.html" title="TermsAndConditions">Disclaimers</a></li>
+															</ul>
+											<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="../mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		
+<script src="../mediawiki/load8478.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Reference", "wgTitle": "Reference", "wgAction": "view", "wgArticleId": 27, "wgIsArticle": true, "wgUserName": null, "wgUserGroups": ["*"], "wgCurRevisionId": 2912, "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.loader.load(["mediawiki.util", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+	mediaWiki.loader.go();
+}
+</script>
+
+<script src="../mediawiki/load55ad.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=vector&amp;*"></script>
+<script>if ( window.mediaWiki ) {
+	mediaWiki.user.options.set({"ccmeonemails":0,"cols":80,"contextchars":50,"contextlines":5,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":1,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+	"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs500":false,"searchNs501":false});;mediaWiki.loader.state({"user.options":"ready"});
+}
+</script>		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<!-- Served in 0.029 secs. -->			</body>
+
+<!-- Mirrored from code.kx.com/wiki/Reference by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 13 Oct 2013 19:29:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>
